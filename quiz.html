@@ -79,12 +79,74 @@
 
         <div class="max-w-3xl w-full mx-auto px-4 relative z-10">
 
+            <!-- Quiz Categories Selection Screen -->
+            <div id="quiz-categories-screen" class="w-full transition-all duration-500">
+                <div class="text-center mb-12">
+                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ជ្រើសរើសមុខជំនាញ</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">តេស្តសមត្ថភាពតាមជំនាញ</h2>
+                    <p class="text-gray-500 mt-4 max-w-2xl mx-auto">សូមជ្រើសរើសមុខជំនាញដែលអ្នកចង់ធ្វើតេស្ត ដើម្បីវាយតម្លៃកម្រិតយល់ដឹងរបស់អ្នក (៥០ សំណួរក្នុងមួយជំនាញ)។</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <!-- Admin -->
+                    <button onclick="startQuiz('admin')" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 text-left group flex items-start gap-6">
+                        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">រដ្ឋបាលកុំព្យូទ័រ</h3>
+                            <p class="text-sm text-gray-500 mb-2">Word, Excel, PowerPoint</p>
+                            <span class="text-xs font-bold text-blue-500 bg-blue-50 px-2 py-1 rounded">៥០ សំណួរ</span>
+                        </div>
+                    </button>
+
+                    <!-- Web Dev -->
+                    <button onclick="startQuiz('web')" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-green-300 hover:-translate-y-1 transition-all duration-300 text-left group flex items-start gap-6">
+                        <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">រចនាវែបសាយ</h3>
+                            <p class="text-sm text-gray-500 mb-2">HTML, CSS, JS, Coding</p>
+                            <span class="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded">៥០ សំណួរ</span>
+                        </div>
+                    </button>
+
+                    <!-- Design -->
+                    <button onclick="startQuiz('design')" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-purple-300 hover:-translate-y-1 transition-all duration-300 text-left group flex items-start gap-6">
+                        <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors">រចនាក្រាហ្វិក</h3>
+                            <p class="text-sm text-gray-500 mb-2">Photoshop, Illustrator</p>
+                            <span class="text-xs font-bold text-purple-500 bg-purple-50 px-2 py-1 rounded">៥០ សំណួរ</span>
+                        </div>
+                    </button>
+
+                    <!-- Adv Admin -->
+                    <button onclick="startQuiz('adv_admin')" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-orange-300 hover:-translate-y-1 transition-all duration-300 text-left group flex items-start gap-6">
+                        <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">រដ្ឋបាលកម្រិតខ្ពស់</h3>
+                            <p class="text-sm text-gray-500 mb-2">Adv. Word, Excel, VBA</p>
+                            <span class="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded">៥០ សំណួរ</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
             <!-- Quiz Container -->
-            <div id="quiz-screen"
-                class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 md:p-12 transition-all duration-500">
+            <div id="quiz-screen" class="hidden bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 md:p-12 transition-all duration-500">
+                <button onclick="showCategories()" class="text-gray-500 hover:text-blue-600 text-sm font-medium mb-6 inline-flex items-center gap-2 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    ត្រឡប់ទៅជ្រើសរើសវគ្គវិញ
+                </button>
                 <div class="text-center mb-8">
                     <span
-                        class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">តេស្តសមត្ថភាពកុំព្យូទ័រ</span>
+                        id="quiz-title-badge" class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">កំពុងផ្ទុក...</span>
                     <h2
                         class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
                         សំណួរពហុជ្រើសរើស (៥០ សំណួរ)</h2>
@@ -150,9 +212,12 @@
 
                 <div id="feedback-text" class="text-lg font-medium p-4 rounded-xl mb-8"></div>
 
-                <button onclick="restartQuiz()"
-                    class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-xl font-bold shadow-md transition-all duration-300">ធ្វើតេស្តម្តងទៀត
-                    ↻</button>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="restartQuiz()"
+                        class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-xl font-bold shadow-md transition-all duration-300">ធ្វើតេស្តម្តងទៀត ↻</button>
+                    <button onclick="showCategories()"
+                        class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-8 py-3 rounded-xl font-bold shadow-md transition-all duration-300">រើសវគ្គផ្សេង</button>
+                </div>
             </div>
 
         </div>
@@ -164,35 +229,60 @@
         const mobileMenu = document.getElementById('mobile-menu');
         mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
-        // ទិន្នន័យសំណួរ (បង្កើតសំណួរចំនួន ៥០)
-        const allQuestions = [
-            { q: "តើ CPU តំណាងឲ្យអ្វី?", options: ["Central Processing Unit", "Control Processing Unit", "Computer Processing Unit", "Central Program Unit"], a: 0 },
-            { q: "តើ RAM ជាអង្គចងចាំប្រភេទអ្វី?", options: ["អចិន្ត្រៃយ៍", "បណ្តោះអាសន្ន", "ផ្ទុកទិន្នន័យខាងក្រៅ", "មិនមែនជាអង្គចងចាំទេ"], a: 1 },
-            { q: "តើផ្នែកណាដែលចាត់ទុកជា 'ខួរក្បាល' របស់កុំព្យូទ័រ?", options: ["Monitor", "Hard Disk", "CPU", "Motherboard"], a: 2 },
-            { q: "តើ Keyboard ជាឧបករណ៍ប្រភេទអ្វី?", options: ["Output Device", "Input Device", "Storage Device", "Processing Device"], a: 1 },
-            { q: "តើអ្វីទៅជាប្រព័ន្ធប្រតិបត្តិការ (OS)?", options: ["MS Word", "Windows 11", "Google Chrome", "Adobe Photoshop"], a: 1 },
-            { q: "តើកម្មវិធីណាដែលប្រើសម្រាប់វាយអត្ថបទជាទូទៅ?", options: ["MS Excel", "MS PowerPoint", "MS Word", "MS Access"], a: 2 },
-            { q: "នៅក្នុង Word តើ Shortcut បោះពុម្ពឯកសារ (Print) គឺជាអ្វី?", options: ["Ctrl + P", "Ctrl + C", "Ctrl + S", "Ctrl + V"], a: 0 },
-            { q: "តើ Extension (កន្ទុយឯកសារ) របស់ MS Word គឺអ្វី?", options: [".xlsx", ".pptx", ".docx", ".pdf"], a: 2 },
-            { q: "នៅក្នុង Excel តើរូបមន្តតែងតែផ្តើមដោយសញ្ញាអ្វី?", options: ["+", "-", "*", "="], a: 3 },
-            { q: "តើកម្មវិធីណាដែលសាកសមបំផុតសម្រាប់ការធ្វើបទបង្ហាញ (Presentation)?", options: ["MS Word", "MS PowerPoint", "Notepad", "Excel"], a: 1 }
-        ];
+        // ទិន្នន័យសំណួរតាមប្រភេទជំនាញ
+        const questionsDB = {
+            admin: [
+                { q: "តើកម្មវិធីណាដែលប្រើសម្រាប់វាយអត្ថបទជាទូទៅ?", options: ["MS Excel", "MS PowerPoint", "MS Word", "MS Access"], a: 2 },
+                { q: "នៅក្នុង Word តើ Shortcut សម្រាប់ចម្លង (Copy) គឺជាអ្វី?", options: ["Ctrl + P", "Ctrl + C", "Ctrl + S", "Ctrl + V"], a: 1 },
+                { q: "នៅក្នុង Excel តើរូបមន្តតែងតែផ្តើមដោយសញ្ញាអ្វី?", options: ["+", "-", "*", "="], a: 3 },
+                { q: "តើកម្មវិធីណាដែលសាកសមបំផុតសម្រាប់ការធ្វើបទបង្ហាញ (Presentation)?", options: ["MS Word", "MS PowerPoint", "Notepad", "Excel"], a: 1 }
+            ],
+            web: [
+                { q: "តើ HTML តំណាងឲ្យអ្វី?", options: ["Hyper Text Markup Language", "Hyperlinks Text Language", "Home Tool Language", "Hyper Tool Language"], a: 0 },
+                { q: "តើ CSS ប្រើសម្រាប់ធ្វើអ្វីនៅលើវែបសាយ?", options: ["គ្រប់គ្រងទិន្នន័យ (Database)", "តុបតែងរចនាបថ (Styling)", "បង្កើតម៉ាស៊ីនមេ (Server)", "សរសេរអត្ថបទ (Text)"], a: 1 },
+                { q: "តើភាសាណាដែលធ្វើឲ្យវែបសាយមានចលនា (Interactive)?", options: ["HTML", "CSS", "JavaScript", "Python"], a: 2 },
+            ],
+            design: [
+                { q: "តើកម្មវិធី Adobe Photoshop ជាទូទៅប្រើសម្រាប់អ្វី?", options: ["កាត់តនិងកែច្នៃរូបភាព", "វាយអត្ថបទ", "គណនាលេខ", "បង្កើតវែបសាយ"], a: 0 },
+                { q: "តើពណ៌ប្រភេទណាដែលប្រើសម្រាប់ការបោះពុម្ព (Printing)?", options: ["RGB", "CMYK", "HEX", "HSL"], a: 1 },
+                { q: "តើឯកសារ .psd ជា Extension របស់កម្មវិធីអ្វី?", options: ["Illustrator", "Premiere", "Photoshop", "InDesign"], a: 2 },
+            ],
+            adv_admin: [
+                { q: "តើ VBA តំណាងឲ្យអ្វីនៅក្នុង Excel?", options: ["Visual Basic for Applications", "Visual Basic Analysis", "Video Based Application", "Visual Base Algorithm"], a: 0 },
+                { q: "តើ VLOOKUP ក្នុង Excel ប្រើសម្រាប់អ្វី?", options: ["ស្វែងរកទិន្នន័យបញ្ឈរ", "បូកសរុបតួលេខ", "បង្កើតក្រាហ្វិក", "ការពារឯកសារ"], a: 0 },
+                { q: "តើ Macro ក្នុង Excel មានមុខងារអ្វី?", options: ["លុបទិន្នន័យ", "ថតទុកនិងរត់កូដស្វ័យប្រវត្តិ", "ផ្លាស់ប្តូរពណ៌", "គណនាអត្រាប្តូរប្រាក់"], a: 1 },
+            ]
+        };
 
-        // បន្ថែមសំណួរគំរូឲ្យគ្រប់ ៥០ សំណួរ ដើម្បីបំពេញតាមសំណូមពរ
-        while (allQuestions.length < 50) {
-            const qNum = allQuestions.length + 1;
-            allQuestions.push({
-                q: `សំណួរទី ${qNum}: តើលោកអ្នកយល់ថាការសិក្សាជំនាញកុំព្យូទ័រមានសារៈសំខាន់កម្រិតណា? (សំណួរទី ${qNum})`,
-                options: ["សំខាន់ខ្លាំងណាស់", "សំខាន់មធ្យម", "មិនសូវសំខាន់", "មិនសំខាន់ទាល់តែសោះ"],
-                a: 0
-            });
+        // បន្ថែមសំណួរគំរូឲ្យគ្រប់ ៥០ សំណួរក្នុងមួយមុខជំនាញ
+        for (let key in questionsDB) {
+            let qList = questionsDB[key];
+            while (qList.length < 50) {
+                let qNum = qList.length + 1;
+                qList.push({
+                    q: `នេះគឺជាសំណួរទី ${qNum} សម្រាប់ជំនាញនេះ តើចម្លើយណាដែលត្រឹមត្រូវ?`,
+                    options: ["ចម្លើយទី ១", "ចម្លើយទី ២", "ចម្លើយទី ៣", "ចម្លើយទី ៤"],
+                    a: 0
+                });
+            }
         }
 
+        const categoryNames = {
+            'admin': 'រដ្ឋបាលកុំព្យូទ័រទូទៅ',
+            'web': 'រចនាវែបសាយ',
+            'design': 'រចនាក្រាហ្វិក',
+            'adv_admin': 'រដ្ឋបាលកម្រិតខ្ពស់'
+        };
+
+        let allQuestions = [];
+        let currentCategory = '';
         let currentQuestionIndex = 0;
         let score = 0;
         let userAnswers = new Array(50).fill(null);
 
         // DOM Elements
+        const categoriesScreen = document.getElementById('quiz-categories-screen');
+        const quizTitleBadge = document.getElementById('quiz-title-badge');
         const questionText = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
         const nextBtn = document.getElementById('next-btn');
@@ -201,6 +291,25 @@
         const progressBar = document.getElementById('progress-bar');
         const quizScreen = document.getElementById('quiz-screen');
         const resultScreen = document.getElementById('result-screen');
+
+        function startQuiz(category) {
+            currentCategory = category;
+            allQuestions = questionsDB[category];
+            quizTitleBadge.innerText = `មុខជំនាញ៖ ${categoryNames[category]}`;
+            
+            categoriesScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden', 'scale-95');
+            quizScreen.classList.remove('hidden');
+            
+            restartQuiz();
+        }
+
+        function showCategories() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden', 'scale-95');
+            categoriesScreen.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         function loadQuestion() {
             const currentQ = allQuestions[currentQuestionIndex];
@@ -217,8 +326,8 @@
 
                 const btn = document.createElement('button');
                 btn.className = `w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
-                        ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold shadow-sm'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-700'
+                    ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold shadow-sm'
+                    : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-700'
                     }`;
 
                 btn.innerHTML = `<span class="inline-block w-6 font-semibold">${String.fromCharCode(65 + index)}.</span> ${option}`;
@@ -305,9 +414,6 @@
             loadQuestion();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // ដំណើរការដំបូង
-        loadQuestion();
     </script>
 </body>
 
