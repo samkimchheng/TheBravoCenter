@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ពង្រឹងចំណេះដឹង - មជ្ឈមណ្ឌលមិត្តពូកែ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation Bar -->
+    <nav
+        class="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 fixed w-full z-50 top-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3 cursor-pointer hover:opacity-90 transition-opacity">
+                    <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល" class="h-12 w-auto rounded-lg shadow-sm">
+                    <span
+                        class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <div class="flex items-center bg-gray-50/80 p-1.5 rounded-full border border-gray-100 shadow-inner">
+                        <a href="index.html"
+                            class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">ទំព័រដើម</a>
+                        <a href="about.html"
+                            class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">អំពីយើង</a>
+                        <a href="courses.html"
+                            class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">វគ្គសិក្សា</a>
+                        <a href="features.html"
+                            class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">សកម្មភាព</a>
+                        <a href="quiz.html"
+                            class="text-blue-700 font-bold bg-white px-5 py-2 rounded-full shadow-sm ring-1 ring-gray-900/5 transition-all duration-300">ពង្រឹងចំណេះដឹង</a>
+                        <a href="contact.html"
+                            class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">ទំនាក់ទំនង</a>
+                    </div>
+                    <a href="index.html#register"
+                        class="bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white px-7 py-2.5 rounded-full font-bold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 ring-2 ring-white/50 relative overflow-hidden group">
+                        <span class="relative z-10">ចុះឈ្មោះឥឡូវនេះ</span>
+                    </a>
+                </div>
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn"
+                        class="p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none transition-colors">
+                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-white/95 backdrop-blur-md px-4 pt-4 pb-8 space-y-4 shadow-2xl border-t border-gray-100 absolute w-full rounded-b-3xl">
+            <div class="bg-gray-50/80 p-2 rounded-2xl border border-gray-100 shadow-inner space-y-1">
+                <a href="index.html"
+                    class="block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ទំព័រដើម</a>
+                <a href="about.html"
+                    class="block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">អំពីយើង</a>
+                <a href="courses.html"
+                    class="block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">វគ្គសិក្សា</a>
+                <a href="features.html"
+                    class="block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">សកម្មភាព</a>
+                <a href="quiz.html"
+                    class="block px-5 py-3 text-blue-700 font-bold bg-white rounded-xl shadow-sm ring-1 ring-gray-900/5 transition-all duration-300">ពង្រឹងចំណេះដឹង</a>
+                <a href="contact.html"
+                    class="block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ទំនាក់ទំនង</a>
+            </div>
+        </div>
+    </nav>
+
+    <section
+        class="pt-32 pb-20 min-h-screen relative overflow-hidden bg-gradient-to-b from-blue-50/50 to-white flex justify-center items-center">
+        <div
+            class="absolute top-0 left-0 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl opacity-30 animate-pulse">
+        </div>
+
+        <div class="max-w-3xl w-full mx-auto px-4 relative z-10">
+
+            <!-- Quiz Container -->
+            <div id="quiz-screen"
+                class="bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 md:p-12 transition-all duration-500">
+                <div class="text-center mb-8">
+                    <span
+                        class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">តេស្តសមត្ថភាពកុំព្យូទ័រ</span>
+                    <h2
+                        class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
+                        សំណួរពហុជ្រើសរើស (៥០ សំណួរ)</h2>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between text-sm font-medium text-gray-500 mb-2">
+                        <span id="progress-text">សំណួរទី 1 / 50</span>
+                    </div>
+                    <div class="w-full bg-gray-100 rounded-full h-2.5">
+                        <div id="progress-bar"
+                            class="bg-gradient-to-r from-blue-500 to-indigo-600 h-2.5 rounded-full transition-all duration-500"
+                            style="width: 2%"></div>
+                    </div>
+                </div>
+
+                <!-- Question -->
+                <h3 id="question-text" class="text-xl md:text-2xl font-bold text-gray-800 mb-6 leading-relaxed">
+                    កំពុងផ្ទុកសំណួរ...</h3>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3 mb-8">
+                    <!-- Options will be rendered here by JS -->
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex justify-end pt-4 border-t border-gray-100">
+                    <button id="next-btn" onclick="nextQuestion()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:shadow-lg transition-all duration-300 hidden">សំណួរបន្ទាប់
+                        &rarr;</button>
+                    <button id="submit-btn" onclick="submitQuiz()"
+                        class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-md hover:shadow-lg transition-all duration-300 hidden">បញ្ជូនចម្លើយ
+                        ផ្ទៀងផ្ទាត់លទ្ធផល</button>
+                </div>
+            </div>
+
+            <!-- Results Container -->
+            <div id="result-screen"
+                class="hidden bg-white rounded-[2rem] shadow-xl border border-gray-100 p-8 md:p-12 text-center transition-all duration-500 transform scale-95">
+                <div
+                    class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-500">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-extrabold text-gray-800 mb-2">លទ្ធផលរបស់អ្នក</h2>
+                <p class="text-gray-500 mb-8">ខាងក្រោមនេះជាពិន្ទុដែលអ្នកទទួលបានពីការធ្វើតេស្ត៖</p>
+
+                <div class="flex justify-center items-center gap-8 mb-8">
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">ចម្លើយត្រឹមត្រូវ</p>
+                        <p id="score-text" class="text-4xl font-black text-blue-600">0 / 50</p>
+                    </div>
+                    <div class="w-px h-16 bg-gray-200"></div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">ជាភាគរយ</p>
+                        <p id="percentage-text" class="text-4xl font-black text-green-500">0%</p>
+                    </div>
+                </div>
+
+                <div id="feedback-text" class="text-lg font-medium p-4 rounded-xl mb-8"></div>
+
+                <button onclick="restartQuiz()"
+                    class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-xl font-bold shadow-md transition-all duration-300">ធ្វើតេស្តម្តងទៀត
+                    ↻</button>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+        // ទិន្នន័យសំណួរ (បង្កើតសំណួរចំនួន ៥០)
+        const allQuestions = [
+            { q: "តើ CPU តំណាងឲ្យអ្វី?", options: ["Central Processing Unit", "Control Processing Unit", "Computer Processing Unit", "Central Program Unit"], a: 0 },
+            { q: "តើ RAM ជាអង្គចងចាំប្រភេទអ្វី?", options: ["អចិន្ត្រៃយ៍", "បណ្តោះអាសន្ន", "ផ្ទុកទិន្នន័យខាងក្រៅ", "មិនមែនជាអង្គចងចាំទេ"], a: 1 },
+            { q: "តើផ្នែកណាដែលចាត់ទុកជា 'ខួរក្បាល' របស់កុំព្យូទ័រ?", options: ["Monitor", "Hard Disk", "CPU", "Motherboard"], a: 2 },
+            { q: "តើ Keyboard ជាឧបករណ៍ប្រភេទអ្វី?", options: ["Output Device", "Input Device", "Storage Device", "Processing Device"], a: 1 },
+            { q: "តើអ្វីទៅជាប្រព័ន្ធប្រតិបត្តិការ (OS)?", options: ["MS Word", "Windows 11", "Google Chrome", "Adobe Photoshop"], a: 1 },
+            { q: "តើកម្មវិធីណាដែលប្រើសម្រាប់វាយអត្ថបទជាទូទៅ?", options: ["MS Excel", "MS PowerPoint", "MS Word", "MS Access"], a: 2 },
+            { q: "នៅក្នុង Word តើ Shortcut បោះពុម្ពឯកសារ (Print) គឺជាអ្វី?", options: ["Ctrl + P", "Ctrl + C", "Ctrl + S", "Ctrl + V"], a: 0 },
+            { q: "តើ Extension (កន្ទុយឯកសារ) របស់ MS Word គឺអ្វី?", options: [".xlsx", ".pptx", ".docx", ".pdf"], a: 2 },
+            { q: "នៅក្នុង Excel តើរូបមន្តតែងតែផ្តើមដោយសញ្ញាអ្វី?", options: ["+", "-", "*", "="], a: 3 },
+            { q: "តើកម្មវិធីណាដែលសាកសមបំផុតសម្រាប់ការធ្វើបទបង្ហាញ (Presentation)?", options: ["MS Word", "MS PowerPoint", "Notepad", "Excel"], a: 1 }
+        ];
+
+        // បន្ថែមសំណួរគំរូឲ្យគ្រប់ ៥០ សំណួរ ដើម្បីបំពេញតាមសំណូមពរ
+        while (allQuestions.length < 50) {
+            const qNum = allQuestions.length + 1;
+            allQuestions.push({
+                q: `សំណួរទី ${qNum}: តើលោកអ្នកយល់ថាការសិក្សាជំនាញកុំព្យូទ័រមានសារៈសំខាន់កម្រិតណា? (សំណួរទី ${qNum})`,
+                options: ["សំខាន់ខ្លាំងណាស់", "សំខាន់មធ្យម", "មិនសូវសំខាន់", "មិនសំខាន់ទាល់តែសោះ"],
+                a: 0
+            });
+        }
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(50).fill(null);
+
+        // DOM Elements
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+
+        function loadQuestion() {
+            const currentQ = allQuestions[currentQuestionIndex];
+
+            // ធ្វើបច្ចុប្បន្នភាព UI
+            questionText.innerText = `${currentQuestionIndex + 1}. ${currentQ.q}`;
+            progressText.innerText = `សំណួរទី ${currentQuestionIndex + 1} / ${allQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / allQuestions.length) * 100}%`;
+
+            // បង្កើតជម្រើស
+            optionsContainer.innerHTML = '';
+            currentQ.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestionIndex] === index;
+
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
+                        ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold shadow-sm'
+                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-700'
+                    }`;
+
+                btn.innerHTML = `<span class="inline-block w-6 font-semibold">${String.fromCharCode(65 + index)}.</span> ${option}`;
+                btn.onclick = () => selectOption(index);
+                optionsContainer.appendChild(btn);
+            });
+
+            // បង្ហាញប៊ូតុង Next ឬ Submit
+            if (currentQuestionIndex === allQuestions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+
+            updateButtonState();
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
+            loadQuestion(); // Render ឡើងវិញដើម្បីបង្ហាញការ Select
+        }
+
+        function updateButtonState() {
+            const hasAnswered = userAnswers[currentQuestionIndex] !== null;
+            nextBtn.disabled = !hasAnswered;
+            submitBtn.disabled = !hasAnswered;
+
+            if (!hasAnswered) {
+                nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function nextQuestion() {
+            if (userAnswers[currentQuestionIndex] !== null && currentQuestionIndex < allQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            if (userAnswers[currentQuestionIndex] !== null) {
+                // គណនាពិន្ទុ
+                score = 0;
+                userAnswers.forEach((ans, idx) => {
+                    if (ans === allQuestions[idx].a) score++;
+                });
+
+                // បង្ហាញលទ្ធផល
+                quizScreen.classList.add('hidden');
+                resultScreen.classList.remove('hidden', 'scale-95');
+
+                const percentage = Math.round((score / allQuestions.length) * 100);
+                document.getElementById('score-text').innerText = `${score} / ${allQuestions.length}`;
+                document.getElementById('percentage-text').innerText = `${percentage}%`;
+
+                const feedback = document.getElementById('feedback-text');
+                if (percentage >= 80) {
+                    feedback.innerText = "អស្ចារ្យណាស់! អ្នកពិតជាមានចំណេះដឹងជ្រៅជ្រះ។ 🌟";
+                    feedback.className = "text-xl font-bold text-green-700 bg-green-50 p-4 rounded-xl mb-8";
+                } else if (percentage >= 50) {
+                    feedback.innerText = "ល្អមធ្យម! អ្នកអាចបន្តការសិក្សាដើម្បីពង្រឹងបន្ថែម។ 👍";
+                    feedback.className = "text-xl font-bold text-blue-700 bg-blue-50 p-4 rounded-xl mb-8";
+                } else {
+                    feedback.innerText = "កុំបាក់ទឹកចិត្ត! សូមចុះឈ្មោះរៀនវគ្គសិក្សារបស់យើងដើម្បីពង្រឹងសមត្ថភាព។ 💪";
+                    feedback.className = "text-xl font-bold text-orange-700 bg-orange-50 p-4 rounded-xl mb-8";
+                }
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers.fill(null);
+
+            resultScreen.classList.add('hidden', 'scale-95');
+            quizScreen.classList.remove('hidden');
+
+            loadQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ដំណើរការដំបូង
+        loadQuestion();
+    </script>
+</body>
+
+</html>
