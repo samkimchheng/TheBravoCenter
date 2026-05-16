@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>សកម្មភាព - មជ្ឈមណ្ឌលមិត្តពូកែ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-white shadow-md fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល" class="h-10 w-auto">
+                    <span class="text-2xl font-bold text-blue-600">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600">ទំព័រដើម</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600">អំពីយើង</a>
+                    <a href="courses.html" class="text-gray-700 hover:text-blue-600">វគ្គសិក្សា</a>
+                    <a href="features.html" class="text-blue-600 font-bold">សកម្មភាព</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600">ទំនាក់ទំនង</a>
+                    <a href="index.html#register"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">ចុះឈ្មោះឥឡូវនេះ</a>
+                </div>
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-4 pt-2 pb-4 space-y-2 shadow-md border-t">
+            <a href="index.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">ទំព័រដើម</a>
+            <a href="about.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">អំពីយើង</a>
+            <a href="courses.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">វគ្គសិក្សា</a>
+            <a href="features.html"
+                class="block px-3 py-2 text-blue-600 font-bold hover:bg-gray-50 rounded-md">សកម្មភាព</a>
+            <a href="contact.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">ទំនាក់ទំនង</a>
+            <a href="index.html#register"
+                class="block px-3 py-2 bg-blue-600 text-white text-center rounded-md hover:bg-blue-700 mt-2">ចុះឈ្មោះឥឡូវនេះ</a>
+        </div>
+    </nav>
+
+    <section id="features" class="pt-24 pb-12 bg-white min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">ហេតុអ្វីគួរសិក្សាជាមួយយើង?</h2>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-800 mb-4">ផ្ទាំងបង្ហាញវិញ្ញាបនបត្រ</h3>
+                    <p class="text-gray-600 mb-4">សិស្សនឹងទទួលបានវិញ្ញាបនបត្របញ្ជាក់ការសិក្សាដែលមានការទទួលស្គាល់
+                        ក្រោយពេលបញ្ចប់ការសិក្សាដោយជោគជ័យ ដែលជួយបង្កើនទំនុកចិត្តក្នុងការស្វែងរកការងារ។</p>
+                </div>
+                <img src="https://via.placeholder.com/500x350?text=Certificate+Sample" alt="គំរូវិញ្ញាបនបត្រ"
+                    class="rounded border shadow-lg">
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center flex-row-reverse">
+                <div class="md:order-2">
+                    <h3 class="text-2xl font-bold text-blue-800 mb-4">រូបភាពសកម្មភាពជាក់ស្តែង</h3>
+                    <p class="text-gray-600 mb-4">បន្ទប់រៀនបំពាក់ដោយកុំព្យូទ័រទំនើបៗ និងមានផាសុកភាព។
+                        សិស្សានុសិស្សមានឱកាសអនុវត្តផ្ទាល់លើម៉ាស៊ីនពិតៗ ក្រោមការណែនាំពីលោកគ្រូ អ្នកគ្រូផ្ទាល់។</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 md:order-1">
+                    <img src="assets/images/action2.jpg" alt="សកម្មភាពសិស្ស ១"
+                        class="rounded-lg shadow-lg col-span-2 w-full h-auto object-cover border">
+                    <img src="assets/images/action3.jpg" alt="សកម្មភាពសិស្ស ២"
+                        class="rounded-lg shadow-lg w-full h-auto object-cover border">
+                    <img src="assets/images/action4.jpg" alt="សកម្មភាពសិស្ស ៣"
+                        class="rounded-lg shadow-lg w-full h-auto object-cover border">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; 2024 មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+    </footer>
+
+    <script>const mobileBtn = document.getElementById('mobile-menu-btn'); const mobileMenu = document.getElementById('mobile-menu'); mobileBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });</script>
+</body>
+
+</html>

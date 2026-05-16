@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>មជ្ឈមណ្ឌលមិត្តពូកែ</title>
+    <!-- ប្រើប្រាស់ Tailwind CSS សម្រាប់ការរចនា -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ភ្ជាប់ទៅកាន់ File CSS ខាងក្រៅ -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- របារម៉ឺនុយ (Navigation Bar) -->
+    <nav class="bg-white shadow-md fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <!-- ដាក់ Logo របស់អ្នកនៅទីនេះ -->
+                    <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល" class="h-10 w-auto">
+                    <span class="text-2xl font-bold text-blue-600">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600">ទំព័រដើម</a>
+                    <a href="about.html" class="text-gray-700 hover:text-blue-600">អំពីយើង</a>
+                    <a href="courses.html" class="text-gray-700 hover:text-blue-600">វគ្គសិក្សា</a>
+                    <a href="features.html" class="text-gray-700 hover:text-blue-600">សកម្មភាព</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-blue-600">ទំនាក់ទំនង</a>
+                    <a href="index.html#register"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">ចុះឈ្មោះឥឡូវនេះ</a>
+                </div>
+                <!-- ប៊ូតុង Hamburger សម្រាប់ Mobile -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ម៉ឺនុយសម្រាប់ទូរសព្ទ (Mobile Menu) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-4 pt-2 pb-4 space-y-2 shadow-md border-t">
+            <a href="index.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">ទំព័រដើម</a>
+            <a href="about.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">អំពីយើង</a>
+            <a href="courses.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">វគ្គសិក្សា</a>
+            <a href="features.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">សកម្មភាព</a>
+            <a href="contact.html"
+                class="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-md">ទំនាក់ទំនង</a>
+            <a href="index.html#register"
+                class="block px-3 py-2 bg-blue-600 text-white text-center rounded-md hover:bg-blue-700 mt-2">ចុះឈ្មោះឥឡូវនេះ</a>
+        </div>
+    </nav>
+
+    <!-- ទំព័រដើម (Home Page / Hero Section) -->
+    <section id="home" class="pt-24 pb-12 bg-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-800 mb-4">ស្វាគមន៍មកកាន់មជ្ឈមណ្ឌលបណ្តុះបណ្តាលរបស់យើង
+            </h1>
+            <p class="text-lg text-gray-600 mb-8">កសាងជំនាញរបស់អ្នក ដើម្បីអនាគតដ៏ភ្លឺស្វាង
+                ជាមួយគ្រូដែលមានបទពិសោធន៍ផ្ទាល់។</p>
+            <!-- ដាក់រូបភាពសកម្មភាពបន្ទប់សិក្សានៅទីនេះ -->
+            <img src="assets/images/action.jpg" alt="សកម្មភាពបន្ទប់សិក្សា" class="mx-auto rounded-lg shadow-lg mb-8">
+            <a href="#register"
+                class="inline-block bg-green-500 text-white text-lg font-bold px-8 py-3 rounded-full hover:bg-green-600 transition">
+                ចុះឈ្មោះចូលរៀនឥឡូវនេះ (Telegram/Call)
+            </a>
+        </div>
+    </section>
+
+    <!-- ទម្រង់ចុះឈ្មោះងាយស្រួល (Easy Registration) -->
+    <section id="register" class="py-12 bg-blue-600 text-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">ចុះឈ្មោះចូលរៀនឥឡូវនេះ</h2>
+            <p class="mb-8 text-blue-100">សូមបំពេញព័ត៌មានខាងក្រោម ឬចុចប៊ូតុងដើម្បីទំនាក់ទំនងមកយើងខ្ញុំដោយផ្ទាល់។</p>
+
+            <form class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto mb-8">
+                <div class="mb-4">
+                    <input type="text" placeholder="ឈ្មោះរបស់អ្នក"
+                        class="w-full px-4 py-2 border rounded text-gray-800 focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <input type="tel" placeholder="លេខទូរសព្ទ"
+                        class="w-full px-4 py-2 border rounded text-gray-800 focus:outline-none focus:border-blue-500">
+                </div>
+                <button type="button"
+                    class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition">
+                    ផ្ញើព័ត៌មានចុះឈ្មោះ
+                </button>
+            </form>
+
+            <div class="flex justify-center space-x-4">
+                <!-- ជំនួស link តេឡេក្រាម និង ហ្វេសប៊ុក របស់អ្នក -->
+                <a href="https://t.me/Kimchheng12" target="_blank"
+                    class="bg-blue-400 px-6 py-2 rounded-full hover:bg-blue-500 font-bold">ចុះឈ្មោះតាម Telegram</a>
+                <a href="tel:+85512345678"
+                    class="bg-gray-800 px-6 py-2 rounded-full hover:bg-gray-900 font-bold">ហៅទូរសព្ទឥឡូវនេះ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; 2024 មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+    </footer>
+
+    <!-- Script សម្រាប់ដំណើរការ Mobile Menu -->
+    <script>
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>
