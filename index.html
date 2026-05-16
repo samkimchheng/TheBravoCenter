@@ -118,26 +118,35 @@
                     <div
                         class="absolute inset-0 bg-gradient-to-tr from-white to-gray-50 rounded-[2rem] transform -rotate-2 scale-105 opacity-50">
                     </div>
-                    <img src="assets/images/action.jpg" alt="សកម្មភាពបន្ទប់សិក្សា"
-                        class="relative z-10 w-full object-cover rounded-[2rem] shadow-2xl border-8 border-white/80 h-[400px] md:h-[500px]">
-
-                    <!-- Floating Badge -->
                     <div
-                        class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center gap-4 animate-bounce">
-                        <div
-                            class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-500 font-medium">ចុះឈ្មោះថ្ងៃនេះ</p>
-                            <p class="font-bold text-gray-800">បញ្ចុះតម្លៃពិសេស!</p>
-                        </div>
+                        class="relative z-10 w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white/80">
+                        <img src="assets/images/action.jpg" alt="សកម្មភាពបន្ទប់សិក្សា ១"
+                            class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100">
+                        <img src="assets/images/action2.jpg" alt="សកម្មភាពបន្ទប់សិក្សា ២"
+                            class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                        <img src="assets/images/action3.jpg" alt="សកម្មភាពបន្ទប់សិក្សា ៣"
+                            class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                        <img src="assets/images/action4.jpg" alt="សកម្មភាពបន្ទប់សិក្សា ៤"
+                            class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                    </div>
+                </div>
+
+                <!-- Floating Badge -->
+                <div
+                    class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl z-20 flex items-center gap-4 animate-bounce">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">ចុះឈ្មោះថ្ងៃនេះ</p>
+                        <p class="font-bold text-gray-800">បញ្ចុះតម្លៃពិសេស!</p>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -218,7 +227,7 @@
                         </div>
                         <h3 class="text-xl font-bold mb-2">ហៅទូរសព្ទផ្ទាល់</h3>
                         <p class="text-gray-400 mb-6 text-sm">ទំនាក់ទំនងផ្ទាល់ដើម្បីសាកសួរព័ត៌មាន</p>
-                        <a href="tel:+85512345678"
+                        <a href="tel:+85593586024"
                             class="inline-block w-full bg-white/10 text-white font-bold py-3 px-6 rounded-full hover:bg-white/20 transition-colors border border-white/20">ចុចខលឥឡូវនេះ</a>
                     </div>
                 </div>
@@ -231,7 +240,7 @@
         <p>&copy; 2024 មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
     </footer>
 
-    <!-- Script សម្រាប់ដំណើរការ Mobile Menu -->
+    <!-- Script សម្រាប់ដំណើរការ Mobile Menu និង Slideshow -->
     <script>
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -239,6 +248,18 @@
         mobileBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+
+        // កូដសម្រាប់ដំណើរការ Slideshow
+        const slides = document.querySelectorAll('.slide-img');
+        let currentSlide = 0;
+
+        if (slides.length > 0) {
+            setInterval(() => {
+                slides[currentSlide].classList.replace('opacity-100', 'opacity-0');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.replace('opacity-0', 'opacity-100');
+            }, 3000); // ប្តូររូបភាពរៀងរាល់ ៣ វិនាទីម្តង
+        }
     </script>
 </body>
 
