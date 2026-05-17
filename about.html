@@ -25,17 +25,25 @@
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(241, 245, 249, 0.5); 
+            background: rgba(241, 245, 249, 0.5);
             border-radius: 10px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
+            background: #cbd5e1;
             border-radius: 10px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+            background: #94a3b8;
         }
+
+        /* ប្តូរពាក្យ មជ្ឈមណ្ឌលមិត្តពូកែ ទៅជា TheBravoCenter ពេលបកប្រែ */
+        html[class*="translated-"] .text-km { display: none !important; }
+        html[class*="translated-"] .text-en { display: inline !important; }
+        .text-en { display: none; }
     </style>
 </head>
 
@@ -50,7 +58,7 @@
                     <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល"
                         class="h-10 sm:h-12 w-auto rounded-lg shadow-sm shrink-0">
                     <span
-                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap"><span class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span class="text-en notranslate">TheBravoCenter</span></span>
                 </div>
                 <div class="hidden xl:flex items-center space-x-2 2xl:space-x-4">
                     <div
@@ -134,162 +142,165 @@
             </div>
 
             <!-- ប្រអប់ Scroll ព័ត៌មាន (Scrollable Container) -->
-            <div class="overflow-y-auto max-h-[75vh] custom-scrollbar px-2 sm:px-6 py-6 bg-white/40 backdrop-blur-md rounded-3xl shadow-[inset_0_2px_15px_rgba(0,0,0,0.05)] border border-white/60">
-                
+            <div
+                class="overflow-y-auto max-h-[75vh] custom-scrollbar px-2 sm:px-6 py-6 bg-white/40 backdrop-blur-md rounded-3xl shadow-[inset_0_2px_15px_rgba(0,0,0,0.05)] border border-white/60">
+
                 <!-- ថ្នាក់ដឹកនាំមជ្ឈមណ្ឌល -->
                 <div class="flex flex-col items-center justify-center gap-12 mb-16">
                     <!-- ប្រវត្តិរូបនាយកមជ្ឈមណ្ឌល -->
                     <div class="flex flex-col items-center justify-center">
                         <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                        <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                            </div>
+                            <!-- រូបភាព -->
+                            <img src="assets/images/action5.jpg" alt="លោកគ្រូ សំ គឹមឆេង"
+                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 notranslate">សំ គឹមឆេង</h3>
+                        <p
+                            class="text-blue-700 font-bold text-base md:text-lg bg-blue-50 px-5 py-1.5 rounded-full border border-blue-100 shadow-sm">
+                            នាយកមជ្ឈមណ្ឌល</p>
+                    </div>
+
+                    <!-- ប្រវត្តិរូបហិរញ្ញិក -->
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-pink-600 to-rose-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                            </div>
+                            <!-- រូបភាព -->
+                            <img src="assets/images/action6.jpg" alt="ស៊ឹង សុមុនី"
+                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 notranslate">ស៊ឹង សុមុនី</h3>
+                        <p
+                            class="text-pink-700 font-bold text-base md:text-lg bg-pink-50 px-5 py-1.5 rounded-full border border-pink-100 shadow-sm">
+                            ហិរញ្ញិក</p>
+                    </div>
+
+                    <!-- ក្រុមគ្រូបណ្តុះបណ្តាល -->
+                    <div class="flex flex-col md:flex-row flex-wrap items-center justify-center gap-10 lg:gap-16">
+                        <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ហើ ឆៃលាង) -->
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+                                <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-cyan-600 to-cyan-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                                </div>
+                                <!-- រូបភាព -->
+                                <img src="assets/images/action7.jpg" alt="ហើ ឆៃលាង"
+                                    class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                            </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 notranslate">ហើ ឆៃលាង</h3>
+                            <p
+                                class="text-cyan-700 font-bold text-base md:text-lg bg-cyan-50 px-5 py-1.5 rounded-full border border-cyan-100 shadow-sm">
+                                គ្រូបណ្តុះបណ្តាល</p>
+                        </div>
+
+                        <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ជួប ជាន) -->
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+                                <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-green-600 to-emerald-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                                </div>
+                                <!-- រូបភាព -->
+                                <img src="assets/images/action8.jpg" alt="ជួប ជាន"
+                                    class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                            </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 notranslate">ជួប ជាន</h3>
+                            <p
+                                class="text-green-700 font-bold text-base md:text-lg bg-green-50 px-5 py-1.5 rounded-full border border-green-100 shadow-sm">
+                                គ្រូបណ្តុះបណ្តាល</p>
+                        </div>
+
+                        <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ភោគ ផល) -->
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+                                <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-orange-500 to-yellow-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                                </div>
+                                <!-- រូបភាព -->
+                                <img src="assets/images/action9.jpg" alt="ភោគ ផល"
+                                    class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                            </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2 notranslate">ភោគ ផល</h3>
+                            <p
+                                class="text-orange-700 font-bold text-base md:text-lg bg-orange-50 px-5 py-1.5 rounded-full border border-orange-100 shadow-sm">
+                                គ្រូបណ្តុះបណ្តាល</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <!-- ប្រវត្តិ -->
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-blue-600"></div>
                         <div
-                            class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                            class="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                         </div>
-                        <!-- រូបភាព -->
-                        <img src="assets/images/action5.jpg" alt="លោកគ្រូ សំ គឹមឆេង"
-                            class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">ប្រវត្តិ</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            មជ្ឈមណ្ឌលត្រូវបានបង្កើតឡើងដើម្បីជួយដល់សិស្សនិស្សិតក្នុងការអភិវឌ្ឍជំនាញបច្ចេកវិទ្យាប្រកបដោយប្រសិទ្ធភាព។
+                        </p>
                     </div>
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">សំ គឹមឆេង</h3>
-                    <p
-                        class="text-blue-700 font-bold text-base md:text-lg bg-blue-50 px-5 py-1.5 rounded-full border border-blue-100 shadow-sm">
-                        នាយកមជ្ឈមណ្ឌល</p>
-                </div>
 
-                <!-- ប្រវត្តិរូបហិរញ្ញិក -->
-                <div class="flex flex-col items-center justify-center">
-                    <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                        <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                    <!-- ចក្ខុវិស័យ -->
+                    <div
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-400 to-purple-600">
+                        </div>
                         <div
-                            class="absolute inset-0 bg-gradient-to-tr from-pink-600 to-rose-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                            class="w-16 h-16 mx-auto bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
+                            </svg>
                         </div>
-                        <!-- រូបភាព -->
-                        <img src="assets/images/action6.jpg" alt="ស៊ឹង សុមុនី"
-                            class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
-                    </div>
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ស៊ឹង សុមុនី</h3>
-                    <p
-                        class="text-pink-700 font-bold text-base md:text-lg bg-pink-50 px-5 py-1.5 rounded-full border border-pink-100 shadow-sm">
-                        ហិរញ្ញិក</p>
-                </div>
-
-                <!-- ក្រុមគ្រូបណ្តុះបណ្តាល -->
-                <div class="flex flex-col md:flex-row flex-wrap items-center justify-center gap-10 lg:gap-16">
-                    <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ហើ ឆៃលាង) -->
-                    <div class="flex flex-col items-center justify-center">
-                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-tr from-cyan-600 to-cyan-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
-                            </div>
-                            <!-- រូបភាព -->
-                            <img src="assets/images/action7.jpg" alt="ហើ ឆៃលាង"
-                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ហើ ឆៃលាង</h3>
-                        <p
-                            class="text-cyan-700 font-bold text-base md:text-lg bg-cyan-50 px-5 py-1.5 rounded-full border border-cyan-100 shadow-sm">
-                            គ្រូបណ្តុះបណ្តាល</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">ចក្ខុវិស័យ</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            ក្លាយជាស្ថាប័នឈានមុខគេក្នុងការបណ្តុះបណ្តាលជំនាញកុំព្យូទ័រប្រកបដោយគុណភាពខ្ពស់ និងស្តង់ដារ។
+                        </p>
                     </div>
 
-                    <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ជួប ជាន) -->
-                    <div class="flex flex-col items-center justify-center">
-                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-tr from-green-600 to-emerald-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
-                            </div>
-                            <!-- រូបភាព -->
-                            <img src="assets/images/action8.jpg" alt="ជួប ជាន"
-                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ជួប ជាន</h3>
-                        <p
-                            class="text-green-700 font-bold text-base md:text-lg bg-green-50 px-5 py-1.5 rounded-full border border-green-100 shadow-sm">
-                            គ្រូបណ្តុះបណ្តាល</p>
-                    </div>
-
-                    <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ភោគ ផល) -->
-                    <div class="flex flex-col items-center justify-center">
-                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-tr from-orange-500 to-yellow-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
-                            </div>
-                            <!-- រូបភាព -->
-                            <img src="assets/images/action9.jpg" alt="ភោគ ផល"
-                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ភោគ ផល</h3>
-                        <p
-                            class="text-orange-700 font-bold text-base md:text-lg bg-orange-50 px-5 py-1.5 rounded-full border border-orange-100 shadow-sm">
-                            គ្រូបណ្តុះបណ្តាល</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 text-center">
-                <!-- ប្រវត្តិ -->
-                <div
-                    class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-blue-600"></div>
+                    <!-- គោលបំណង -->
                     <div
-                        class="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-green-600">
+                        </div>
+                        <div
+                            class="w-16 h-16 mx-auto bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">គោលបំណង</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            ផ្តល់នូវចំណេះដឹងពិត អនុវត្តជាក់ស្តែង និងធានាថាអ្នកសិក្សាអាចយកទៅប្រើប្រាស់ជាការងារពិតប្រាកដ។
+                        </p>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">ប្រវត្តិ</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        មជ្ឈមណ្ឌលត្រូវបានបង្កើតឡើងដើម្បីជួយដល់សិស្សនិស្សិតក្នុងការអភិវឌ្ឍជំនាញបច្ចេកវិទ្យាប្រកបដោយប្រសិទ្ធភាព។
-                    </p>
                 </div>
-
-                <!-- ចក្ខុវិស័យ -->
-                <div
-                    class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-                    <div
-                        class="w-16 h-16 mx-auto bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">ចក្ខុវិស័យ</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        ក្លាយជាស្ថាប័នឈានមុខគេក្នុងការបណ្តុះបណ្តាលជំនាញកុំព្យូទ័រប្រកបដោយគុណភាពខ្ពស់ និងស្តង់ដារ។
-                    </p>
-                </div>
-
-                <!-- គោលបំណង -->
-                <div
-                    class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-green-600"></div>
-                    <div
-                        class="w-16 h-16 mx-auto bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">គោលបំណង</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        ផ្តល់នូវចំណេះដឹងពិត អនុវត្តជាក់ស្តែង និងធានាថាអ្នកសិក្សាអាចយកទៅប្រើប្រាស់ជាការងារពិតប្រាកដ។
-                    </p>
-                </div>
-            </div>
 
             </div> <!-- បញ្ចប់ប្រអប់ Scroll -->
         </div>
     </section>
 
     <footer class="bg-gray-800 text-white text-center py-4">
-        <p>&copy; <span id="year"></span> មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
-        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white">សំ គឹមឆេង</strong>
+        <p>&copy; <span id="year"></span> <span class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span class="text-en notranslate">TheBravoCenter</span>. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white notranslate">សំ គឹមឆេង</strong>
         </p>
         <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
     </footer>

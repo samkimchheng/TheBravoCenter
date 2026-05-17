@@ -20,6 +20,11 @@
         #goog-gt-tt {
             display: none !important;
         }
+
+        /* ប្តូរពាក្យ មជ្ឈមណ្ឌលមិត្តពូកែ ទៅជា TheBravoCenter ពេលបកប្រែ */
+        html[class*="translated-"] .text-km { display: none !important; }
+        html[class*="translated-"] .text-en { display: inline !important; }
+        .text-en { display: none; }
     </style>
 </head>
 
@@ -35,7 +40,7 @@
                     <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល"
                         class="h-10 sm:h-12 w-auto rounded-lg shadow-sm shrink-0">
                     <span
-                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap"><span class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span class="text-en notranslate">TheBravoCenter</span></span>
                 </div>
                 <div class="hidden xl:flex items-center space-x-2 2xl:space-x-4">
                     <div
@@ -642,8 +647,8 @@
     </script>
 
     <footer class="bg-gray-800 text-white text-center py-4">
-        <p>&copy; <span id="year"></span> មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
-        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white">សំ គឹមឆេង</strong></p>
+        <p>&copy; <span id="year"></span> <span class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span class="text-en notranslate">TheBravoCenter</span>. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white notranslate">សំ គឹមឆេង</strong></p>
         <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
     </footer>
 
