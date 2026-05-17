@@ -9,9 +9,17 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         /* លាក់ផ្ទាំង Google Translate ខាងលើ និងការពារមិនឱ្យជាន់ Navbar */
-        body { top: 0 !important; }
-        .skiptranslate iframe { display: none !important; }
-        #goog-gt-tt { display: none !important; }
+        body {
+            top: 0 !important;
+        }
+
+        .skiptranslate iframe {
+            display: none !important;
+        }
+
+        #goog-gt-tt {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -22,12 +30,16 @@
         class="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 fixed w-full z-50 top-0 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-2 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 overflow-hidden">
-                    <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល" class="h-10 sm:h-12 w-auto rounded-lg shadow-sm shrink-0">
-                    <span class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
+                <div
+                    class="flex items-center gap-2 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 overflow-hidden">
+                    <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល"
+                        class="h-10 sm:h-12 w-auto rounded-lg shadow-sm shrink-0">
+                    <span
+                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap">មជ្ឈមណ្ឌលមិត្តពូកែ</span>
                 </div>
                 <div class="hidden xl:flex items-center space-x-2 2xl:space-x-4">
-                    <div class="flex items-center bg-gray-50/80 p-1.5 rounded-full border border-gray-100 shadow-inner whitespace-nowrap text-sm 2xl:text-base">
+                    <div
+                        class="flex items-center bg-gray-50/80 p-1.5 rounded-full border border-gray-100 shadow-inner whitespace-nowrap text-sm 2xl:text-base">
                         <a href="index.html"
                             class="text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">ទំព័រដើម</a>
                         <a href="about.html"
@@ -629,14 +641,23 @@
         }
     </script>
 
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; <span id="year"></span> មជ្ឈមណ្ឌលមិត្តពូកែ. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white">សំ គឹមឆេង</strong></p>
+        <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    </footer>
+
     <!-- Google Translate Widget -->
-    <div id="google_translate_element" class="fixed bottom-4 left-4 z-50 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all"></div>
+    <div id="google_translate_element"
+        class="fixed bottom-4 left-4 z-50 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all">
+    </div>
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'km', includedLanguages: 'km,en' }, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>
