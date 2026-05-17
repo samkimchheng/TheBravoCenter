@@ -20,6 +20,22 @@
         #goog-gt-tt {
             display: none !important;
         }
+
+        /* Custom Scrollbar សម្រាប់ប្រអប់ព័ត៌មានអំពីយើង */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
     </style>
 </head>
 
@@ -99,7 +115,7 @@
     </nav>
 
     <section id="about"
-        class="pt-32 pb-20 bg-gradient-to-b from-blue-50/50 to-white min-h-screen relative overflow-hidden">
+        class="pt-24 pb-10 bg-gradient-to-b from-blue-50/50 to-white min-h-screen relative overflow-hidden">
         <!-- Abstract Shapes សម្រាប់លម្អផ្ទៃខាងក្រោយ -->
         <div
             class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl opacity-30 animate-pulse">
@@ -109,19 +125,22 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12">
+            <div class="text-center mb-6">
                 <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ស្វែងយល់បន្ថែម</span>
                 <h2
-                    class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 mb-4 py-2 leading-normal">
+                    class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 mb-3 py-1 leading-normal">
                     អំពីយើង</h2>
                 <div class="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
             </div>
 
-            <!-- ថ្នាក់ដឹកនាំមជ្ឈមណ្ឌល -->
-            <div class="flex flex-col items-center justify-center gap-12 mb-16">
-                <!-- ប្រវត្តិរូបនាយកមជ្ឈមណ្ឌល -->
-                <div class="flex flex-col items-center justify-center">
-                    <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+            <!-- ប្រអប់ Scroll ព័ត៌មាន (Scrollable Container) -->
+            <div class="overflow-y-auto max-h-[75vh] custom-scrollbar px-2 sm:px-6 py-6 bg-white/40 backdrop-blur-md rounded-3xl shadow-[inset_0_2px_15px_rgba(0,0,0,0.05)] border border-white/60">
+                
+                <!-- ថ្នាក់ដឹកនាំមជ្ឈមណ្ឌល -->
+                <div class="flex flex-col items-center justify-center gap-12 mb-16">
+                    <!-- ប្រវត្តិរូបនាយកមជ្ឈមណ្ឌល -->
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
                         <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
                         <div
                             class="absolute inset-0 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
@@ -189,22 +208,22 @@
                             គ្រូបណ្តុះបណ្តាល</p>
                     </div>
 
-                <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ភោគ ផល) -->
-                <div class="flex flex-col items-center justify-center">
-                    <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
-                        <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-tr from-orange-500 to-yellow-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                    <!-- ប្រវត្តិរូបគ្រូបណ្តុះបណ្តាល (ភោគ ផល) -->
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 mb-6 group">
+                            <!-- ពន្លឺស្រមោលខាងក្រោយរូបភាព -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-orange-500 to-yellow-500 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-500">
+                            </div>
+                            <!-- រូបភាព -->
+                            <img src="assets/images/action9.jpg" alt="ភោគ ផល"
+                                class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
                         </div>
-                        <!-- រូបភាព -->
-                        <img src="assets/images/action9.jpg" alt="ភោគ ផល"
-                            class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl z-10 transform group-hover:scale-105 transition duration-500">
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ភោគ ផល</h3>
+                        <p
+                            class="text-orange-700 font-bold text-base md:text-lg bg-orange-50 px-5 py-1.5 rounded-full border border-orange-100 shadow-sm">
+                            គ្រូបណ្តុះបណ្តាល</p>
                     </div>
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">ភោគ ផល</h3>
-                    <p
-                        class="text-orange-700 font-bold text-base md:text-lg bg-orange-50 px-5 py-1.5 rounded-full border border-orange-100 shadow-sm">
-                        គ្រូបណ្តុះបណ្តាល</p>
-                </div>
                 </div>
             </div>
 
@@ -263,6 +282,8 @@
                     </p>
                 </div>
             </div>
+
+            </div> <!-- បញ្ចប់ប្រអប់ Scroll -->
         </div>
     </section>
 
