@@ -898,7 +898,7 @@
                 resultScreen.classList.remove('hidden', 'scale-95');
 
                 const percentage = Math.round((score / allQuestions.length) * 100);
-                
+
                 // កត់ត្រាពិន្ទុខ្ពស់បំផុតចូលក្នុងបញ្ជីជំនាញនីមួយៗ
                 if (percentage > bestScores[currentCategory]) {
                     bestScores[currentCategory] = percentage;
@@ -969,15 +969,15 @@
                             y: {
                                 beginAtZero: true,
                                 max: 100,
-                                ticks: { callback: function(value) { return value + '%' } }
+                                ticks: { callback: function (value) { return value + '%' } }
                             }
                         },
                         plugins: {
                             legend: { display: false },
-                            title: { 
-                                display: true, 
-                                text: 'ប្រៀបធៀបលទ្ធផលគ្រប់មុខជំនាញ', 
-                                font: { size: 16 } 
+                            title: {
+                                display: true,
+                                text: 'ប្រៀបធៀបលទ្ធផលគ្រប់មុខជំនាញ',
+                                font: { size: 16 }
                             }
                         }
                     }
