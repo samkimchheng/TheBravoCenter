@@ -249,7 +249,7 @@
                 <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-8 text-center">
                     <!-- ប្រវត្តិ -->
                     <div
-                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group flex flex-col h-full">
                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-blue-600"></div>
                         <div
                             class="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -258,15 +258,26 @@
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4">ប្រវត្តិ</h3>
-                        <p class="text-gray-600 leading-relaxed">
-                            មជ្ឈមណ្ឌលត្រូវបានបង្កើតឡើងដើម្បីជួយដល់សិស្សនិស្សិតក្នុងការអភិវឌ្ឍជំនាញបច្ចេកវិទ្យាប្រកបដោយប្រសិទ្ធភាព។
-                        </p>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">ប្រវត្តិ និងការទទួលស្គាល់ផ្លូវច្បាប់</h3>
+                        <div class="text-gray-600 leading-relaxed text-left flex flex-col flex-grow">
+                            <p>មជ្ឈមណ្ឌលមិត្តពូកែ The Bravo Center គឺជាស្ថាប័នបណ្តុះបណ្តាលជំនាញកុំព្យូទ័រ និងបច្ចេកវិទ្យា ដែលត្រូវបានបង្កើតឡើងដើម្បីជួយជំរុញថាមពលទឹកចិត្ត និងសមត្ថភាពរបស់សិស្សានុសិស្ស ។</p>
+
+                            <div id="history-more-text"
+                                class="hidden mt-4 text-sm md:text-base border-t border-gray-100 pt-4">
+                                <p>ផ្អែកលើឯកសារផ្លូវការ មជ្ឈមណ្ឌលរបស់យើងដំណើរការដោយមានការទទួលស្គាល់ និងឯកភាពត្រឹមត្រូវតាមច្បាប់តាំងពីឆ្នាំ២០១៤ មកម៉្លេះ ពីសំណាក់អាជ្ញាធរដែនដី និងស្ថាប័នជំនាញពាក់ព័ន្ធ រួមមាន មេឃុំបឹងកន្ទួត ការិយាល័យអប់រំ យុវជន និងកីឡាស្រុកក្រគរ អភិបាលស្រុកក្រគរ មន្ទីរអប់រំ យុវជន និងកីឡាខេត្តពោធិ៍សាត់ ព្រមទាំងការឯកភាពពីអភិបាលនៃគណៈអភិបាលខេត្តពោធិ៍សាត់។</p>
+                            </div>
+                            <div class="text-center mt-auto pt-4">
+                                <button id="history-read-more-btn" onclick="toggleHistoryText()"
+                                    class="text-blue-600 font-semibold hover:text-blue-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
+                                    <span>អានបន្ថែម / Read More</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- ចក្ខុវិស័យ -->
                     <div
-                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group flex flex-col h-full">
                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-400 to-purple-600">
                         </div>
                         <div
@@ -280,7 +291,7 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-4">ចក្ខុវិស័យ</h3>
-                        <div class="text-gray-600 leading-relaxed">
+                        <div class="text-gray-600 leading-relaxed text-left flex flex-col flex-grow">
                             <p>ក្លាយជាស្ថាប័នឈានមុខគេក្នុងការបណ្តុះបណ្តាលជំនាញកុំព្យូទ័រប្រកបដោយគុណភាពខ្ពស់ និងស្តង់ដារ។
                             </p>
 
@@ -301,16 +312,18 @@
                                     និងការកសាងសមត្ថភាពសិស្សានុសិស្សឱ្យមានភាពជឿជាក់ខ្ពស់ក្នុងអាជីពការងាររបស់ពួកគេនាពេលអនាគត។
                                 </p>
                             </div>
-                            <button id="vision-read-more-btn" onclick="toggleVisionText()"
-                                class="mt-4 text-purple-600 font-semibold hover:text-purple-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
-                                <span>អានបន្ថែម / Read More</span>
-                            </button>
+                            <div class="text-center mt-auto pt-4">
+                                <button id="vision-read-more-btn" onclick="toggleVisionText()"
+                                    class="text-purple-600 font-semibold hover:text-purple-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
+                                    <span>អានបន្ថែម / Read More</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- បេសកកម្ម -->
                     <div
-                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group flex flex-col h-full">
                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-400 to-orange-600">
                         </div>
                         <div
@@ -321,7 +334,7 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-4">បេសកកម្ម</h3>
-                        <div class="text-gray-600 leading-relaxed text-left">
+                        <div class="text-gray-600 leading-relaxed text-left flex flex-col flex-grow">
                             <p><strong class="text-gray-800">ឧត្តមភាពនៃការអប់រំ៖</strong>
                                 ផ្តល់នូវកម្មវិធីសិក្សាដែលស្របតាមស្តង់ដារទីផ្សារការងារជាក់ស្តែង
                                 ដឹកនាំដោយគ្រូបង្គោលដែលមានវិជ្ជាជីវៈ និងបទពិសោធន៍ច្បាស់លាស់។</p>
@@ -347,7 +360,7 @@
                                         និងចូលរួមចំណែកពង្រឹងសមត្ថភាពយុវជនក្នុងសហគមន៍។</li>
                                 </ul>
                             </div>
-                            <div class="text-center mt-4">
+                            <div class="text-center mt-auto pt-4">
                                 <button id="mission-read-more-btn" onclick="toggleMissionText()"
                                     class="text-orange-600 font-semibold hover:text-orange-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
                                     <span>អានបន្ថែម / Read More</span>
@@ -358,7 +371,7 @@
 
                     <!-- គោលបំណង -->
                     <div
-                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group">
+                        class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 relative overflow-hidden group flex flex-col h-full">
                         <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-400 to-green-600">
                         </div>
                         <div
@@ -369,18 +382,38 @@
                             </svg>
                         </div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-4">គោលបំណង</h3>
-                        <div class="text-gray-600 leading-relaxed text-left">
-                            <p>ផ្តល់នូវចំណេះដឹងពិត អនុវត្តជាក់ស្តែង និងធានាថាអ្នកសិក្សាអាចយកទៅប្រើប្រាស់ជាការងារពិតប្រាកដ។</p>
-                            
-                            <div id="objective-more-text" class="hidden mt-4 text-sm md:text-base border-t border-gray-100 pt-4">
+                        <div class="text-gray-600 leading-relaxed text-left flex flex-col flex-grow">
+                            <p>ផ្តល់នូវចំណេះដឹងពិត អនុវត្តជាក់ស្តែង
+                                និងធានាថាអ្នកសិក្សាអាចយកទៅប្រើប្រាស់ជាការងារពិតប្រាកដ។</p>
+
+                            <div id="objective-more-text"
+                                class="hidden mt-4 text-sm md:text-base border-t border-gray-100 pt-4">
                                 <h4 class="font-bold text-gray-800 mb-2">គោលបំណង និងទិសដៅយុទ្ធសាស្ត្រ</h4>
-                                <p class="mb-4">ដើម្បីសម្រេចឱ្យបាននូវចក្ខុវិស័យ និងបេសកកម្មខាងលើ មជ្ឈមណ្ឌលមិត្តពូកែ បានកំណត់នូវគោលបំណងជាយុទ្ធសាស្ត្រសំខាន់ៗដូចខាងក្រោម៖</p>
-                                <p class="mb-2"><strong class="text-gray-800">ការផ្តល់ចំណេះដឹងពិត និងស៊ីជម្រៅ (Authentic & Profound Knowledge):</strong><br>យើងផ្តោតជាសំខាន់លើការបង្រៀនដែលផ្សារភ្ជាប់យ៉ាងជិតស្និទ្ធរវាងទ្រឹស្តីមូលដ្ឋាន និងការអនុវត្ត ដើម្បីធានាថាសិក្ខាកាមគ្រប់រូបទទួលបាននូវចំណេះដឹងផ្នែកកុំព្យូទ័រ និងបច្ចេកវិទ្យាពិតប្រាកដ ច្បាស់លាស់ និងមិនមានភាពស្រពិចស្រពិល។</p>
-                                <p class="mb-2"><strong class="text-gray-800">ការជំរុញការអនុវត្តជាក់ស្តែង (Practical & Hands-on Application):</strong><br>យើងរៀបចំកម្មវិធីសិក្សាដោយប្រែក្លាយបន្ទប់រៀនឱ្យទៅជាមជ្ឈដ្ឋានការងារជាក់ស្តែង។ សិក្ខាកាមនឹងត្រូវបានបំពាក់បំប៉នតាមរយៈការចុះអនុវត្តផ្ទាល់លើគម្រោង និងការដោះស្រាយបញ្ហាបច្ចេកទេសនានា ដែលឆ្លើយតបទៅនឹងតម្រូវការប្រចាំថ្ងៃរបស់ស្ថាប័ន ឬក្រុមហ៊ុន។</p>
-                                <p class="mb-4"><strong class="text-gray-800">ការធានាប្រសិទ្ធភាពក្នុងទីផ្សារការងារ (Assurance of Employability & Real-world Impact):</strong><br>គោលដៅចុងក្រោយបំផុតរបស់យើង គឺធានាឱ្យបានថារាល់សិក្ខាកាមដែលបញ្ចប់ការសិក្សា មិនត្រឹមតែទទួលបាននូវវិញ្ញាបនបត្រប៉ុណ្ណោះទេ ប៉ុន្តែពួកគេមានសមត្ថភាពពេញលេញ ទំនុកចិត្តខ្ពស់ និងវិជ្ជាជីវៈត្រឹមត្រូវ ក្នុងការយកជំនាញទាំងនោះទៅប្រកបរបរចិញ្ចឹមជីវិត បម្រើការងារ និងបង្កើតស្នាដៃពិតប្រាកដនៅក្នុងទីផ្សារការងារនាពេលបច្ចុប្បន្ន និងអនាគត។</p>
+                                <p class="mb-4">ដើម្បីសម្រេចឱ្យបាននូវចក្ខុវិស័យ និងបេសកកម្មខាងលើ មជ្ឈមណ្ឌលមិត្តពូកែ
+                                    បានកំណត់នូវគោលបំណងជាយុទ្ធសាស្ត្រសំខាន់ៗដូចខាងក្រោម៖</p>
+                                <p class="mb-2"><strong class="text-gray-800">ការផ្តល់ចំណេះដឹងពិត និងស៊ីជម្រៅ (Authentic
+                                        & Profound
+                                        Knowledge):</strong><br>យើងផ្តោតជាសំខាន់លើការបង្រៀនដែលផ្សារភ្ជាប់យ៉ាងជិតស្និទ្ធរវាងទ្រឹស្តីមូលដ្ឋាន
+                                    និងការអនុវត្ត ដើម្បីធានាថាសិក្ខាកាមគ្រប់រូបទទួលបាននូវចំណេះដឹងផ្នែកកុំព្យូទ័រ
+                                    និងបច្ចេកវិទ្យាពិតប្រាកដ ច្បាស់លាស់ និងមិនមានភាពស្រពិចស្រពិល។</p>
+                                <p class="mb-2"><strong class="text-gray-800">ការជំរុញការអនុវត្តជាក់ស្តែង (Practical &
+                                        Hands-on
+                                        Application):</strong><br>យើងរៀបចំកម្មវិធីសិក្សាដោយប្រែក្លាយបន្ទប់រៀនឱ្យទៅជាមជ្ឈដ្ឋានការងារជាក់ស្តែង។
+                                    សិក្ខាកាមនឹងត្រូវបានបំពាក់បំប៉នតាមរយៈការចុះអនុវត្តផ្ទាល់លើគម្រោង
+                                    និងការដោះស្រាយបញ្ហាបច្ចេកទេសនានា ដែលឆ្លើយតបទៅនឹងតម្រូវការប្រចាំថ្ងៃរបស់ស្ថាប័ន
+                                    ឬក្រុមហ៊ុន។</p>
+                                <p class="mb-4"><strong class="text-gray-800">ការធានាប្រសិទ្ធភាពក្នុងទីផ្សារការងារ
+                                        (Assurance of Employability & Real-world
+                                        Impact):</strong><br>គោលដៅចុងក្រោយបំផុតរបស់យើង
+                                    គឺធានាឱ្យបានថារាល់សិក្ខាកាមដែលបញ្ចប់ការសិក្សា
+                                    មិនត្រឹមតែទទួលបាននូវវិញ្ញាបនបត្រប៉ុណ្ណោះទេ ប៉ុន្តែពួកគេមានសមត្ថភាពពេញលេញ
+                                    ទំនុកចិត្តខ្ពស់ និងវិជ្ជាជីវៈត្រឹមត្រូវ ក្នុងការយកជំនាញទាំងនោះទៅប្រកបរបរចិញ្ចឹមជីវិត
+                                    បម្រើការងារ និងបង្កើតស្នាដៃពិតប្រាកដនៅក្នុងទីផ្សារការងារនាពេលបច្ចុប្បន្ន និងអនាគត។
+                                </p>
                             </div>
-                            <div class="text-center mt-4">
-                                <button id="objective-read-more-btn" onclick="toggleObjectiveText()" class="text-green-600 font-semibold hover:text-green-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
+                            <div class="text-center mt-auto pt-4">
+                                <button id="objective-read-more-btn" onclick="toggleObjectiveText()"
+                                    class="text-green-600 font-semibold hover:text-green-800 hover:underline focus:outline-none transition-colors inline-flex items-center gap-1">
                                     <span>អានបន្ថែម / Read More</span>
                                 </button>
                             </div>
@@ -408,6 +441,18 @@
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'km', includedLanguages: 'km,en' }, 'google_translate_element');
+        }
+
+        function toggleHistoryText() {
+            const moreText = document.getElementById('history-more-text');
+            const btnText = document.getElementById('history-read-more-btn').querySelector('span');
+            if (moreText.classList.contains('hidden')) {
+                moreText.classList.remove('hidden');
+                btnText.textContent = 'លាក់អត្ថបទ / Show Less';
+            } else {
+                moreText.classList.add('hidden');
+                btnText.textContent = 'អានបន្ថែម / Read More';
+            }
         }
 
         function toggleMissionText() {
