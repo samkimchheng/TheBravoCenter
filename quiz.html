@@ -21,6 +21,25 @@
             display: none !important;
         }
 
+        /* Custom Scrollbar សម្រាប់ប្រអប់មេរៀនសំខាន់ៗ */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
         /* ប្តូរពាក្យ មជ្ឈមណ្ឌលមិត្តពូកែ ទៅជា TheBravoCenter ពេលបកប្រែ */
         html[class*="translated-"] .text-km {
             display: none !important;
@@ -398,7 +417,8 @@
                     <p class="text-gray-500 mt-4 max-w-2xl mx-auto">អានសេចក្តីពន្យល់លម្អិត និងស្វែងយល់បន្ថែមអំពីគ្រឿងបន្លាស់ និងបច្ចេកវិទ្យាកុំព្យូទ័រ។</p>
                 </div>
 
-                <div class="space-y-8">
+                <!-- ប្រអប់ Scroll មេរៀន (Scrollable Container) -->
+                <div class="space-y-8 overflow-y-auto max-h-[65vh] custom-scrollbar pr-2 sm:pr-4 pb-4">
                     <!-- Lesson 1 -->
                     <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
