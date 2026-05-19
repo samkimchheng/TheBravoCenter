@@ -139,8 +139,10 @@
 
             <!-- Tabs សម្រាប់ប្តូរផ្ទាំង -->
             <div class="flex justify-center gap-4 mb-8" id="top-tabs">
-                <button onclick="switchTab('quizzes')" id="tab-quizzes" class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors">តេស្តសមត្ថភាព</button>
-                <button onclick="switchTab('lessons')" id="tab-lessons" class="px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100">មេរៀនសំខាន់ៗ</button>
+                <button onclick="switchTab('quizzes')" id="tab-quizzes"
+                    class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors">តេស្តសមត្ថភាព</button>
+                <button onclick="switchTab('lessons')" id="tab-lessons"
+                    class="px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100">មេរៀនសំខាន់ៗ</button>
             </div>
 
             <!-- Quiz Categories Selection Screen -->
@@ -411,90 +413,307 @@
             <!-- Lessons Screen (មេរៀនសំខាន់ៗ) -->
             <div id="lessons-screen" class="hidden w-full transition-all duration-500">
                 <div class="text-center mb-12">
-                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ចំណេះដឹងបន្ថែម</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
+                    <span
+                        class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ចំណេះដឹងបន្ថែម</span>
+                    <h2
+                        class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
                         មេរៀនសំខាន់ៗ</h2>
-                    <p class="text-gray-500 mt-4 max-w-2xl mx-auto">អានសេចក្តីពន្យល់លម្អិត និងស្វែងយល់បន្ថែមអំពីគ្រឿងបន្លាស់ និងបច្ចេកវិទ្យាកុំព្យូទ័រ។</p>
+                    <p class="text-gray-500 mt-4 max-w-2xl mx-auto">អានសេចក្តីពន្យល់លម្អិត
+                        និងស្វែងយល់បន្ថែមអំពីគ្រឿងបន្លាស់ និងបច្ចេកវិទ្យាកុំព្យូទ័រ។</p>
                 </div>
 
                 <!-- ប្រអប់ Scroll មេរៀន (Scrollable Container) -->
                 <div class="space-y-8 overflow-y-auto max-h-[65vh] custom-scrollbar pr-2 sm:pr-4 pb-4">
                     <!-- Lesson 1 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">Motherboard (ផ្ទាំងសៀគ្វីមេ)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Motherboard (ផ្ទាំងសៀគ្វីមេ)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                Motherboard គឺជាបន្ទះសៀគ្វីធំជាងគេនៅក្នុងកុំព្យូទ័រ ដែលដើរតួជា "ប្រព័ន្ធសរសៃប្រសាទកណ្តាល"។ គ្រឿងបន្លាស់ទាំងអស់ ដូចជា CPU, RAM, Hard Disk, VGA និងរន្ធដោតផ្សេងៗ សុទ្ធតែត្រូវដោតភ្ជាប់ទៅកាន់វា។ 
-                                វាអនុញ្ញាតឲ្យគ្រឿងបន្លាស់ទាំងនេះអាចប្រាស្រ័យទាក់ទង និងផ្លាស់ប្តូរទិន្នន័យគ្នាទៅវិញទៅមកបានយ៉ាងរលូន។
+                                Motherboard គឺជាបន្ទះសៀគ្វីធំជាងគេនៅក្នុងកុំព្យូទ័រ ដែលដើរតួជា
+                                "ប្រព័ន្ធសរសៃប្រសាទកណ្តាល"។ គ្រឿងបន្លាស់ទាំងអស់ ដូចជា CPU, RAM, Hard Disk, VGA
+                                និងរន្ធដោតផ្សេងៗ សុទ្ធតែត្រូវដោតភ្ជាប់ទៅកាន់វា។
+                                វាអនុញ្ញាតឲ្យគ្រឿងបន្លាស់ទាំងនេះអាចប្រាស្រ័យទាក់ទង
+                                និងផ្លាស់ប្តូរទិន្នន័យគ្នាទៅវិញទៅមកបានយ៉ាងរលូន។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop" alt="Motherboard" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop"
+                                alt="Motherboard"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
 
                     <!-- Lesson 2 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">CPU (ខួរក្បាលកុំព្យូទ័រ)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                CPU (ខួរក្បាលកុំព្យូទ័រ)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                CPU (Central Processing Unit) ប្រៀបបានទៅនឹង "ខួរក្បាល" របស់កុំព្យូទ័រ។ វាទទួលបន្ទុកគណនា និងអនុវត្តរាល់បទបញ្ជាដែលកម្មវិធីផ្តល់ឲ្យ។ ល្បឿនលឿន ឬយឺតរបស់កុំព្យូទ័រមួយភាគធំ គឺអាស្រ័យលើទំហំល្បឿន (GHz) និងចំនួន Core របស់ CPU នេះឯង។ កាលណា CPU ខ្លាំង វានឹងជួយឲ្យកុំព្យូទ័រដើរស្រួល មិនងាយគាំង។
+                                CPU (Central Processing Unit) ប្រៀបបានទៅនឹង "ខួរក្បាល" របស់កុំព្យូទ័រ។ វាទទួលបន្ទុកគណនា
+                                និងអនុវត្តរាល់បទបញ្ជាដែលកម្មវិធីផ្តល់ឲ្យ។ ល្បឿនលឿន ឬយឺតរបស់កុំព្យូទ័រមួយភាគធំ
+                                គឺអាស្រ័យលើទំហំល្បឿន (GHz) និងចំនួន Core របស់ CPU នេះឯង។ កាលណា CPU ខ្លាំង
+                                វានឹងជួយឲ្យកុំព្យូទ័រដើរស្រួល មិនងាយគាំង។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=1374&auto=format&fit=crop" alt="CPU" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=1374&auto=format&fit=crop"
+                                alt="CPU"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
 
                     <!-- Lesson 3 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">RAM (អង្គចងចាំបណ្តោះអាសន្ន)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                RAM (អង្គចងចាំបណ្តោះអាសន្ន)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                RAM (Random Access Memory) ជាកន្លែងសម្រាប់ផ្ទុកទិន្នន័យបណ្តោះអាសន្ន ដើម្បីឲ្យ CPU ទាញយកទៅប្រើប្រាស់បានលឿនជាងទាញពី Hard Disk ផ្ទាល់។ កាលណាយើងមាន RAM ធំ កុំព្យូទ័រអាចបើកកម្មវិធី ឬ Chrome Tabs បានច្រើនក្នុងពេលតែមួយដោយមិនយឺត។ ទិន្នន័យក្នុង RAM នឹងត្រូវលុបចោលទាំងស្រុងពេលកុំព្យូទ័ររលត់។
+                                RAM (Random Access Memory) ជាកន្លែងសម្រាប់ផ្ទុកទិន្នន័យបណ្តោះអាសន្ន ដើម្បីឲ្យ CPU
+                                ទាញយកទៅប្រើប្រាស់បានលឿនជាងទាញពី Hard Disk ផ្ទាល់។ កាលណាយើងមាន RAM ធំ
+                                កុំព្យូទ័រអាចបើកកម្មវិធី ឬ Chrome Tabs បានច្រើនក្នុងពេលតែមួយដោយមិនយឺត។ ទិន្នន័យក្នុង RAM
+                                នឹងត្រូវលុបចោលទាំងស្រុងពេលកុំព្យូទ័ររលត់។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?q=80&w=1631&auto=format&fit=crop" alt="RAM" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?q=80&w=1631&auto=format&fit=crop"
+                                alt="RAM"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
 
                     <!-- Lesson 4 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">GPU (កាតក្រាហ្វិក)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                GPU (កាតក្រាហ្វិក)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                GPU (Graphics Processing Unit) ជាអ្នកទទួលបន្ទុកគណនា និងបញ្ចេញរូបភាព វីដេអូ ឬហ្គេម 3D ទៅកាន់អេក្រង់កុំព្យូទ័ររបស់អ្នក។ សម្រាប់អ្នករចនាក្រាហ្វិក កាត់តវីដេអូ ឬលេងហ្គេម កាតក្រាហ្វិកដាច់ (Dedicated VGA) គឺពិតជាសំខាន់ខ្លាំងណាស់ ដើម្បីឲ្យរូបភាពដើររលូនល្អ មិនដាច់ៗ (Lag)។
+                                GPU (Graphics Processing Unit) ជាអ្នកទទួលបន្ទុកគណនា និងបញ្ចេញរូបភាព វីដេអូ ឬហ្គេម 3D
+                                ទៅកាន់អេក្រង់កុំព្យូទ័ររបស់អ្នក។ សម្រាប់អ្នករចនាក្រាហ្វិក កាត់តវីដេអូ ឬលេងហ្គេម
+                                កាតក្រាហ្វិកដាច់ (Dedicated VGA) គឺពិតជាសំខាន់ខ្លាំងណាស់ ដើម្បីឲ្យរូបភាពដើររលូនល្អ
+                                មិនដាច់ៗ (Lag)។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?q=80&w=1470&auto=format&fit=crop" alt="GPU" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?q=80&w=1470&auto=format&fit=crop"
+                                alt="GPU"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
 
                     <!-- Lesson 5 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">Monitor (អេក្រង់កុំព្យូទ័រ)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Monitor (អេក្រង់កុំព្យូទ័រ)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                អេក្រង់កុំព្យូទ័រ (Monitor) គឺជាឧបករណ៍បញ្ចេញ (Output Device) ដ៏សំខាន់បំផុតមួយ ដែលមានតួនាទីបង្ហាញរូបភាព វីដេអូ និងព័ត៌មានផ្សេងៗចេញពីកុំព្យូទ័រឲ្យយើងមើលឃើញ។ គុណភាពនៃអេក្រង់អាស្រ័យលើកម្រិតភាពច្បាស់ (Resolution), ល្បឿនបង្ហាញរូបភាព (Refresh Rate) និងប្រភេទបន្ទះអេក្រង់ (Panel Type) ដូចជា IPS, VA ឬ TN ជាដើម។
+                                អេក្រង់កុំព្យូទ័រ (Monitor) គឺជាឧបករណ៍បញ្ចេញ (Output Device) ដ៏សំខាន់បំផុតមួយ
+                                ដែលមានតួនាទីបង្ហាញរូបភាព វីដេអូ និងព័ត៌មានផ្សេងៗចេញពីកុំព្យូទ័រឲ្យយើងមើលឃើញ។
+                                គុណភាពនៃអេក្រង់អាស្រ័យលើកម្រិតភាពច្បាស់ (Resolution), ល្បឿនបង្ហាញរូបភាព (Refresh Rate)
+                                និងប្រភេទបន្ទះអេក្រង់ (Panel Type) ដូចជា IPS, VA ឬ TN ជាដើម។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=1442&auto=format&fit=crop" alt="Monitor" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=1442&auto=format&fit=crop"
+                                alt="Monitor"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
 
                     <!-- Lesson 6 -->
-                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
                         <div class="flex-1 md:w-1/2">
-                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">Keyboard & Mouse (ក្តារចុច និងកណ្តុរ)</h3>
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Keyboard & Mouse (ក្តារចុច និងកណ្តុរ)</h3>
                             <p class="text-gray-600 leading-relaxed text-justify">
-                                ក្តារចុច (Keyboard) និងកណ្តុរ (Mouse) គឺជាឧបករណ៍បញ្ចូល (Input Devices) ចម្បងសម្រាប់បញ្ជាកុំព្យូទ័រ។ ក្តារចុចមានតួនាទីវាយបញ្ចូលអត្ថបទ និងតួអក្សរផ្សេងៗ ខណៈដែលកណ្តុរមានតួនាទីចង្អុល ជ្រើសរើស និងអូសទម្លាក់ទិន្នន័យនៅលើអេក្រង់។ ឧបករណ៍ទាំងពីរនេះជួយឲ្យការប្រើប្រាស់កុំព្យូទ័រប្រព្រឹត្តទៅបានយ៉ាងងាយស្រួល និងរហ័ស។
+                                ក្តារចុច (Keyboard) និងកណ្តុរ (Mouse) គឺជាឧបករណ៍បញ្ចូល (Input Devices)
+                                ចម្បងសម្រាប់បញ្ជាកុំព្យូទ័រ។ ក្តារចុចមានតួនាទីវាយបញ្ចូលអត្ថបទ និងតួអក្សរផ្សេងៗ
+                                ខណៈដែលកណ្តុរមានតួនាទីចង្អុល ជ្រើសរើស និងអូសទម្លាក់ទិន្នន័យនៅលើអេក្រង់។
+                                ឧបករណ៍ទាំងពីរនេះជួយឲ្យការប្រើប្រាស់កុំព្យូទ័រប្រព្រឹត្តទៅបានយ៉ាងងាយស្រួល និងរហ័ស។
                             </p>
                         </div>
                         <div class="flex-1 md:w-1/2 w-full">
-                            <img src="https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1471&auto=format&fit=crop" alt="Keyboard and Mouse" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1471&auto=format&fit=crop"
+                                alt="Keyboard and Mouse"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 7 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Storage (ឧបករណ៍ផ្ទុកទិន្នន័យ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                ឧបករណ៍ផ្ទុកទិន្នន័យ (Storage) ដូចជា HDD (Hard Disk Drive) និង SSD (Solid State Drive)
+                                ជាកន្លែងសម្រាប់រក្សាទុកប្រព័ន្ធប្រតិបត្តិការ កម្មវិធី និងឯកសាររបស់អ្នកជាអចិន្ត្រៃយ៍។
+                                បច្ចុប្បន្ន SSD ទទួលបានការពេញនិយមខ្លាំងជាង HDD ដោយសារវាមានល្បឿនអាន
+                                និងសរសេរទិន្នន័យលឿនជាងរាប់សិបដង ធ្វើឲ្យកុំព្យូទ័រដំណើរការបានយ៉ាងរហ័ស។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1597852074816-d933c7d2b988?q=80&w=1470&auto=format&fit=crop"
+                                alt="Storage Drive SSD HDD"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 8 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                PSU (ប្រភពផ្គត់ផ្គង់ថាមពល)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                Power Supply Unit (PSU) មានតួនាទីយ៉ាងសំខាន់ក្នុងការទទួលយកចរន្តអគ្គិសនីពីព្រីភ្លើង (AC)
+                                មកបំប្លែងទៅជាចរន្ត (DC)
+                                ដើម្បីផ្គត់ផ្គង់ថាមពលទៅកាន់គ្រប់គ្រឿងបន្លាស់ទាំងអស់នៅក្នុងកុំព្យូទ័រ។ ការជ្រើសរើស PSU
+                                ដែលមានគុណភាពល្អ និងទំហំវ៉ាត់ (Watt) គ្រប់គ្រាន់ គឺជួយធានាដល់សុវត្ថិភាព
+                                និងអាយុកាលរបស់កុំព្យូទ័រ។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1470&auto=format&fit=crop"
+                                alt="Power Supply Unit"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 9 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Operating System (ប្រព័ន្ធប្រតិបត្តិការ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                ប្រព័ន្ធប្រតិបត្តិការ (OS) ដូចជា Windows, macOS, ឫ Linux
+                                គឺជាកម្មវិធីមេដែលគ្រប់គ្រងផ្នែករឹង (Hardware) និងកម្មវិធីផ្សេងៗទៀត (Software)
+                                ទាំងអស់នៅក្នុងកុំព្យូទ័រ។ បើគ្មាន OS ទេ កុំព្យូទ័រមិនអាចដំណើរការបានឡើយ
+                                វាប្រៀបដូចជារាងកាយដែលគ្មានព្រលឹងអញ្ចឹង។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1374&auto=format&fit=crop"
+                                alt="Operating System"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 10 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Application Software (កម្មវិធីប្រើប្រាស់)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                Application Software
+                                គឺជាកម្មវិធីដែលត្រូវបានបង្កើតឡើងសម្រាប់ឲ្យអ្នកប្រើប្រាស់ធ្វើការងារជាក់លាក់ណាមួយ។
+                                ឧទាហរណ៍៖ Microsoft Word សម្រាប់វាយអត្ថបទ, Google Chrome សម្រាប់លេងអ៊ីនធឺណិត, និង Adobe
+                                Photoshop សម្រាប់កាត់តរូបភាពជាដើម។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1374&auto=format&fit=crop"
+                                alt="Application Software"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 11 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Computer Network (បណ្តាញកុំព្យូទ័រ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                បណ្តាញកុំព្យូទ័រ គឺជាការតភ្ជាប់កុំព្យូទ័រពីរ ឬច្រើនបញ្ចូលគ្នា ដើម្បីចែករំលែកទិន្នន័យ
+                                ម៉ាស៊ីនបោះពុម្ព និងការប្រើប្រាស់អ៊ីនធឺណិតរួមគ្នា។ អ៊ីនធឺណិត (Internet)
+                                ដែលយើងប្រើប្រាស់សព្វថ្ងៃ គឺជាបណ្តាញកុំព្យូទ័រដ៏ធំបំផុតនៅលើពិភពលោក។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1470&auto=format&fit=crop"
+                                alt="Computer Network"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 12 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Virus & Security (មេរោគ និងសុវត្ថិភាព)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                មេរោគកុំព្យូទ័រ (Malware/Virus) គឺជាកម្មវិធីអាក្រក់ដែលបង្កើតឡើងដើម្បីលួចទិន្នន័យ
+                                បំផ្លាញឯកសារ ឬធ្វើឲ្យកុំព្យូទ័រខូច។ ការប្រើប្រាស់កម្មវិធីកម្ចាត់មេរោគ (Antivirus),
+                                ការមិនចុចលើតំណភ្ជាប់មិនច្បាស់លាស់ និងការប្រើលេខសម្ងាត់រឹងមាំ
+                                គឺជាវិធីល្អបំផុតដើម្បីការពារកុំព្យូទ័ររបស់អ្នក។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1470&auto=format&fit=crop"
+                                alt="Virus & Security"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 13 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                I/O Ports (រន្ធតភ្ជាប់ទិន្នន័យ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                រន្ធតភ្ជាប់ (Ports) មានតួនាទីជាច្រកសម្រាប់បញ្ជូនទិន្នន័យចេញ និងចូលរវាងកុំព្យូទ័រ
+                                និងឧបករណ៍ខាងក្រៅ។ រន្ធដែលពេញនិយមមានដូចជា USB (សម្រាប់ Flash Drive, Mouse), HDMI
+                                (សម្រាប់បញ្ចេញរូបភាពទៅអេក្រង់) និង Audio Jack (សម្រាប់កាសស្តាប់ត្រចៀក)។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1544652250-9372d829f07f?q=80&w=1470&auto=format&fit=crop"
+                                alt="I/O Ports"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 14 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                Computer Maintenance (ការថែទាំកុំព្យូទ័រ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                ការថែទាំកុំព្យូទ័រឲ្យបានត្រឹមត្រូវ នឹងជួយឲ្យវាមានអាយុកាលប្រើប្រាស់បានយូរ
+                                និងដំណើរការបានល្អ។ ការថែទាំរួមមាន៖ ការសម្អាតធូលីខាងក្នុងម៉ាស៊ីន ការអាប់ដេតកម្មវិធី
+                                (Update Software) និងការមិនទាញយកឯកសារដែលមានប្រភពមិនច្បាស់លាស់។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=1470&auto=format&fit=crop"
+                                alt="Computer Maintenance"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
                         </div>
                     </div>
                 </div>
@@ -1025,7 +1244,7 @@
             if (tab === 'quizzes') {
                 tabQuizzes.className = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
                 tabLessons.className = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
-                
+
                 lessonsScreen.classList.add('hidden');
                 categoriesScreen.classList.remove('hidden');
                 quizScreen.classList.add('hidden');
@@ -1033,7 +1252,7 @@
             } else if (tab === 'lessons') {
                 tabLessons.className = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
                 tabQuizzes.className = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
-                
+
                 categoriesScreen.classList.add('hidden');
                 quizScreen.classList.add('hidden');
                 resultScreen.classList.add('hidden', 'scale-95');
@@ -1059,7 +1278,7 @@
             resultScreen.classList.add('hidden', 'scale-95');
             categoriesScreen.classList.remove('hidden');
             document.getElementById('top-tabs').classList.remove('hidden');
-            
+
             // ត្រឡប់ទៅ Active Tab ជា Quizzes វិញជានិច្ចនៅពេលត្រឡប់ថយក្រោយ
             switchTab('quizzes');
 
