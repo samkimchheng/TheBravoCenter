@@ -116,7 +116,13 @@
             class="absolute top-0 left-0 w-72 h-72 rounded-full bg-blue-200 mix-blend-multiply filter blur-3xl opacity-30 animate-pulse">
         </div>
 
-        <div class="max-w-3xl w-full mx-auto px-4 relative z-10">
+        <div class="max-w-5xl w-full mx-auto px-4 relative z-10">
+
+            <!-- Tabs សម្រាប់ប្តូរផ្ទាំង -->
+            <div class="flex justify-center gap-4 mb-8" id="top-tabs">
+                <button onclick="switchTab('quizzes')" id="tab-quizzes" class="px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors">តេស្តសមត្ថភាព</button>
+                <button onclick="switchTab('lessons')" id="tab-lessons" class="px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100">មេរៀនសំខាន់ៗ</button>
+            </div>
 
             <!-- Quiz Categories Selection Screen -->
             <div id="quiz-categories-screen" class="w-full transition-all duration-500">
@@ -344,6 +350,107 @@
                                 </div>
                             </div>
                     </button>
+
+                    <!-- English -->
+                    <button onclick="startQuiz('english')"
+                        class="relative overflow-hidden bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left group">
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-400 to-yellow-600">
+                        </div>
+                        <div
+                            class="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                        </div>
+                        <div class="flex items-center gap-6 relative z-10">
+                            <div class="flex items-start gap-6 relative z-10">
+                                <div
+                                    class="w-20 h-20 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-yellow-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3
+                                        class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-yellow-600 transition-colors">
+                                        ភាសាអង់គ្លេស</h3>
+                                    <p class="text-sm text-gray-500 mb-3">Grammar, Vocabulary, Reading</p>
+                                    <span
+                                        class="inline-flex items-center gap-1.5 text-xs font-bold text-yellow-700 bg-yellow-100 px-3 py-1.5 rounded-full">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
+                                        </svg>
+                                        ៥០ សំណួរ
+                                    </span>
+                                </div>
+                            </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lessons Screen (មេរៀនសំខាន់ៗ) -->
+            <div id="lessons-screen" class="hidden w-full transition-all duration-500">
+                <div class="text-center mb-12">
+                    <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ចំណេះដឹងបន្ថែម</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
+                        មេរៀនសំខាន់ៗ</h2>
+                    <p class="text-gray-500 mt-4 max-w-2xl mx-auto">អានសេចក្តីពន្យល់លម្អិត និងស្វែងយល់បន្ថែមអំពីគ្រឿងបន្លាស់ និងបច្ចេកវិទ្យាកុំព្យូទ័រ។</p>
+                </div>
+
+                <div class="space-y-8">
+                    <!-- Lesson 1 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">Motherboard (ផ្ទាំងសៀគ្វីមេ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                Motherboard គឺជាបន្ទះសៀគ្វីធំជាងគេនៅក្នុងកុំព្យូទ័រ ដែលដើរតួជា "ប្រព័ន្ធសរសៃប្រសាទកណ្តាល"។ គ្រឿងបន្លាស់ទាំងអស់ ដូចជា CPU, RAM, Hard Disk, VGA និងរន្ធដោតផ្សេងៗ សុទ្ធតែត្រូវដោតភ្ជាប់ទៅកាន់វា។ 
+                                វាអនុញ្ញាតឲ្យគ្រឿងបន្លាស់ទាំងនេះអាចប្រាស្រ័យទាក់ទង និងផ្លាស់ប្តូរទិន្នន័យគ្នាទៅវិញទៅមកបានយ៉ាងរលូន។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop" alt="Motherboard" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 2 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">CPU (ខួរក្បាលកុំព្យូទ័រ)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                CPU (Central Processing Unit) ប្រៀបបានទៅនឹង "ខួរក្បាល" របស់កុំព្យូទ័រ។ វាទទួលបន្ទុកគណនា និងអនុវត្តរាល់បទបញ្ជាដែលកម្មវិធីផ្តល់ឲ្យ។ ល្បឿនលឿន ឬយឺតរបស់កុំព្យូទ័រមួយភាគធំ គឺអាស្រ័យលើទំហំល្បឿន (GHz) និងចំនួន Core របស់ CPU នេះឯង។ កាលណា CPU ខ្លាំង វានឹងជួយឲ្យកុំព្យូទ័រដើរស្រួល មិនងាយគាំង។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?q=80&w=1374&auto=format&fit=crop" alt="CPU" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 3 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">RAM (អង្គចងចាំបណ្តោះអាសន្ន)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                RAM (Random Access Memory) ជាកន្លែងសម្រាប់ផ្ទុកទិន្នន័យបណ្តោះអាសន្ន ដើម្បីឲ្យ CPU ទាញយកទៅប្រើប្រាស់បានលឿនជាងទាញពី Hard Disk ផ្ទាល់។ កាលណាយើងមាន RAM ធំ កុំព្យូទ័រអាចបើកកម្មវិធី ឬ Chrome Tabs បានច្រើនក្នុងពេលតែមួយដោយមិនយឺត។ ទិន្នន័យក្នុង RAM នឹងត្រូវលុបចោលទាំងស្រុងពេលកុំព្យូទ័ររលត់។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?q=80&w=1631&auto=format&fit=crop" alt="RAM" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 4 -->
+                    <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">GPU (កាតក្រាហ្វិក)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify">
+                                GPU (Graphics Processing Unit) ជាអ្នកទទួលបន្ទុកគណនា និងបញ្ចេញរូបភាព វីដេអូ ឬហ្គេម 3D ទៅកាន់អេក្រង់កុំព្យូទ័ររបស់អ្នក។ សម្រាប់អ្នករចនាក្រាហ្វិក កាត់តវីដេអូ ឬលេងហ្គេម កាតក្រាហ្វិកដាច់ (Dedicated VGA) គឺពិតជាសំខាន់ខ្លាំងណាស់ ដើម្បីឲ្យរូបភាពដើររលូនល្អ មិនដាច់ៗ (Lag)។
+                            </p>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?q=80&w=1470&auto=format&fit=crop" alt="GPU" class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -763,6 +870,58 @@
                 { q: "តើពាក្យ \"End of Life (EOL)\" ឬ \"End of Support\" សម្រាប់ OS ដូចជា Windows 7 មានន័យដូចម្តេច?", options: ["កុំព្យូទ័រនឹងផ្ទុះ", "ក្រុមហ៊ុនលែងបញ្ចេញកំណែទម្រង់ ឬជួសជុលប្រព័ន្ធសុវត្ថិភាពឲ្យទៀតហើយ ដែលធ្វើឲ្យវាងាយរងការវាយប្រហារពី Hacker", "វានឹងក្លាយជាកម្មវិធីឥតគិតថ្លៃ", "កម្មវិធីទាំងអស់នឹងត្រូវលុបដោយស្វ័យប្រវត្តិ"], a: 1 },
                 { q: "ប្រសិនបើកម្មវិធីមួយគាំង (Not Responding) ហើយអ្នកមិនអាចបិទវាដោយចុចខ្វែង (X) បាន តើផ្លូវកាត់ណាដែលអ្នកគួរចុចដើម្បីហៅ Task Manager មកបិទវា?", options: ["Alt + Tab", "Ctrl + Shift + Esc", "Windows + D", "Shift + Delete"], a: 1 },
                 { q: "តើផ្លូវកាត់ (Shortcut) មួយណាដែលអ្នកគួរប្រើដើម្បី ចាក់សោអេក្រង់ (Lock Screen) កុំព្យូទ័រ Windows របស់អ្នកជាបន្ទាន់ ពេលអ្នកងើបចេញពីតុការងារ?", options: ["Ctrl + L", "Alt + F4", "Windows Key + L", "Esc"], a: 2 }
+            ],
+            english: [
+                { q: "តើពាក្យអង់គ្លេសមួយណាមានន័យថា \"ឧបករណ៍សម្រាប់វាយអត្ថបទបញ្ជូលក្នុងកុំព្យូទ័រ\"?", options: ["Monitor", "Keyboard", "Speaker", "Mouse"], a: 1 },
+                { q: "តើការទាញយកឯកសារពីអ៊ីនធឺណិតមកកុំព្យូទ័រ ភាសាអង់គ្លេសហៅថាអ្វី?", options: ["Uploading", "Surfing", "Downloading", "Streaming"], a: 2 },
+                { q: "តើពាក្យអង់គ្លេសមួយណាមានន័យថា \"លេខសម្ងាត់\"?", options: ["Account", "Password", "Username", "Network"], a: 1 },
+                { q: "តើពាក្យផ្ទុយ (Antonym) នៃពាក្យ \"Hardware\" គឺជាអ្វី?", options: ["Monitor", "Network", "Software", "CPU"], a: 2 },
+                { q: "តើពាក្យ \"Delete\" មានន័យជាភាសាខ្មែរថាយ៉ាងដូចម្តេច?", options: ["រក្សាទុក", "ចម្លង", "បញ្ជូន", "លុបចោល"], a: 3 },
+                { q: "តើកន្លែងនិម្មិតសម្រាប់ផ្ទុក និងរៀបចំឯកសារ (Files) ហៅថាអ្វី?", options: ["Folder", "Browser", "Window", "Icon"], a: 0 },
+                { q: "តើពាក្យ \"Save\" នៅក្នុងកុំព្យូទ័រមានន័យដូចម្តេច?", options: ["បើកឯកសារថ្មី", "រក្សាទុកឯកសារ", "លុបឯកសារ", "បិទកុំព្យូទ័រ"], a: 1 },
+                { q: "ការបញ្ជូនឯកសារពីកុំព្យូទ័ររបស់អ្នកទៅកាន់អ៊ីនធឺណិត ហៅថាអ្វី?", options: ["Download", "Upload", "Install", "Update"], a: 1 },
+                { q: "តើពាក្យ \"Network\" មានន័យដូចម្តេច?", options: ["ម៉ាស៊ីនបោះពុម្ព", "បណ្តាញកុំព្យូទ័រដែលតភ្ជាប់គ្នា", "កម្មវិធីស្តាប់ចម្រៀង", "ឈ្មោះមេរោគ"], a: 1 },
+                { q: "\"A device used to click and move the cursor on the screen\" សំដៅលើអ្វី?", options: ["Keyboard", "Mouse", "Printer", "Monitor"], a: 1 },
+                { q: "តើអក្សរកាត់ \"CPU\" តំណាងឱ្យពាក្យពេញថាអ្វី?", options: ["Central Processing Unit", "Computer Personal Unit", "Control Program Utility", "Center Printed Unit"], a: 0 },
+                { q: "តើកុំព្យូទ័រយួរដៃ ភាសាអង់គ្លេសហៅថាអ្វី?", options: ["Desktop", "Tablet", "Laptop", "Server"], a: 2 },
+                { q: "តើពាក្យ \"Malware\" ឬ \"Virus\" សំដៅលើអ្វី?", options: ["កម្មវិធីកម្ចាត់មេរោគ", "កម្មវិធីដែលមានមេរោគបង្កគ្រោះថ្នាក់ដល់កុំព្យូទ័រ", "ឧបករណ៍បំពងសំឡេង", "កម្មវិធីលេងហ្គេម"], a: 1 },
+                { q: "តើពាក្យអង់គ្លេសមួយណាមានន័យថា \"ម៉ាស៊ីនបោះពុម្ពឯកសារចេញជាក្រដាស\"?", options: ["Scanner", "Router", "Printer", "Monitor"], a: 2 },
+                { q: "តើពាក្យ \"Reboot\" មានន័យដូចម្តេច?", options: ["បិទកុំព្យូទ័រជារៀងរហូត", "ចាប់ផ្តើមកុំព្យូទ័រឡើងវិញ (Restart)", "ដំឡើងកម្មវិធីថ្មី", "ទិញកុំព្យូទ័រថ្មី"], a: 1 },
+                { q: "រន្ធសម្រាប់ដោតខ្សែ (ឧទាហរណ៍៖ រន្ធ USB, រន្ធ HDMI) ភាសាអង់គ្លេសហៅថាអ្វី?", options: ["Port", "Cable", "Button", "Screen"], a: 0 },
+                { q: "\"The main circuit board of a computer\" (ផ្ទាំងសៀគ្វីមេ) ហៅថាអ្វី?", options: ["Hard Drive", "Motherboard", "Power Supply", "RAM"], a: 1 },
+                { q: "តើពាក្យ \"Install\" មានន័យដូចម្តេច?", options: ["ដំឡើងកម្មវិធីចូលក្នុងម៉ាស៊ីន", "លុបកម្មវិធីចេញពីម៉ាស៊ីន", "ថតចម្លងឯកសារ", "បោះពុម្ពឯកសារ"], a: 0 },
+                { q: "តើពាក្យផ្ទុយនៃពាក្យ \"Install\" (លុបកម្មវិធីចេញ) គឺជាអ្វី?", options: ["Deinstall", "Non-install", "Uninstall", "Anti-install"], a: 2 },
+                { q: "តើពាក្យ \"Wireless\" មានន័យដូចម្តេច?", options: ["មានខ្សែវែង", "ឥតខ្សែ / គ្មានខ្សែ (ឧទាហរណ៍៖ Wireless Mouse)", "អ៊ីនធឺណិតយឺត", "ខ្សែភ្លើង"], a: 1 },
+                { q: "នៅពេលអ្នកចង់ចូលប្រើប្រាស់គណនីហ្វេសប៊ុក តើអ្នកត្រូវធ្វើអ្វី?", options: ["Log out", "Log in", "Shut down", "Print out"], a: 1 },
+                { q: "ការថតចម្លងឯកសារទុកក្រែងលោមានបញ្ហាបាត់បង់ ភាសាអង់គ្លេសប្រើពាក្យអ្វី?", options: ["Back up", "Break down", "Look up", "Turn off"], a: 0 },
+                { q: "មុនពេលឈប់ប្រើកុំព្យូទ័រ អ្នកត្រូវបិទវាដោយប្រើពាក្យថាអ្វី?", options: ["Turn up", "Shut down", "Log in", "Boot up"], a: 1 },
+                { q: "ការភ្ជាប់ឯកសារ (File, រូបភាព) ទៅក្នុងអ៊ីមែលដើម្បីផ្ញើ គេហៅថាអ្វី?", options: ["Delete", "Attach", "Search", "Browse"], a: 1 },
+                { q: "ប្រសិនបើកម្មវិធីគាំង ឬឈប់ដំណើរការភ្លាមៗ តើគេតែងតែប្រើពាក្យអ្វី?", options: ["Run", "Crash", "Update", "Save"], a: 1 },
+                { q: "តើឃ្លា \"Turn up the volume\" មានន័យដូចម្តេច?", options: ["បិទសំឡេង", "បញ្ចុះសំឡេង", "បង្កើនសំឡេងឲ្យលឺជាងមុន", "ប្តូរបទចម្រៀង"], a: 2 },
+                { q: "ការចុចម៉ៅខាងឆ្វេងពីរដងជាប់គ្នាលឿនៗ ហៅថាអ្វី?", options: ["Right-click", "Single-click", "Double-click", "Drag and drop"], a: 2 },
+                { q: "ដើម្បីទទួលបានកំណែទម្រង់ថ្មីបំផុតរបស់កម្មវិធី (Latest version) អ្នកត្រូវធ្វើអ្វី?", options: ["Delete it", "Update it", "Ignore it", "Hide it"], a: 1 },
+                { q: "ការកាត់អត្ថបទពីកន្លែងមួយទៅដាក់កន្លែងមួយទៀត គេប្រើសកម្មភាពអ្វី?", options: ["Copy and paste", "Cut and paste", "Undo and redo", "Find and replace"], a: 1 },
+                { q: "ការរុករកព័ត៌មាន ឬមើលគេហទំព័រលើអ៊ីនធឺណិត គេប្រើពាក្យអ្វី?", options: ["Browse (ឬ Surf)", "Type", "Click", "Print"], a: 0 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"My new computer is _______ than my old one.\"", options: ["fast", "faster", "fastest", "more fast"], a: 1 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"The file _______ by the IT manager yesterday.\"", options: ["deletes", "is deleted", "was deleted", "deleted"], a: 2 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"If you click that link, the virus _______ your computer.\"", options: ["infects", "will infect", "infected", "is infecting"], a: 1 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"I _______ this laptop for 3 years.\"", options: ["use", "used", "have used (ឬ have been using)", "uses"], a: 2 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"A programmer is a person _______ writes code.\"", options: ["which", "who", "whom", "whose"], a: 1 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"This is the folder _______ I saved all my documents.\"", options: ["where", "which", "who", "when"], a: 0 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"You _______ share your password with anyone. It is a security rule.\"", options: ["should", "must not", "don't have to", "can"], a: 1 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"We don't have _______ space left on the hard drive.\"", options: ["many", "much", "a few", "some"], a: 1 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"Please show me how _______ this software.\"", options: ["install", "installing", "to install", "installed"], a: 2 },
+                { q: "ជ្រើសរើសចម្លើយត្រឹមត្រូវ៖ \"I haven't finished downloading the file _______.\"", options: ["already", "just", "yet", "ever"], a: 2 },
+                { q: "អានប្រយោគ៖ \"The server is currently offline.\" តើពាក្យ \"offline\" មានន័យដូចម្តេច?", options: ["ដំណើរការល្អណាស់", "មិនមានភ្ជាប់អ៊ីនធឺណិត ឬមិនដំណើរការ", "កំពុងត្រូវបានលួចចូល", "ដំណើរការលឿនខុសធម្មតា"], a: 1 },
+                { q: "អានប្រយោគ៖ \"Please enter a valid email address.\" តើពាក្យ \"valid\" មានន័យដូចម្តេច?", options: ["ខុសទម្រង់", "ចាស់បំផុត", "ត្រឹមត្រូវ / អាចទទួលយកបាន", "វែងបំផុត"], a: 2 },
+                { q: "អានប្រយោគ៖ \"This file is corrupted.\" តើពាក្យ \"corrupted\" មានន័យដូចម្តេច?", options: ["ឯកសារខូច មិនអាចបើកបាន", "ឯកសារច្បាស់ល្អ", "ឯកសារមានទំហំធំ", "ឯកសារត្រូវបានរក្សាទុក"], a: 0 },
+                { q: "តើពាក្យ \"Troubleshooting\" នៅក្នុងសៀវភៅណែនាំកុំព្យូទ័រ មានន័យដូចម្តេច?", options: ["ការទិញកុំព្យូទ័រថ្មី", "ការស្វែងរក និងដោះស្រាយបញ្ហា (រិះរកកំហុស)", "ការបាញ់ប្រហារក្នុងហ្គេម", "ការលុបកម្មវិធី"], a: 1 },
+                { q: "អានប្រយោគ៖ \"By default, files are saved in the Documents folder.\" តើពាក្យ \"By default\" មានន័យដូចម្តេច?", options: ["ដោយមានការអនុញ្ញាត", "តាមលំនាំដើម / ស្វ័យប្រវត្តិ (ប្រសិនបើគ្មានការកែប្រែ)", "ដោយសារមានកំហុស", "ដោយអ្នកប្រើប្រាស់ផ្ទាល់"], a: 1 },
+                { q: "អានប្រយោគ៖ \"This software requires 4GB of RAM.\" តើពាក្យ \"requires\" មានន័យដូចម្តេច?", options: ["បដិសេធ", "តម្រូវឱ្យមាន / ត្រូវការជាចាំបាច់", "ផ្តល់ជូន", "លុបចោល"], a: 1 },
+                { q: "អានប្រយោគ៖ \"Your antivirus subscription has expired.\" តើអ្នកគួរធ្វើដូចម្តេច?", options: ["ប្រើប្រាស់វាបន្តដោយឥតគិតថ្លៃ", "ជួសជុលម៉ាស៊ីនព្រីន", "បង់ប្រាក់បន្ត (Renew) ព្រោះវាបានផុតកំណត់ហើយ", "លុបអ៊ីមែលចោល"], a: 2 },
+                { q: "អានប្រយោគ៖ \"Click 'Undo' to revert to the previous state.\" តើពាក្យ \"revert\" មានន័យដូចម្តេច?", options: ["បន្តទៅមុខ", "លុបចោលទាំងអស់", "ត្រឡប់ទៅសភាពដើមវិញ (Go back)", "រក្សាទុក"], a: 2 },
+                { q: "អានប្រយោគ៖ \"The system is running out of memory.\" តើប្រយោគនេះមានន័យដូចម្តេច?", options: ["កុំព្យូទ័រកំពុងរត់ចេញពីផ្ទះ", "កុំព្យូទ័រជិតអស់ទំហំផ្ទុក ឬអស់ RAM", "កុំព្យូទ័រកំពុងដំឡើងល្បឿន", "កុំព្យូទ័រមិនមានបញ្ហាអ្វីទេ"], a: 1 },
+                { q: "ការអូសឯកសារដោយប្រើម៉ៅ ទៅទម្លាក់ក្នុងប្រអប់មួយ គេហៅជាភាសាអង់គ្លេសថាអ្វី?", options: ["Copy and paste", "Click and run", "Drag and drop", "Point and shoot"], a: 2 }
             ]
         };
 
@@ -785,7 +944,8 @@
             'design': 'រចនាក្រាហ្វិក',
             'adv_admin': 'រដ្ឋបាលកម្រិតខ្ពស់',
             'hardware': 'Hardware កុំព្យូទ័រ',
-            'software': 'Software កុំព្យូទ័រ'
+            'software': 'Software កុំព្យូទ័រ',
+            'english': 'ភាសាអង់គ្លេស'
         };
 
         let allQuestions = [];
@@ -795,7 +955,7 @@
         let userAnswers = new Array(50).fill(null);
 
         // អញ្ញាតសម្រាប់ផ្ទុកពិន្ទុខ្ពស់បំផុតគ្រប់វគ្គ និងតួក្រាប
-        let bestScores = { admin: 0, web: 0, design: 0, adv_admin: 0, hardware: 0, software: 0 };
+        let bestScores = { admin: 0, web: 0, design: 0, adv_admin: 0, hardware: 0, software: 0, english: 0 };
         let resultsChart = null;
 
         // DOM Elements
@@ -810,6 +970,31 @@
         const quizScreen = document.getElementById('quiz-screen');
         const resultScreen = document.getElementById('result-screen');
 
+        // អនុគមន៍ប្តូរផ្ទាំង (Tabs) រវាង តេស្តសមត្ថភាព និង មេរៀនសំខាន់ៗ
+        function switchTab(tab) {
+            const tabQuizzes = document.getElementById('tab-quizzes');
+            const tabLessons = document.getElementById('tab-lessons');
+            const lessonsScreen = document.getElementById('lessons-screen');
+
+            if (tab === 'quizzes') {
+                tabQuizzes.className = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
+                tabLessons.className = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
+                
+                lessonsScreen.classList.add('hidden');
+                categoriesScreen.classList.remove('hidden');
+                quizScreen.classList.add('hidden');
+                resultScreen.classList.add('hidden', 'scale-95');
+            } else if (tab === 'lessons') {
+                tabLessons.className = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
+                tabQuizzes.className = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
+                
+                categoriesScreen.classList.add('hidden');
+                quizScreen.classList.add('hidden');
+                resultScreen.classList.add('hidden', 'scale-95');
+                lessonsScreen.classList.remove('hidden');
+            }
+        }
+
         function startQuiz(category) {
             currentCategory = category;
             allQuestions = questionsDB[category];
@@ -818,6 +1003,7 @@
             categoriesScreen.classList.add('hidden');
             resultScreen.classList.add('hidden', 'scale-95');
             quizScreen.classList.remove('hidden');
+            document.getElementById('top-tabs').classList.add('hidden');
 
             restartQuiz();
         }
@@ -826,6 +1012,11 @@
             quizScreen.classList.add('hidden');
             resultScreen.classList.add('hidden', 'scale-95');
             categoriesScreen.classList.remove('hidden');
+            document.getElementById('top-tabs').classList.remove('hidden');
+            
+            // ត្រឡប់ទៅ Active Tab ជា Quizzes វិញជានិច្ចនៅពេលត្រឡប់ថយក្រោយ
+            switchTab('quizzes');
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -954,7 +1145,8 @@
                                 'rgba(168, 85, 247, 0.8)',  // រចនាក្រាហ្វិក (Purple)
                                 'rgba(249, 115, 22, 0.8)',  // រដ្ឋបាលកម្រិតខ្ពស់ (Orange)
                                 'rgba(6, 182, 212, 0.8)',   // Hardware (Cyan)
-                                'rgba(244, 63, 94, 0.8)'    // Software (Rose)
+                                'rgba(244, 63, 94, 0.8)',   // Software (Rose)
+                                'rgba(234, 179, 8, 0.8)'    // English (Yellow)
                             ],
                             borderColor: 'white',
                             borderWidth: 4,
