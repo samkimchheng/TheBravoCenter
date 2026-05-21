@@ -1809,8 +1809,12 @@
                 <div class="mb-8">
                     <div class="flex justify-between items-center text-sm font-medium text-gray-500 mb-2">
                         <span id="progress-text">សំណួរទី 1 / 50</span>
-                        <span id="timer-text" class="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-1 transition-colors duration-300">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timer-text"
+                            class="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-1 transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                             <span id="time-left">30</span> វិនាទី
                         </span>
                     </div>
@@ -2328,14 +2332,14 @@
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
-                
+
                 oscillator.type = 'sine';
                 oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // កម្រិតសម្លេង (Hz)
                 gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // កម្រិតសំឡេង
-                
+
                 oscillator.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
-                
+
                 oscillator.start();
                 oscillator.stop(audioCtx.currentTime + 0.15); // បន្លឺត្រឹម 0.15 វិនាទី
             } catch (e) {
@@ -2413,7 +2417,7 @@
             let timeLeft = TIME_LIMIT;
             const timerTextElement = document.getElementById('timer-text');
             document.getElementById('time-left').innerText = timeLeft;
-            
+
             // រៀបចំពណ៌ដើមជាពណ៌ខៀវវិញរាល់ពេលចាប់ផ្តើមសំណួរថ្មី
             timerTextElement.classList.remove('text-red-600', 'bg-red-50', 'border-red-100', 'animate-pulse');
             timerTextElement.classList.add('text-blue-600', 'bg-blue-50', 'border-blue-100');
@@ -2421,17 +2425,17 @@
             timer = setInterval(() => {
                 timeLeft--;
                 document.getElementById('time-left').innerText = timeLeft;
-                
+
                 // ប្តូរទៅពណ៌ក្រហម និងលោតញាក់ (Pulse) ពេលសល់ត្រឹម ១០ វិនាទី
                 if (timeLeft <= 10) {
                     timerTextElement.classList.remove('text-blue-600', 'bg-blue-50', 'border-blue-100');
                     timerTextElement.classList.add('text-red-600', 'bg-red-50', 'border-red-100', 'animate-pulse');
                 }
 
-            // បន្លឺសំឡេង Beep នៅពេលម៉ោងសល់ចន្លោះពី ១ ដល់ ៥ វិនាទី
-            if (timeLeft <= 5 && timeLeft > 0) {
-                playBeep();
-            }
+                // បន្លឺសំឡេង Beep នៅពេលម៉ោងសល់ចន្លោះពី ១ ដល់ ៥ វិនាទី
+                if (timeLeft <= 5 && timeLeft > 0) {
+                    playBeep();
+                }
 
                 if (timeLeft <= 0) {
                     clearInterval(timer);
@@ -2548,10 +2552,10 @@
                     const progress = frame / totalFrames; // គណនាភាគរយនៃដំណើរការ Animation
                     const currentScore = Math.round(score * progress);
                     const currentPercent = Math.round(percentage * progress);
-                    
+
                     document.getElementById('score-text').innerText = `${currentScore} / ${allQuestions.length}`;
                     document.getElementById('percentage-text').innerText = `${currentPercent}%`;
-                    
+
                     if (frame >= totalFrames) clearInterval(scoreTimer); // បញ្ឈប់ Animation ពេលដល់ពិន្ទុជាក់ស្តែង
                 }, frameRate);
 
@@ -2677,6 +2681,15 @@
                 class="text-en notranslate">TheBravoCenter</span>. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
         <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white notranslate">សំ
                 គឹមឆេង</strong></p>
+        <!-- ផ្ទាំងបង្ហាញចំនួនអ្នកចូលទស្សនាវេបសាយ -->
+        <div class="mt-4 text-xs text-gray-400">
+            <script type="text/javascript"
+                src="https://counter1.optistats.ovh/private/counter.js?c=5e7p4ct99hkxcqm8zrq35a9j5pt684w3&down=async"
+                async></script>
+            <noscript><a href="https://www.freecounterstat.com" title="web page visitor counter"><img
+                        src="https://counter1.optistats.ovh/private/freecounterstat.php?c=5e7p4ct99hkxcqm8zrq35a9j5pt684w3"
+                        border="0" title="web page visitor counter" alt="web page visitor counter"></a></noscript>
+        </div>
         <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
     </footer>
 
