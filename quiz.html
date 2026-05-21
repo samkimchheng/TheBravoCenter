@@ -1807,8 +1807,12 @@
 
                 <!-- Progress Bar -->
                 <div class="mb-8">
-                    <div class="flex justify-between text-sm font-medium text-gray-500 mb-2">
+                    <div class="flex justify-between items-center text-sm font-medium text-gray-500 mb-2">
                         <span id="progress-text">សំណួរទី 1 / 50</span>
+                        <span id="timer-text" class="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-1 transition-colors duration-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span id="time-left">30</span> វិនាទី
+                        </span>
                     </div>
                     <div class="w-full bg-gray-100 rounded-full h-2.5">
                         <div id="progress-bar"
@@ -2310,9 +2314,34 @@
         let score = 0;
         let userAnswers = new Array(50).fill(null);
 
+        // អញ្ញាតសម្រាប់កំណត់ពេលវេលា (Timer)
+        let timer;
+        const TIME_LIMIT = 30; // កំណត់ ៣០ វិនាទីក្នុងមួយសំណួរ (អាចប្តូរបាន)
+
         // អញ្ញាតសម្រាប់ផ្ទុកពិន្ទុខ្ពស់បំផុតគ្រប់វគ្គ និងតួក្រាប
         let bestScores = { admin: 0, web: 0, design: 0, adv_admin: 0, hardware: 0, software: 0, english: 0 };
         let resultsChart = null;
+
+        // អនុគមន៍សម្រាប់បញ្ចេញសំឡេង Beep ដោយប្រើ Web Audio API
+        function playBeep() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); // កម្រិតសម្លេង (Hz)
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // កម្រិតសំឡេង
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.15); // បន្លឺត្រឹម 0.15 វិនាទី
+            } catch (e) {
+                console.error("Audio not supported or blocked", e);
+            }
+        }
 
         // DOM Elements
         const categoriesScreen = document.getElementById('quiz-categories-screen');
@@ -2378,7 +2407,42 @@
             restartQuiz();
         }
 
+        // អនុគមន៍ដំណើរការម៉ោង
+        function startTimer() {
+            clearInterval(timer);
+            let timeLeft = TIME_LIMIT;
+            const timerTextElement = document.getElementById('timer-text');
+            document.getElementById('time-left').innerText = timeLeft;
+            
+            // រៀបចំពណ៌ដើមជាពណ៌ខៀវវិញរាល់ពេលចាប់ផ្តើមសំណួរថ្មី
+            timerTextElement.classList.remove('text-red-600', 'bg-red-50', 'border-red-100', 'animate-pulse');
+            timerTextElement.classList.add('text-blue-600', 'bg-blue-50', 'border-blue-100');
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time-left').innerText = timeLeft;
+                
+                // ប្តូរទៅពណ៌ក្រហម និងលោតញាក់ (Pulse) ពេលសល់ត្រឹម ១០ វិនាទី
+                if (timeLeft <= 10) {
+                    timerTextElement.classList.remove('text-blue-600', 'bg-blue-50', 'border-blue-100');
+                    timerTextElement.classList.add('text-red-600', 'bg-red-50', 'border-red-100', 'animate-pulse');
+                }
+
+            // បន្លឺសំឡេង Beep នៅពេលម៉ោងសល់ចន្លោះពី ១ ដល់ ៥ វិនាទី
+            if (timeLeft <= 5 && timeLeft > 0) {
+                playBeep();
+            }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("អស់ម៉ោង! អ្នកមិនបានឆ្លើយទាន់ពេលវេលា។ ការធ្វើតេស្តត្រូវបានត្រឡប់ទៅដើមវិញ។");
+                    showCategories();
+                }
+            }, 1000);
+        }
+
         function showCategories() {
+            clearInterval(timer); // បញ្ឈប់ម៉ោងពេលចេញទៅក្រៅ
             quizScreen.classList.add('hidden');
             resultScreen.classList.add('hidden', 'scale-95');
             categoriesScreen.classList.remove('hidden');
@@ -2449,11 +2513,13 @@
             if (userAnswers[currentQuestionIndex] !== null && currentQuestionIndex < allQuestions.length - 1) {
                 currentQuestionIndex++;
                 loadQuestion();
+                startTimer(); // ចាប់ផ្តើមម៉ោងឡើងវិញសម្រាប់សំណួរបន្ទាប់
             }
         }
 
         function submitQuiz() {
             if (userAnswers[currentQuestionIndex] !== null) {
+                clearInterval(timer); // បញ្ឈប់ម៉ោងពេលបញ្ជូនចម្លើយ
                 // គណនាពិន្ទុ
                 score = 0;
                 userAnswers.forEach((ans, idx) => {
@@ -2471,8 +2537,23 @@
                     bestScores[currentCategory] = percentage;
                 }
 
-                document.getElementById('score-text').innerText = `${score} / ${allQuestions.length}`;
-                document.getElementById('percentage-text').innerText = `${percentage}%`;
+                // បង្ហាញពិន្ទុជា Animation រាប់ពី ០ ដល់ពិន្ទុជាក់ស្តែង
+                const duration = 1500; // រយៈពេល Animation ១.៥ វិនាទី
+                const frameRate = 30; // រាប់រៀងរាល់ ៣០ មីលីវិនាទីម្តង
+                const totalFrames = Math.round(duration / frameRate);
+                let frame = 0;
+
+                const scoreTimer = setInterval(() => {
+                    frame++;
+                    const progress = frame / totalFrames; // គណនាភាគរយនៃដំណើរការ Animation
+                    const currentScore = Math.round(score * progress);
+                    const currentPercent = Math.round(percentage * progress);
+                    
+                    document.getElementById('score-text').innerText = `${currentScore} / ${allQuestions.length}`;
+                    document.getElementById('percentage-text').innerText = `${currentPercent}%`;
+                    
+                    if (frame >= totalFrames) clearInterval(scoreTimer); // បញ្ឈប់ Animation ពេលដល់ពិន្ទុជាក់ស្តែង
+                }, frameRate);
 
                 const feedback = document.getElementById('feedback-text');
                 if (percentage >= 80) {
@@ -2564,6 +2645,7 @@
             quizScreen.classList.remove('hidden');
 
             loadQuestion();
+            startTimer(); // ចាប់ផ្តើមម៉ោងពេលចាប់ផ្តើមតេស្តថ្មី
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
