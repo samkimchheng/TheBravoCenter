@@ -53,9 +53,6 @@
             display: none;
         }
     </style>
-
-    <!-- ភ្ជាប់បណ្ណាល័យ Chart.js សម្រាប់គូរក្រាហ្វិក -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
@@ -1857,11 +1854,6 @@
                     </svg>
                 </div>
 
-                <!-- Chart Canvas សម្រាប់បង្ហាញប្រៀបធៀបលទ្ធផលគ្រប់មុខជំនាញ -->
-                <div class="w-full h-64 md:h-80 mb-8 relative">
-                    <canvas id="resultsChart"></canvas>
-                </div>
-
                 <h2 class="text-3xl font-extrabold text-gray-800 mb-2">លទ្ធផលរបស់អ្នក</h2>
                 <p class="text-gray-500 mb-8">ខាងក្រោមនេះជាពិន្ទុដែលអ្នកទទួលបានពីការធ្វើតេស្ត៖</p>
 
@@ -2324,7 +2316,6 @@
 
         // អញ្ញាតសម្រាប់ផ្ទុកពិន្ទុខ្ពស់បំផុតគ្រប់វគ្គ និងតួក្រាប
         let bestScores = { admin: 0, web: 0, design: 0, adv_admin: 0, hardware: 0, software: 0, english: 0 };
-        let resultsChart = null;
 
         // អនុគមន៍សម្រាប់បញ្ចេញសំឡេង Beep ដោយប្រើ Web Audio API
         function playBeep() {
@@ -2570,73 +2561,6 @@
                     feedback.innerText = "កុំបាក់ទឹកចិត្ត! សូមចុះឈ្មោះរៀនវគ្គសិក្សារបស់យើងដើម្បីពង្រឹងសមត្ថភាព។ 💪";
                     feedback.className = "text-xl font-bold text-orange-700 bg-orange-50 p-4 rounded-xl mb-8";
                 }
-
-                renderChart();
-            }
-        }
-
-        // អនុគមន៍សម្រាប់គូរ និងបង្ហាញក្រាបលទ្ធផល
-        function renderChart() {
-            const ctx = document.getElementById('resultsChart').getContext('2d');
-            const labels = Object.values(categoryNames);
-            const data = Object.keys(categoryNames).map(key => bestScores[key]);
-
-            // ប្រសិនបើធ្លាប់គូរក្រាបរួចម្តងហើយ គ្រាន់តែ Update ទិន្នន័យ
-            if (resultsChart) {
-                resultsChart.data.datasets[0].data = data;
-                resultsChart.update();
-            } else {
-                // បង្កើតក្រាបថ្មី (Bar Chart)
-                resultsChart = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'ពិន្ទុខ្ពស់បំផុត (%)',
-                            data: data,
-                            backgroundColor: [
-                                'rgba(59, 130, 246, 0.8)',  // រដ្ឋបាលកុំព្យូទ័រ (Blue)
-                                'rgba(16, 185, 129, 0.8)',  // រចនាវែបសាយ (Green)
-                                'rgba(168, 85, 247, 0.8)',  // រចនាក្រាហ្វិក (Purple)
-                                'rgba(249, 115, 22, 0.8)',  // រដ្ឋបាលកម្រិតខ្ពស់ (Orange)
-                                'rgba(6, 182, 212, 0.8)',   // Hardware (Cyan)
-                                'rgba(244, 63, 94, 0.8)',   // Software (Rose)
-                                'rgba(234, 179, 8, 0.8)'    // English (Yellow)
-                            ],
-                            borderColor: 'white',
-                            borderWidth: 4,
-                            hoverOffset: 20,
-                            hoverBorderColor: 'white'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        cutout: '60%',
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 25,
-                                    usePointStyle: true,
-                                    pointStyle: 'rectRounded',
-                                    font: {
-                                        size: 13
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'ប្រៀបធៀបលទ្ធផលគ្រប់មុខជំនាញ',
-                                font: {
-                                    size: 18,
-                                    weight: 'bold'
-                                },
-                                padding: { bottom: 20 }
-                            }
-                        }
-                    }
-                });
             }
         }
 
