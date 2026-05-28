@@ -529,8 +529,15 @@
                     <span
                         class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block">ចំណេះដឹងបន្ថែម</span>
                     <h2
-                        class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1">
-                        មេរៀនសំខាន់ៗ</h2>
+                        class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-500 py-1 flex justify-center items-center gap-3">
+                        <svg class="w-8 h-8 md:w-10 md:h-10 text-blue-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                        មេរៀនសំខាន់ៗ
+                    </h2>
                     <p class="text-gray-500 mt-4 max-w-2xl mx-auto">អានសេចក្តីពន្យល់លម្អិត
                         និងស្វែងយល់បន្ថែមអំពីគ្រឿងបន្លាស់ និងបច្ចេកវិទ្យាកុំព្យូទ័រ។</p>
                 </div>
@@ -2633,8 +2640,8 @@
             const quizScreen = document.getElementById('quiz-screen');
             const resultScreen = document.getElementById('result-screen');
 
-            const activeClass = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
-            const inactiveClass = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
+            const activeClass = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors flex items-center justify-center gap-2";
+            const inactiveClass = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100 flex items-center justify-center gap-2";
 
             // Reset all styles
             tabQuizzes.className = inactiveClass;
