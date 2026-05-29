@@ -558,6 +558,9 @@
                     <button onclick="switchLessonCategory('photoshop')" id="tab-lesson-photoshop"
                         class="px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100">មេរៀន
                         PhotoShop</button>
+                    <button onclick="switchLessonCategory('excel-vba')" id="tab-lesson-excel-vba"
+                        class="px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100">មេរៀន
+                        Excel-VBA</button>
                 </div>
 
                 <!-- ប្រអប់ Scroll មេរៀន (Scrollable Container) -->
@@ -2280,6 +2283,201 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ប្រអប់ Scroll មេរៀន Excel-VBA -->
+                <div id="lesson-category-excel-vba"
+                    class="hidden space-y-8 overflow-y-auto max-h-[65vh] custom-scrollbar pr-2 sm:pr-4 pb-4">
+                    <!-- Lesson 1 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី១៖ ការស្គាល់ផ្ទាំងកូដ VBA និង Developer Tab</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                ដើម្បីចាប់ផ្តើមប្រើប្រាស់ VBA អ្នកត្រូវបើកមុខងារ Developer Tab ជាមុនសិន៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><b>បើក Developer Tab៖</b> ចូលទៅកាន់ File > Options > Customize Ribbon ហើយធីកយក Developer។</li>
+                                <li><b>Visual Basic Editor (VBE)៖</b> ចុច <b>Alt + F11</b> ដើម្បីបើកផ្ទាំងសរសេរកូដ VBA។</li>
+                                <li><b>Module៖</b> ជាកន្លែងសម្រាប់សរសេរកូដ។ អ្នកត្រូវ Insert > Module ដើម្បីចាប់ផ្តើម។</li>
+                                <li><b>Save As Macro-Enabled៖</b> ឯកសារត្រូវរក្សាទុកជាទម្រង់ .xlsm ទើបកូដមិនបាត់បង់។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop"
+                                alt="VBA VBE"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 2 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី២៖ ការថតសកម្មភាពកូដ (Record Macro)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                ប្រសិនបើអ្នកមិនទាន់ចេះសរសេរកូដ អ្នកអាចប្រើមុខងារ Record Macro ដើម្បីឲ្យ Excel សរសេរកូដជំនួសអ្នក៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li>ចូលទៅកាន់ <b>Developer Tab</b> > <b>Record Macro</b>។</li>
+                                <li>ដាក់ឈ្មោះឱ្យ Macro រួចចុច OK ។</li>
+                                <li>ធ្វើសកម្មភាពដែលអ្នកចង់ឱ្យ Excel ចងចាំ (ឧ. ប្តូរពណ៌តារាង កែទម្រង់លេខ)។</li>
+                                <li>ចុច <b>Stop Recording</b> ពេលរួចរាល់។ អ្នកអាចចុច Alt+F11 ដើម្បីមើលកូដដែលទើបបង្កើត។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?q=80&w=1470&auto=format&fit=crop"
+                                alt="Record Macro"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 3 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៣៖ ការសរសេរកូដដំបូង (Range, Cell, MsgBox)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                រាល់កូដ VBA (Macro) ទាំងអស់ត្រូវផ្តើមដោយពាក្យ <b>Sub</b> និងបញ្ចប់ដោយ <b>End Sub</b>៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><b>MsgBox "Hello":</b> បង្ហាញផ្ទាំងសារសួស្តី។</li>
+                                <li><b>Range("A1").Value = 100:</b> វាយលេខ ១០០ ចូលទៅក្នុងក្រឡា A1។</li>
+                                <li><b>Cells(1, 1).Value = "Khmer":</b> វាយពាក្យ Khmer ចូលក្រឡាជួរដេក១ ជួរឈរ១ (A1)។</li>
+                                <li><b>Range("A1:B10").ClearContents:</b> លុបទិន្នន័យក្នុងចន្លោះពី A1 ដល់ B10។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1469&auto=format&fit=crop"
+                                alt="VBA Basic Code"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 4 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៤៖ អថេរ និងប្រភេទទិន្នន័យ (Variables & Data Types)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                អថេរ (Variables) ប្រើសម្រាប់ផ្ទុកទិន្នន័យបណ្តោះអាសន្នក្នុងពេលកូដដំណើរការ៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><b>Dim</b> ជាពាក្យគន្លឹះសម្រាប់ប្រកាសអថេរ (ឧ. Dim x As Integer)។</li>
+                                <li><b>Integer / Long៖</b> សម្រាប់ផ្ទុកទិន្នន័យជាចំនួនគត់។</li>
+                                <li><b>String៖</b> សម្រាប់ផ្ទុកទិន្នន័យជាអត្ថបទ។</li>
+                                <li><b>Double៖</b> សម្រាប់ផ្ទុកទិន្នន័យលេខមានក្បៀស ឬទសភាគ។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop"
+                                alt="VBA Variables"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 5 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៥៖ ការប្រើប្រាស់លក្ខខណ្ឌ If...Then...Else</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                លក្ខខណ្ឌ If ជួយអោយកូដអាចសម្រេចចិត្តធ្វើការងារទៅតាមស្ថានភាពជាក់ស្តែង៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><code>If Range("A1").Value >= 50 Then</code> (បើ A1 ធំជាងឬស្មើ 50)</li>
+                                <li><code>&nbsp;&nbsp;MsgBox "ជាប់"</code> (លោតសារថាជាប់)</li>
+                                <li><code>Else</code> (បើមិនអញ្ចឹងទេ)</li>
+                                <li><code>&nbsp;&nbsp;MsgBox "ធ្លាក់"</code> (លោតសារថាធ្លាក់)</li>
+                                <li><code>End If</code> (បញ្ចប់លក្ខខណ្ឌ)</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1470&auto=format&fit=crop"
+                                alt="VBA IF Then"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 6 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៦៖ រង្វិលជុំ (For...Next Loops)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                រង្វិលជុំ (Loops) ជួយអ្នកធ្វើការងារដដែលៗច្រើនដងដោយស្វ័យប្រវត្តិ ដោយមិនបាច់សរសេរកូដច្រំដែល៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><code>For i = 1 To 10</code> (ចាប់ផ្តើមរាប់ពី ១ ដល់ ១០)</li>
+                                <li><code>&nbsp;&nbsp;Cells(i, 1).Value = "Hello"</code> (វាយអត្ថបទចូលក្រឡាទី i)</li>
+                                <li><code>Next i</code> (បន្តទៅលេខបន្ទាប់)</li>
+                                <li>វាមានប្រយោជន៍ខ្លាំងពេលអ្នកត្រូវធ្វើការជាមួយទិន្នន័យរាប់ពាន់ជួរ។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1374&auto=format&fit=crop"
+                                alt="VBA Loops"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 7 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៧៖ ការគ្រប់គ្រងកំហុស (Error Handling)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                នៅពេលកូដជួបបញ្ហា វានឹងលោត Error ដែលធ្វើអោយកម្មវិធីគាំង។ ដើម្បីការពារកុំអោយគាំង គេប្រើ៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li><code>On Error Resume Next</code>: ព្រងើយកន្តើយនឹងកំហុស ហើយបន្តរត់កូដបន្ទាត់បន្ទាប់ទៀត។</li>
+                                <li><code>On Error GoTo ឈ្មោះកន្លែង</code>: បញ្ជូនកូដទៅដំណើរការនៅកន្លែងណាមួយដែលបានកំណត់នៅពេលមានកំហុស។</li>
+                                <li>កុំភ្លេចដាក់ <code>Application.ScreenUpdating = False</code> ដើម្បីអោយកូដដើរលឿន មិនរង្គើអេក្រង់។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1584905066893-7d5c142ba4e1?q=80&w=1374&auto=format&fit=crop"
+                                alt="VBA Error Handling"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+
+                    <!-- Lesson 8 -->
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center gap-8 hover:shadow-xl transition-shadow duration-300">
+                        <div class="flex-1 md:w-1/2">
+                            <h3
+                                class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-2 inline-block">
+                                មេរៀនទី៨៖ ការបង្កើតផ្ទាំងកម្មវិធី (UserForms)</h3>
+                            <p class="text-gray-600 leading-relaxed text-justify mb-4">
+                                UserForm អនុញ្ញាតអោយអ្នកបង្កើតផ្ទាំងសម្រាប់បញ្ចូលទិន្នន័យ (Data Entry Form) ដ៏ស្រស់ស្អាត៖
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                <li>អ្នកអាចទាញដាក់ប្រអប់វាយអក្សរ (TextBox), ប៊ូតុង (CommandButton) និងទម្លាក់បញ្ជី (ComboBox)។</li>
+                                <li>ប្រើកូដដើម្បីចាប់យកទិន្នន័យពី UserForm ទៅរក្សាទុកក្នុងសន្លឹកកិច្ចការ (Worksheet) របស់អ្នក។</li>
+                                <li>វាធ្វើអោយ Excel របស់អ្នកប្រែក្លាយជាកម្មវិធីគ្រប់គ្រងទិន្នន័យដ៏មានអានុភាព។</li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 md:w-1/2 w-full">
+                            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1470&auto=format&fit=crop"
+                                alt="VBA UserForm"
+                                class="rounded-2xl w-full h-56 object-cover shadow-md hover:scale-105 transition-transform duration-500">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Shortcuts Screen (មេរៀន Shortcut Key) -->
@@ -3555,18 +3753,20 @@
             const tabExcel = document.getElementById('tab-lesson-excel');
             const tabPowerPoint = document.getElementById('tab-lesson-powerpoint');
             const tabPhotoshop = document.getElementById('tab-lesson-photoshop');
+            const tabExcelVba = document.getElementById('tab-lesson-excel-vba');
             
             const contentGeneral = document.getElementById('lesson-category-general');
             const contentWord = document.getElementById('lesson-category-word');
             const contentExcel = document.getElementById('lesson-category-excel');
             const contentPowerPoint = document.getElementById('lesson-category-powerpoint');
             const contentPhotoshop = document.getElementById('lesson-category-photoshop');
+            const contentExcelVba = document.getElementById('lesson-category-excel-vba');
 
             const activeClass = "px-6 py-3 rounded-full font-bold bg-blue-600 text-white shadow-md transition-colors";
             const inactiveClass = "px-6 py-3 rounded-full font-bold bg-white text-gray-600 hover:text-blue-600 hover:bg-gray-50 shadow-sm transition-colors border border-gray-100";
 
-            const allTabs = [tabGeneral, tabWord, tabExcel, tabPowerPoint, tabPhotoshop];
-            const allContents = [contentGeneral, contentWord, contentExcel, contentPowerPoint, contentPhotoshop];
+            const allTabs = [tabGeneral, tabWord, tabExcel, tabPowerPoint, tabPhotoshop, tabExcelVba];
+            const allContents = [contentGeneral, contentWord, contentExcel, contentPowerPoint, contentPhotoshop, contentExcelVba];
             
             allTabs.forEach(tab => { if(tab) tab.className = inactiveClass; });
             allContents.forEach(content => { if(content) content.classList.add('hidden'); });
@@ -3586,6 +3786,9 @@
             } else if (category === 'photoshop') {
                 if (tabPhotoshop) tabPhotoshop.className = activeClass;
                 if (contentPhotoshop) contentPhotoshop.classList.remove('hidden');
+            } else if (category === 'excel-vba') {
+                if (tabExcelVba) tabExcelVba.className = activeClass;
+                if (contentExcelVba) contentExcelVba.classList.remove('hidden');
             }
         }
 
