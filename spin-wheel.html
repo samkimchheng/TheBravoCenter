@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>មជ្ឈមណ្ឌលមិត្តពូកែ (បង្វិលកង)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background-color: #f0fdfa;
+            /* Light teal background */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #ffffff;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ទ្រនិចចង្អុល (Pointer) */
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            background-color: #ef4444;
+            /* Red color */
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 10;
+            filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.3));
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            border: 4px solid #e2e8f0;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .center-circle::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #cbd5e1;
+            border-radius: 50%;
+        }
+
+        /* ប៊ូតុងមានចលនា */
+        .btn-spin {
+            transition: all 0.2s;
+        }
+
+        .btn-spin:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .btn-spin:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ផ្កាភ្លើងអបអរសាទរ (Confetti canvas) */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen py-8 px-4 text-slate-800">
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- ផ្ទាំងបញ្ជាក់ការលុប (Modal) -->
+    <div id="confirmModal"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-white p-6 md:p-8 rounded-2xl max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300">
+            <h3 class="text-xl font-bold mb-4 text-slate-800 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                </svg>
+                បញ្ជាក់ការលុប
+            </h3>
+            <p class="mb-6 text-slate-600">តើអ្នកពិតជាចង់លុបបញ្ជីឈ្មោះថ្នាក់ <span id="deleteTargetName"
+                    class="font-bold text-slate-800"></span> នេះមែនទេ?</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancelDeleteBtn"
+                    class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition-colors">បោះបង់</button>
+                <button id="confirmDeleteBtn"
+                    class="px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl shadow-md transition-colors">លុប</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto">
+        <!-- ចំណងជើង -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-2 drop-shadow-sm">
+                មជ្ឈមណ្ឌលមិត្តពូកែ
+            </h1>
+            <p
+                class="text-xl md:text-2xl text-teal-600 font-semibold inline-block bg-teal-100 px-6 py-2 rounded-full border border-teal-200 shadow-sm mb-3">
+                កម្មវិធីបង្វិលកងចាប់ឈ្មោះ
+            </p>
+            <p class="text-slate-500 font-medium text-sm md:text-base">
+                បង្កើតកម្មវិធីដោយ <span class="text-teal-700 font-bold">សំ គឹមឆេង</span>
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-8 items-center max-w-2xl mx-auto">
+
+            <!-- ផ្នែកខាងលើ: កងបង្វិល -->
+            <div
+                class="w-full flex flex-col items-center bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-slate-100 relative overflow-hidden">
+
+                <!-- កន្លែងបង្ហាញអ្នកឈ្នះ -->
+                <div id="winnerDisplay"
+                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border-4 border-yellow-400 z-20 hidden text-center w-4/5 max-w-sm transition-all duration-500 scale-90 opacity-0">
+                    <h3 class="text-lg text-slate-500 font-bold mb-2">សូមអបអរសាទរ! 🎉</h3>
+                    <p id="winnerName" class="text-3xl font-extrabold text-teal-700 break-words mb-6"></p>
+                    <button id="closeWinnerBtn"
+                        class="bg-slate-800 hover:bg-slate-900 text-white px-6 py-2 rounded-full font-semibold transition-colors">បិទ</button>
+                </div>
+
+                <div class="wheel-container mb-8">
+                    <div class="pointer"></div>
+                    <canvas id="wheelCanvas" width="600" height="600"></canvas>
+                    <div class="center-circle"></div>
+                </div>
+
+                <button id="spinBtn"
+                    class="btn-spin w-full max-w-sm bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white text-2xl font-bold py-4 px-8 rounded-full shadow-lg shadow-teal-500/30 border-4 border-white transform">
+                    បង្វិលឥឡូវនេះ
+                </button>
+            </div>
+
+            <!-- ផ្នែកខាងក្រោម: បញ្ចូលឈ្មោះ -->
+            <div class="w-full bg-white p-6 md:p-8 rounded-3xl shadow-xl border border-slate-100">
+                <h2 class="text-xl font-bold mb-4 flex items-center text-slate-700">
+                    <svg class="w-6 h-6 mr-2 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    បញ្ជីឈ្មោះសិស្ស
+                </h2>
+
+                <!-- ផ្នែកគ្រប់គ្រងថ្នាក់រៀន (ថ្មី) -->
+                <div class="mb-5 p-5 bg-teal-50/50 rounded-2xl border border-teal-100">
+                    <h3 class="font-semibold text-teal-800 mb-3 text-sm">គ្រប់គ្រងបញ្ជីឈ្មោះតាមម៉ោង/ថ្នាក់៖</h3>
+                    <div class="flex flex-col sm:flex-row gap-3 mb-3">
+                        <select id="classSelector"
+                            class="flex-1 p-3 border-2 border-teal-200 rounded-xl focus:border-teal-500 focus:ring-0 outline-none text-slate-700 bg-white cursor-pointer transition-colors">
+                            <option value="">-- បង្កើតថ្នាក់ថ្មី (មិនទាន់រក្សាទុក) --</option>
+                        </select>
+                        <button id="deleteClassBtn"
+                            class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold px-4 py-3 rounded-xl transition-colors hidden border border-red-200 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                </path>
+                            </svg>
+                            លុបថ្នាក់នេះ
+                        </button>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="newClassName" placeholder="វាយឈ្មោះម៉ោង/ថ្នាក់ (ឧ. ម៉ោង ៧-៨ ព្រឹក)"
+                            class="flex-1 p-3 border-2 border-teal-200 rounded-xl focus:border-teal-500 focus:ring-0 outline-none text-slate-700 transition-colors">
+                        <button id="saveClassBtn"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-colors whitespace-nowrap flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                                </path>
+                            </svg>
+                            រក្សាទុក
+                        </button>
+                    </div>
+                    <div id="toastMessage"
+                        class="text-sm font-medium mt-3 hidden text-center p-2.5 rounded-lg transition-all duration-300">
+                    </div>
+                </div>
+
+                <textarea id="namesInput" rows="6"
+                    class="w-full p-4 border-2 border-slate-200 rounded-xl focus:border-teal-400 focus:ring-0 resize-none text-base mb-4 transition-colors"
+                    placeholder="បញ្ចូលឈ្មោះនៅទីនេះ...
+សិស្សទី១
+សិស្សទី២
+សិស្សទី៣"></textarea>
+
+                <div class="flex gap-3 mb-6">
+                    <button id="updateWheelBtn"
+                        class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-colors flex justify-center items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                            </path>
+                        </svg>
+                        ធ្វើបច្ចុប្បន្នភាពកង
+                    </button>
+                    <button id="clearBtn"
+                        class="bg-red-100 hover:bg-red-200 text-red-600 font-bold py-3 px-4 rounded-xl transition-colors">
+                        លុប
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-semibold text-slate-500">ចំនួនសិស្សសរុប៖</span>
+                        <span id="studentCount"
+                            class="bg-teal-100 text-teal-800 py-1 px-3 rounded-full text-sm font-bold">0</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // អថេរសម្រាប់កង (Wheel Variables)
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const namesInput = document.getElementById('namesInput');
+        const updateBtn = document.getElementById('updateWheelBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const spinBtn = document.getElementById('spinBtn');
+        const studentCountDisplay = document.getElementById('studentCount');
+        const winnerDisplay = document.getElementById('winnerDisplay');
+        const winnerNameDisplay = document.getElementById('winnerName');
+        const closeWinnerBtn = document.getElementById('closeWinnerBtn');
+
+        // អថេរសម្រាប់គ្រប់គ្រងថ្នាក់ (Class Management Variables)
+        const classSelector = document.getElementById('classSelector');
+        const newClassNameInput = document.getElementById('newClassName');
+        const saveClassBtn = document.getElementById('saveClassBtn');
+        const deleteClassBtn = document.getElementById('deleteClassBtn');
+        const toastMessage = document.getElementById('toastMessage');
+        const confirmModal = document.getElementById('confirmModal');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const deleteTargetName = document.getElementById('deleteTargetName');
+
+        // ទាញយកទិន្នន័យពី LocalStorage ឬកំណត់ទិន្នន័យលំនាំដើម
+        let savedClasses = JSON.parse(localStorage.getItem('spinWheelClasses')) || {};
+
+        let names = ["សិស្ស ក", "សិស្ស ខ", "សិស្ស គ", "សិស្ស ឃ", "សិស្ស ង", "សិស្ស ច"];
+
+        // ពណ៌រចនាប័ទ្មស្អាតៗ
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FDCB6E',
+            '#6C5CE7', '#FF8ED4', '#00B894', '#E17055',
+            '#0984E3', '#D63031', '#A8E6CF', '#FFD3B6'
+        ];
+
+        let currentAngle = 0;
+        let isSpinning = false;
+        let spinVelocity = 0;
+        let animationId;
+
+        // កំណត់ទំហំកង
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(centerX, centerY) - 10;
+
+        // អាប់ដេតបញ្ជីឈ្មោះ
+        function updateNames() {
+            const rawNames = namesInput.value.split('\n');
+            names = rawNames.map(name => name.trim()).filter(name => name !== '');
+
+            if (names.length === 0) {
+                names = ["សូមបញ្ចូលឈ្មោះ"];
+            }
+
+            studentCountDisplay.textContent = names[0] === "សូមបញ្ចូលឈ្មោះ" ? "0" : names.length;
+            drawWheel();
+        }
+
+        // គូរព្រុយនីមួយៗ (Draw Slices)
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const sliceAngle = (2 * Math.PI) / names.length;
+
+            for (let i = 0; i < names.length; i++) {
+                const startAngle = currentAngle + i * sliceAngle;
+                const endAngle = startAngle + sliceAngle;
+
+                // គូរពណ៌ផ្ទៃ
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+
+                // គូរបន្ទាត់ខណ្ឌ
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#ffffff";
+                ctx.stroke();
+
+                // សរសេរអក្សរ
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + sliceAngle / 2);
+
+                ctx.textAlign = "right";
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = "#ffffff";
+
+                // កំណត់ទំហំអក្សរទៅតាមចំនួនសិស្ស
+                let fontSize = 28;
+                if (names.length > 15) fontSize = 18;
+                else if (names.length > 10) fontSize = 22;
+
+                ctx.font = `bold ${fontSize}px 'Kantumruy Pro', sans-serif`;
+
+                // ដាក់ស្រមោលអក្សរអោយងាយអាន
+                ctx.shadowColor = "rgba(0,0,0,0.4)";
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+
+                const text = names[i];
+                // កាត់អក្សរបើវែងពេក
+                const displayText = text.length > 15 ? text.substring(0, 15) + '...' : text;
+
+                ctx.fillText(displayText, radius - 30, 0);
+                ctx.restore();
+            }
+        }
+
+        // មុខងារបង្វិល
+        function spin() {
+            if (isSpinning || names[0] === "សូមបញ្ចូលឈ្មោះ") return;
+
+            isSpinning = true;
+            spinBtn.disabled = true;
+            spinBtn.textContent = "កំពុងបង្វិល...";
+            hideWinner();
+
+            // កំណត់ល្បឿនបង្វិលចៃដន្យ (ល្បឿនដំបូងចន្លោះ 0.3 ទៅ 0.5)
+            spinVelocity = Math.random() * 0.2 + 0.3;
+
+            animateSpin();
+        }
+
+        // ចលនាបង្វិល (Animation Loop)
+        function animateSpin() {
+            currentAngle += spinVelocity;
+
+            // បន្ថយល្បឿនបន្តិចម្តងៗ (Friction)
+            spinVelocity *= 0.985;
+
+            drawWheel();
+
+            if (spinVelocity > 0.002) {
+                animationId = requestAnimationFrame(animateSpin);
+            } else {
+                // ឈប់បង្វិល
+                isSpinning = false;
+                spinBtn.disabled = false;
+                spinBtn.textContent = "បង្វិលឥឡូវនេះ";
+                cancelAnimationFrame(animationId);
+                determineWinner();
+            }
+        }
+
+        // រកអ្នកឈ្នះបន្ទាប់ពីឈប់
+        function determineWinner() {
+            // ទ្រនិចចង្អុលនៅខាងលើ (Top = 270 ដឺក្រេ ឬ -PI/2)
+            // កងវិលតាមទ្រនិចនាឡិកា ដូច្នេះយើងត្រូវគណនាបញ្ច្រាស
+
+            const sliceAngle = (2 * Math.PI) / names.length;
+
+            // ធ្វើអោយ currentAngle ស្ថិតក្នុងចន្លោះ 0 ទៅ 2PI
+            let normalizedAngle = currentAngle % (2 * Math.PI);
+            if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+
+            // ទីតាំងទ្រនិចគឺនៅខាងលើ (-PI/2)
+            // រកមុំដែលត្រូវនឹងទ្រនិច
+            let pointerAngle = (3 * Math.PI / 2) - normalizedAngle;
+            if (pointerAngle < 0) pointerAngle += 2 * Math.PI;
+
+            const winningIndex = Math.floor(pointerAngle / sliceAngle);
+            const winner = names[winningIndex];
+
+            showWinner(winner);
+        }
+
+        function showWinner(name) {
+            winnerNameDisplay.textContent = name;
+            winnerDisplay.classList.remove('hidden');
+            // ប្រើ setTimeout ដើម្បីអោយ transition ដំណើរការ
+            setTimeout(() => {
+                winnerDisplay.classList.remove('scale-90', 'opacity-0');
+                winnerDisplay.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            fireConfetti();
+        }
+
+        function hideWinner() {
+            winnerDisplay.classList.remove('scale-100', 'opacity-100');
+            winnerDisplay.classList.add('scale-90', 'opacity-0');
+            setTimeout(() => {
+                winnerDisplay.classList.add('hidden');
+            }, 300);
+        }
+
+        // ----------------------------------------
+        // ប្រព័ន្ធ Confetti (ផ្កាភ្លើងអបអរសាទរ)
+        // ----------------------------------------
+        const ctxConfetti = document.getElementById('confettiCanvas').getContext('2d');
+        let confettis = [];
+
+        function fireConfetti() {
+            const canvasC = document.getElementById('confettiCanvas');
+            canvasC.width = window.innerWidth;
+            canvasC.height = window.innerHeight;
+            confettis = [];
+            for (let i = 0; i < 150; i++) {
+                confettis.push({
+                    x: canvasC.width / 2,
+                    y: canvasC.height / 2 + 100,
+                    vx: (Math.random() - 0.5) * 20,
+                    vy: (Math.random() - 1) * 20 - 5,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rot: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 10
+                });
+            }
+            requestAnimationFrame(drawConfetti);
+        }
+
+        function drawConfetti() {
+            const canvasC = document.getElementById('confettiCanvas');
+            ctxConfetti.clearRect(0, 0, canvasC.width, canvasC.height);
+            let active = false;
+
+            confettis.forEach(c => {
+                c.x += c.vx;
+                c.y += c.vy;
+                c.vy += 0.5; // ទំនាញផែនដី (Gravity)
+                c.rot += c.rotSpeed;
+
+                if (c.y < canvasC.height) active = true;
+
+                ctxConfetti.save();
+                ctxConfetti.translate(c.x, c.y);
+                ctxConfetti.rotate(c.rot * Math.PI / 180);
+                ctxConfetti.fillStyle = c.color;
+                ctxConfetti.fillRect(-c.size / 2, -c.size / 2, c.size, c.size);
+                ctxConfetti.restore();
+            });
+
+            if (active) requestAnimationFrame(drawConfetti);
+            else ctxConfetti.clearRect(0, 0, canvasC.width, canvasC.height);
+        }
+
+        // ----------------------------------------
+        // ព្រឹត្តិការណ៍ (Event Listeners)
+        // ----------------------------------------
+        updateBtn.addEventListener('click', updateNames);
+
+        clearBtn.addEventListener('click', () => {
+            namesInput.value = '';
+            updateNames();
+        });
+
+        spinBtn.addEventListener('click', spin);
+        closeWinnerBtn.addEventListener('click', hideWinner);
+
+        // បញ្ចូលទិន្នន័យដំបូងនៅពេលបើក
+        namesInput.value = names.join('\n');
+        updateNames();
+        updateClassDropdown(); // បង្ហាញបញ្ជីថ្នាក់ដំបូង
+
+        // រៀបចំទំហំ Canvas អោយត្រូវពេលប្តូរទំហំអេក្រង់
+        window.addEventListener('resize', () => {
+            const canvasC = document.getElementById('confettiCanvas');
+            canvasC.width = window.innerWidth;
+            canvasC.height = window.innerHeight;
+        });
+
+        // ----------------------------------------
+        // មុខងារគ្រប់គ្រងថ្នាក់/ម៉ោងសិក្សា (Class Management)
+        // ----------------------------------------
+
+        // បង្ហាញសារជូនដំណឹង
+        function showToast(msg, type = 'success') {
+            toastMessage.textContent = msg;
+            toastMessage.className = `text-sm font-medium mt-3 text-center p-2.5 rounded-lg transition-all duration-300 block ${type === 'error' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+            setTimeout(() => {
+                toastMessage.classList.add('hidden');
+                toastMessage.classList.remove('block');
+            }, 3000);
+        }
+
+        // អាប់ដេត Dropdown
+        function updateClassDropdown() {
+            const currentValue = classSelector.value;
+            classSelector.innerHTML = '<option value="">-- បង្កើតថ្នាក់ថ្មី (មិនទាន់រក្សាទុក) --</option>';
+
+            for (let className in savedClasses) {
+                const option = document.createElement('option');
+                option.value = className;
+                option.textContent = className;
+                classSelector.appendChild(option);
+            }
+
+            // រក្សាតម្លៃដែលបានជ្រើសរើសបើវានៅមាន
+            if (savedClasses[currentValue]) {
+                classSelector.value = currentValue;
+            }
+        }
+
+        // ពេលរើសម៉ោង/ថ្នាក់ពី Dropdown
+        classSelector.addEventListener('change', (e) => {
+            const selectedClass = e.target.value;
+            if (selectedClass && savedClasses[selectedClass]) {
+                namesInput.value = savedClasses[selectedClass].join('\n');
+                newClassNameInput.value = selectedClass;
+                deleteClassBtn.classList.remove('hidden');
+                updateNames();
+                showToast(`បានទាញយកបញ្ជីឈ្មោះ "${selectedClass}"`, 'success');
+            } else {
+                namesInput.value = '';
+                newClassNameInput.value = '';
+                deleteClassBtn.classList.add('hidden');
+                updateNames();
+            }
+        });
+
+        // រក្សាទុកម៉ោង/ថ្នាក់
+        saveClassBtn.addEventListener('click', () => {
+            const className = newClassNameInput.value.trim();
+            if (!className) {
+                showToast('សូមវាយបញ្ចូលឈ្មោះម៉ោង ឬថ្នាក់!', 'error');
+                newClassNameInput.focus();
+                return;
+            }
+
+            const currentNames = namesInput.value.split('\n').map(name => name.trim()).filter(name => name !== '');
+            if (currentNames.length === 0) {
+                showToast('សូមបញ្ចូលឈ្មោះសិស្សយ៉ាងហោចណាស់១នាក់!', 'error');
+                namesInput.focus();
+                return;
+            }
+
+            // រក្សាទុកទៅក្នុង Object និង LocalStorage
+            savedClasses[className] = currentNames;
+            localStorage.setItem('spinWheelClasses', JSON.stringify(savedClasses));
+
+            updateClassDropdown();
+            classSelector.value = className;
+            deleteClassBtn.classList.remove('hidden');
+
+            showToast('បានរក្សាទុករួចរាល់! ✓', 'success');
+        });
+
+        // មុខងារបង្ហាញផ្ទាំងបញ្ជាក់ការលុប
+        function openModal() {
+            confirmModal.classList.remove('hidden');
+            // Timeout ដើម្បីអោយ transition ដំណើរការ
+            setTimeout(() => {
+                confirmModal.classList.remove('opacity-0');
+                confirmModal.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        // មុខងារបិទផ្ទាំងបញ្ជាក់ការលុប
+        function closeModal() {
+            confirmModal.classList.add('opacity-0');
+            confirmModal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                confirmModal.classList.add('hidden');
+            }, 300); // ត្រូវគ្នានឹង duration-300 ក្នុង CSS
+        }
+
+        // ចុចប៊ូតុងលុបថ្នាក់ (ហៅ Modal មក)
+        deleteClassBtn.addEventListener('click', () => {
+            const selectedClass = classSelector.value;
+            if (selectedClass) {
+                deleteTargetName.textContent = selectedClass;
+                openModal();
+            }
+        });
+
+        // ចុចបោះបង់ការលុប
+        cancelDeleteBtn.addEventListener('click', closeModal);
+
+        // ចុចបញ្ជាក់ការលុប
+        confirmDeleteBtn.addEventListener('click', () => {
+            const selectedClass = classSelector.value;
+            if (selectedClass && savedClasses[selectedClass]) {
+                delete savedClasses[selectedClass];
+                localStorage.setItem('spinWheelClasses', JSON.stringify(savedClasses));
+
+                updateClassDropdown();
+                classSelector.value = "";
+                newClassNameInput.value = "";
+                namesInput.value = "";
+                deleteClassBtn.classList.add('hidden');
+                updateNames();
+
+                closeModal();
+                showToast(`បានលុប "${selectedClass}" រួចរាល់`, 'success');
+            }
+        });
+
+    </script>
+</body>
+
+</html>
