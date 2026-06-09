@@ -52,6 +52,21 @@
         .text-en {
             display: none;
         }
+
+        /* ចលនាសម្រាប់ឡូហ្គូបញ្ចេញពន្លឺ និងលោតឡើងចុះ */
+        @keyframes glow-bounce {
+            0%, 100% {
+                transform: translateY(0);
+                box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+            }
+            50% {
+                transform: translateY(-6px);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 1), 0 0 35px rgba(96, 165, 250, 0.6);
+            }
+        }
+        .animate-glow-bounce {
+            animation: glow-bounce 2s infinite ease-in-out;
+        }
     </style>
 </head>
 
@@ -64,7 +79,7 @@
                 <div
                     class="flex items-center gap-2 sm:gap-3 cursor-pointer hover:opacity-90 transition-opacity shrink-0 overflow-hidden">
                     <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល"
-                        class="h-10 sm:h-12 w-auto rounded-lg shadow-sm shrink-0">
+                        class="h-10 sm:h-12 w-auto rounded-lg shrink-0 animate-glow-bounce">
                     <span
                         class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap"><span
                             class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span
