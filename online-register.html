@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>កម្មវិធីចុះឈ្មោះសិស្សអនឡាញ - មជ្ឈមណ្ឌលមិត្តពូកែ The Bravo Center</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Kantumruy Pro & Koh Santepheap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Koh+Santepheap:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Tech Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', 'Koh Santepheap', sans-serif;
+        }
+
+        /* Custom scrollbar for better styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 3px;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        techDark: '#0f172a',
+                        techCard: '#1e293b',
+                        techBlue: '#3b82f6',
+                        techTeal: '#06b6d4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-techDark text-slate-100 min-h-screen flex items-center justify-center p-3 sm:p-6">
+
+    <div
+        class="w-full max-w-5xl bg-techCard rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+
+        <!-- ផ្នែកខាងឆ្វេង៖ ព័ត៌មានមជ្ឈមណ្ឌល (Center Info Side) -->
+        <div
+            class="lg:col-span-4 bg-gradient-to-br from-blue-900 via-slate-900 to-cyan-900 p-8 flex flex-col justify-between text-white relative">
+            <div
+                class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent pointer-events-none">
+            </div>
+
+            <div class="relative z-10">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="p-2.5 bg-blue-500/20 border border-blue-400/30 rounded-xl text-cyan-400">
+                        <i class="fa-solid fa-laptop-code text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xs font-bold tracking-wider text-cyan-400 uppercase">មជ្ឈមណ្ឌលមិត្តពូកែ</h2>
+                        <h1 class="text-lg font-black tracking-wide text-white">THE BRAVO CENTER</h1>
+                    </div>
+                </div>
+
+                <!-- Welcome Text -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-slate-100">ចុះឈ្មោះចូលរៀនវគ្គអនឡាញ!</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        សូមបំពេញទម្រង់បែបបទនៅខាងស្តាំ ដើម្បីចុះឈ្មោះចូលរៀនថ្នាក់បច្ចេកវិទ្យា និងកុំព្យូទ័រតាមរយៈអនឡាញ
+                        (Online) ជាមួយមជ្ឈមណ្ឌលមិត្តពូកែ។
+                    </p>
+                </div>
+
+                <!-- Info Icons -->
+                <div class="mt-8 space-y-4 text-xs">
+                    <div class="flex items-center space-x-3 text-slate-300">
+                        <i class="fa-solid fa-video text-cyan-400 text-lg w-6 text-center"></i>
+                        <span>រៀនបន្តផ្ទាល់តាមរយៈ Google Meet / Zoom</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-slate-300">
+                        <i class="fa-solid fa-rotate-left text-cyan-400 text-lg w-6 text-center"></i>
+                        <span>ទទួលបានវីដេអូមេរៀនសម្រាប់មើលឡើងវិញ</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-slate-300">
+                        <i class="fa-solid fa-certificate text-cyan-400 text-lg w-6 text-center"></i>
+                        <span>ទទួលបានវិញ្ញាបនបត្របញ្ជាក់ការសិក្សា</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="mt-8 pt-6 border-t border-slate-700/50 text-xs text-slate-400 space-y-2 relative z-10">
+                <p><i class="fa-solid fa-phone mr-2 text-cyan-500"></i> +855 93 58 60 24 / 92 56 40 54</p>
+                <p><i class="fa-solid fa-envelope mr-2 text-cyan-500"></i> camboview41@gmail.com</p>
+                <p><i class="fa-solid fa-location-dot mr-2 text-cyan-500"></i> រៀនពីចម្ងាយ (Online)</p>
+            </div>
+        </div>
+
+        <!-- ផ្នែកខាងស្តាំ៖ ទម្រង់ចុះឈ្មោះ (Registration Form Side) -->
+        <div class="lg:col-span-8 p-6 sm:p-10">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                <i class="fa-solid fa-user-plus mr-3 text-blue-500"></i> ទម្រង់ចុះឈ្មោះសិស្សវគ្គអនឡាញ
+            </h2>
+
+            <form id="registerForm" onsubmit="handleSubmit(event)" class="space-y-6">
+                <!-- ផ្នែកទី១៖ ព័ត៌មានផ្ទាល់ខ្លួន -->
+                <div>
+                    <span
+                        class="text-xs font-bold text-cyan-400 uppercase tracking-wider block mb-3 border-b border-slate-700 pb-1">១.
+                        ព័ត៌មានផ្ទាល់ខ្លួន (Personal Details)</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- ឈ្មោះខ្មែរ -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ឈ្មោះខ្មែរ <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="khmerName" required placeholder="ឧ. សុខ ម៉ានិត"
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                        </div>
+                        <!-- ឈ្មោះឡាតាំង -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ឈ្មោះឡាតាំង (Latin) <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="latinName" required placeholder="Ex. SOK MANITH"
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder-slate-500 uppercase focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                        </div>
+                        <!-- ភេទ -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ភេទ <span
+                                    class="text-red-500">*</span></label>
+                            <select id="gender" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                                <option value="" disabled selected>ជ្រើសរើសភេទ</option>
+                                <option value="ប្រុស">ប្រុស (Male)</option>
+                                <option value="ស្រី">ស្រី (Female)</option>
+                                <option value="ផ្សេងៗ">ផ្សេងៗ (Other)</option>
+                            </select>
+                        </div>
+                        <!-- ថ្ងៃខែឆ្នាំកំណើត -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ថ្ងៃខែឆ្នាំកំណើត <span
+                                    class="text-red-500">*</span></label>
+                            <input type="date" id="dob" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ផ្នែកទី២៖ ព័ត៌មានទំនាក់ទំនង -->
+                <div>
+                    <span
+                        class="text-xs font-bold text-cyan-400 uppercase tracking-wider block mb-3 border-b border-slate-700 pb-1">២.
+                        ព័ត៌មានទំនាក់ទំនង (Contact Details)</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- លេខទូរស័ព្ទ -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">គណនី Telegram (លេខទូរស័ព្ទ)
+                                <span class="text-red-500">*</span></label>
+                            <input type="tel" id="phone" required placeholder="ឧ. 012345678"
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                        </div>
+                        <!-- អ៊ីមែល -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">អ៊ីមែល (Email)</label>
+                            <input type="email" id="email" placeholder="ឧ. name@example.com"
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ផ្នែកទី៣៖ ការជ្រើសរើសវគ្គសិក្សាអនឡាញ -->
+                <div>
+                    <span
+                        class="text-xs font-bold text-cyan-400 uppercase tracking-wider block mb-3 border-b border-slate-700 pb-1">៣.
+                        ការជ្រើសរើសការសិក្សា (Course Selection)</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- វគ្គសិក្សា -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ជ្រើសរើសវគ្គសិក្សា (Online)
+                                <span class="text-red-500">*</span></label>
+                            <select id="course" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                                <option value="" disabled selected>ជ្រើសរើសវគ្គសិក្សាអនឡាញ</option>
+                                <option value="Computer Administration (Word, Excel, PPT)">Computer Administration
+                                    (Word, Excel, PPT)</option>
+                                <option value="Graphic Design (Photoshop, Illustrator)">Graphic Design (Photoshop,
+                                    Illustrator)</option>
+                                <option value="Web Development (HTML, CSS, JS, React)">Web Development (HTML, CSS, JS,
+                                    React)</option>
+                                <option value="Network & Cybersecurity">Network & Cybersecurity</option>
+                                <option value="Python Programming for Beginners">Python Programming for Beginners
+                                </option>
+                            </select>
+                        </div>
+                        <!-- ម៉ោងសិក្សា -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-medium">ម៉ោងសិក្សាអនឡាញ <span
+                                    class="text-red-500">*</span></label>
+                            <select id="shift" required
+                                class="w-full bg-slate-900/80 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150">
+                                <option value="" disabled selected>ជ្រើសរើសម៉ោងសិក្សា</option>
+                                <option value="វេនល្ងាច (06:00 PM - 07:30 PM)">វេនល្ងាច (06:00 PM - 07:30 PM)</option>
+                                <option value="វេនយប់ (08:00 PM - 09:30 PM)">វេនយប់ (08:00 PM - 09:30 PM)</option>
+                                <option value="ចុងសប្តាហ៍ (សៅរ៍ - អាទិត្យ រសៀល)">ចុងសប្តាហ៍ (សៅរ៍ - អាទិត្យ រសៀល)
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ប៊ូតុងបញ្ជូន -->
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4">
+                    <button type="reset"
+                        class="w-full sm:w-auto px-6 py-2.5 rounded-lg border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white text-sm font-medium transition duration-200">
+                        <i class="fa-solid fa-rotate-left mr-2"></i> សម្អាតទិន្នន័យ
+                    </button>
+                    <!-- Form action អាចប្តូរទៅកាន់ API របស់អ្នក -->
+                    <button type="submit"
+                        class="w-full sm:w-auto px-8 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition duration-200">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> ចុះឈ្មោះចូលរៀនវគ្គអនឡាញ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- modal សម្រាប់បង្ហាញទិន្នន័យជោគជ័យ (Success Notification Modal) -->
+    <div id="successModal"
+        class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div
+            class="bg-techCard border border-slate-700 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl transform scale-95 transition-all duration-300">
+            <!-- Icon -->
+            <div
+                class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-500/10 text-emerald-400 mb-4 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check text-3xl"></i>
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-2">ការចុះឈ្មោះជោគជ័យ!</h3>
+            <p class="text-xs text-slate-400 mb-6">មជ្ឈមណ្ឌលមិត្តពូកែ The Bravo Center ទទួលបានព័ត៌មានរបស់អ្នកហើយ
+                ក្រុមការងារយើងនឹងទាក់ទងទៅអ្នកក្នុងពេលឆាប់ៗ។</p>
+
+            <!-- សេចក្តីលម្អិតនៃទិន្នន័យសិស្ស -->
+            <div class="bg-slate-900/90 rounded-xl p-4 text-left text-xs space-y-2 mb-6 border border-slate-800">
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="text-slate-400">ឈ្មោះសិស្ស៖</span>
+                    <span class="text-white font-semibold" id="modalName">...</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="text-slate-400">ភេទ៖</span>
+                    <span class="text-white" id="modalGender">...</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="text-slate-400">វគ្គសិក្សាអនឡាញ៖</span>
+                    <span class="text-cyan-400 font-medium" id="modalCourse">...</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-1.5">
+                    <span class="text-slate-400">ម៉ោងសិក្សាអនឡាញ៖</span>
+                    <span class="text-yellow-400" id="modalShift">...</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">គណនី Telegram៖</span>
+                    <span class="text-white" id="modalPhone">...</span>
+                </div>
+            </div>
+
+            <button onclick="closeModal()"
+                class="w-full bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold py-2.5 rounded-lg border border-slate-700 transition duration-150">
+                បិទផ្ទាំងនេះ
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript script -->
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // ទប់ស្កាត់ការ Reload ទំព័រ
+
+            // ទាញយកតម្លៃពី Form
+            const khmerName = document.getElementById('khmerName').value;
+            const latinName = document.getElementById('latinName').value;
+            const gender = document.getElementById('gender').value;
+            const phone = document.getElementById('phone').value;
+            const course = document.getElementById('course').value;
+            const shift = document.getElementById('shift').value;
+
+            // ដាក់បញ្ចូលតម្លៃទៅកាន់ Modal
+            document.getElementById('modalName').textContent = `${khmerName} (${latinName.toUpperCase()})`;
+            document.getElementById('modalGender').textContent = gender;
+            document.getElementById('modalCourse').textContent = course;
+            document.getElementById('modalShift').textContent = shift;
+            document.getElementById('modalPhone').textContent = phone;
+
+            // បង្ហាញ Modal
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            // លាក់ Modal វិញ
+            const modal = document.getElementById('successModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+
+            // សម្អាតទិន្នន័យលើ Form
+            document.getElementById('registerForm').reset();
+        }
+    </script>
+</body>
+
+</html>
