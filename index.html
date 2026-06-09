@@ -249,7 +249,7 @@
             <div class="text-center max-w-2xl mx-auto mb-16">
                 <span
                     class="text-blue-400 font-semibold tracking-wider uppercase text-sm mb-4 block">ចាប់ផ្តើមឥឡូវនេះ</span>
-                <h2 class="text-3xl md:text-5xl font-bold mb-6">ចុះឈ្មោះចូលរៀន</h2>
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">ចុះឈ្មោះចូលរៀនអនឡាញ</h2>
                 <p class="text-gray-300 text-lg">សូមបំពេញព័ត៌មានខាងក្រោម ឬចុចប៊ូតុងដើម្បីទំនាក់ទំនងមកយើងខ្ញុំដោយផ្ទាល់។
                 </p>
             </div>
@@ -261,14 +261,74 @@
                         class="bg-white/10 backdrop-blur-md p-8 md:p-10 rounded-[2rem] shadow-2xl border border-white/10">
                         <div class="grid md:grid-cols-2 gap-6 mb-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">ឈ្មោះរបស់អ្នក</label>
-                                <input type="text" name="name" placeholder="បញ្ចូលឈ្មោះ..." required
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ឈ្មោះខ្មែរ <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" name="khmerName" placeholder="ឧ. សុខ ម៉ានិត" required
                                     class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-300 mb-2">លេខទូរសព្ទ</label>
-                                <input type="tel" name="phone" placeholder="បញ្ចូលលេខទូរសព្ទ..." required
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ឈ្មោះឡាតាំង (Latin) <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" name="latinName" placeholder="Ex. SOK MANITH" required
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ភេទ <span
+                                        class="text-red-500">*</span></label>
+                                <select name="gender" required
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all [&>option]:text-gray-900">
+                                    <option value="" disabled selected>ជ្រើសរើសភេទ</option>
+                                    <option value="ប្រុស">ប្រុស (Male)</option>
+                                    <option value="ស្រី">ស្រី (Female)</option>
+                                    <option value="ផ្សេងៗ">ផ្សេងៗ (Other)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ថ្ងៃខែឆ្នាំកំណើត <span
+                                        class="text-red-500">*</span></label>
+                                <input type="date" name="dob" required
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">គណនី Telegram (លេខទូរស័ព្ទ)
+                                    <span class="text-red-500">*</span></label>
+                                <input type="tel" name="phone" placeholder="ឧ. 012345678" required
                                     class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">អ៊ីមែល (Email)</label>
+                                <input type="email" name="email" placeholder="ឧ. name@example.com"
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ជ្រើសរើសវគ្គសិក្សា (Online)
+                                    <span class="text-red-500">*</span></label>
+                                <select name="course" required
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all [&>option]:text-gray-900">
+                                    <option value="" disabled selected>ជ្រើសរើសវគ្គសិក្សាអនឡាញ</option>
+                                    <option value="Computer Administration (Word, Excel, PPT)">Computer Administration
+                                        (Word, Excel, PPT)</option>
+                                    <option value="Graphic Design (Photoshop, Illustrator)">Graphic Design (Photoshop,
+                                        Illustrator)</option>
+                                    <option value="Web Development (HTML, CSS, JS, React)">Web Development (HTML, CSS,
+                                        JS, React)</option>
+                                    <option value="Network & Cybersecurity">Network & Cybersecurity</option>
+                                    <option value="Python Programming for Beginners">Python Programming for Beginners
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-300 mb-2">ម៉ោងសិក្សាអនឡាញ <span
+                                        class="text-red-500">*</span></label>
+                                <select name="shift" required
+                                    class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white/10 transition-all [&>option]:text-gray-900">
+                                    <option value="" disabled selected>ជ្រើសរើសម៉ោងសិក្សា</option>
+                                    <option value="វេនល្ងាច (06:00 PM - 07:30 PM)">វេនល្ងាច (06:00 PM - 07:30 PM)
+                                    </option>
+                                    <option value="វេនយប់ (08:00 PM - 09:30 PM)">វេនយប់ (08:00 PM - 09:30 PM)</option>
+                                    <option value="ចុងសប្តាហ៍ (សៅរ៍ - អាទិត្យ រសៀល)">ចុងសប្តាហ៍ (សៅរ៍ - អាទិត្យ រសៀល)
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <button type="submit"
