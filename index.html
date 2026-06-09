@@ -51,6 +51,16 @@
         .animate-glow-bounce {
             animation: glow-bounce 2s infinite ease-in-out;
         }
+
+        /* ចលនាពន្លឺរត់កាត់អក្សរ (Text Shine) សម្រាប់ឈ្មោះមជ្ឈមណ្ឌល */
+        @keyframes text-shine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        .animate-text-shine {
+            background-size: 200% auto;
+            animation: text-shine 3s linear infinite;
+        }
     </style>
 </head>
 
@@ -66,7 +76,7 @@
                     <img src="assets/images/a.jpg" alt="Logo មជ្ឈមណ្ឌល"
                         class="h-10 sm:h-12 w-auto rounded-lg shrink-0 animate-glow-bounce">
                     <span
-                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500 tracking-tight whitespace-nowrap"><span
+                        class="text-lg sm:text-xl lg:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-cyan-400 to-blue-700 tracking-tight whitespace-nowrap animate-text-shine"><span
                             class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span
                             class="text-en notranslate">TheBravoCenter</span></span>
                 </div>
