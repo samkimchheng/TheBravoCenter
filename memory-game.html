@@ -76,6 +76,14 @@
     <main
         class="w-full max-w-4xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl relative z-10">
 
+        <!-- ប៊ូតុងត្រឡប់ទៅទំព័រដើម -->
+        <div id="back-home-btn" class="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
+            <a href="index.html" class="flex items-center space-x-2 text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all border border-white/10 backdrop-blur-md">
+                <span>🏠</span>
+                <span class="hidden sm:inline">ត្រឡប់ទៅទំព័រដើម</span>
+            </a>
+        </div>
+
         <!-- ================= ផ្ទាំងចាប់ផ្តើមលេង (Start Screen) ================= -->
         <section id="start-screen" class="flex flex-col items-center text-center py-8">
             <div class="text-6xl mb-4 animate-bounce">🧠✨</div>
@@ -391,6 +399,7 @@
         function startGame() {
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('back-home-btn').classList.add('hidden');
             resetGame();
         }
 
@@ -399,6 +408,7 @@
             clearInterval(timerInterval);
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('start-screen').classList.remove('hidden');
+            document.getElementById('back-home-btn').classList.remove('hidden');
             updateGlobalHighScore();
             playSound('flip');
         }
