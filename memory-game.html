@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ហ្គេមល្បងប្រាជ្ញា៖ ស្វែងរកគូដូចគ្នា</title>
+    <!-- Tailwind CSS សម្រាប់ UI និងរចនាបថទំនើប -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts សម្រាប់អក្សរខ្មែរស្អាតៗ -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
+            overflow-x: hidden;
+        }
+
+        /* បង្កើតផលប៉ះពាល់ 3D សម្រាប់ការបង្វិលកាត */
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card-front {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbar សម្រាប់សម្រស់ */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.8);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4 text-white relative">
+
+    <!-- Canvas សម្រាប់បង្ហាញកម្ទេចក្រដាសអបអរសាទរពេលឈ្នះ -->
+    <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full hidden"></canvas>
+
+    <!-- ផ្ទៃខាងក្រោយមានពន្លឺរត់លម្អ (Glowing Orbs) -->
+    <div class="absolute top-10 left-10 w-72 h-72 bg-indigo-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-80 h-80 bg-fuchsia-500/20 rounded-full blur-[120px] pointer-events-none">
+    </div>
+
+    <!-- ប្រអប់ហ្គេមទាំងមូល -->
+    <main
+        class="w-full max-w-4xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl relative z-10">
+
+        <!-- ================= ផ្ទាំងចាប់ផ្តើមលេង (Start Screen) ================= -->
+        <section id="start-screen" class="flex flex-col items-center text-center py-8">
+            <div class="text-6xl mb-4 animate-bounce">🧠✨</div>
+
+            <!-- បន្ថែម pb-4 (Padding Bottom) និង pt-2 ដើម្បីការពារការបាត់ជើងអក្សរខ្មែរ -->
+            <h1
+                class="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 pt-2 pb-4 leading-tight">
+                ល្បងប្រាជ្ញាស្វែងរកគូ
+            </h1>
+
+            <!-- រក្សាទុកការដកឃ្លាទម្លាក់ចុះក្រោមដ៏ស្រស់ស្អាត -->
+            <p class="text-slate-300 text-sm md:text-base max-w-md mt-4 mb-12">
+                សូមពង្រឹងការចងចាំរបស់អ្នក! ជ្រើសរើសកម្រិត និងប្រធានបទដែលអ្នកចូលចិត្តដើម្បីចាប់ផ្តើមការប្រកួតប្រជែង។
+            </p>
+
+            <!-- ជម្រើសកម្រិតលេង -->
+            <div class="w-full max-w-md mb-6 text-left">
+                <label class="block text-indigo-300 text-sm font-semibold mb-2 ml-1">🎮 ជ្រើសរើសកម្រិតពិបាក៖</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="selectDifficulty('easy')" id="btn-easy"
+                        class="difficulty-btn py-3 px-2 rounded-xl bg-indigo-600/30 border-2 border-indigo-500 text-sm font-semibold hover:bg-indigo-600/50 transition-all duration-300 shadow-lg shadow-indigo-500/20">
+                        ងាយស្រួល<br><span class="text-xs text-indigo-300">(កាត 16)</span>
+                    </button>
+                    <button onclick="selectDifficulty('medium')" id="btn-medium"
+                        class="difficulty-btn py-3 px-2 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold hover:bg-white/10 transition-all duration-300">
+                        មធ្យម<br><span class="text-xs text-slate-400">(កាត 24)</span>
+                    </button>
+                    <button onclick="selectDifficulty('hard')" id="btn-hard"
+                        class="difficulty-btn py-3 px-2 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold hover:bg-white/10 transition-all duration-300">
+                        ពិបាក<br><span class="text-xs text-slate-400">(កាត 36)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ជម្រើសប្រធានបទ -->
+            <div class="w-full max-w-md mb-8 text-left">
+                <label class="block text-indigo-300 text-sm font-semibold mb-2 ml-1">🎨 ជ្រើសរើសប្រធានបទ៖</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="selectTheme('animals')" id="theme-animals"
+                        class="theme-btn py-3 px-4 rounded-xl bg-indigo-600/30 border-2 border-indigo-500 text-left flex items-center space-x-3 hover:bg-indigo-600/50 transition-all duration-300">
+                        <span class="text-2xl">🦁</span>
+                        <span class="font-semibold text-sm">សត្វចិញ្ចឹម</span>
+                    </button>
+                    <button onclick="selectTheme('fruits')" id="theme-fruits"
+                        class="theme-btn py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-left flex items-center space-x-3 hover:bg-white/10 transition-all duration-300">
+                        <span class="text-2xl">🍎</span>
+                        <span class="font-semibold text-sm">ផ្លែឈើស្រស់</span>
+                    </button>
+                    <button onclick="selectTheme('space')" id="theme-space"
+                        class="theme-btn py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-left flex items-center space-x-3 hover:bg-white/10 transition-all duration-300">
+                        <span class="text-2xl">🚀</span>
+                        <span class="font-semibold text-sm">លំហអាកាស</span>
+                    </button>
+                    <button onclick="selectTheme('food')" id="theme-food"
+                        class="theme-btn py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-left flex items-center space-x-3 hover:bg-white/10 transition-all duration-300">
+                        <span class="text-2xl">🍕</span>
+                        <span class="font-semibold text-sm">ម្ហូបអាហារ</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ប៊ូតុងចាប់ផ្តើម -->
+            <button onclick="startGame()"
+                class="w-full max-w-md py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:to-pink-600 font-bold text-lg rounded-2xl shadow-xl shadow-purple-500/30 transform hover:-translate-y-1 transition-all duration-300">
+                🚀 ចាប់ផ្តើមលេងឥឡូវនេះ
+            </button>
+
+            <!-- បង្ហាញពិន្ទុខ្ពស់បំផុត និងព័ត៌មានអ្នកបង្កើត -->
+            <div class="mt-8 text-slate-400 text-sm flex flex-col items-center space-y-4">
+                <div class="flex items-center space-x-2">
+                    <span>🏆 ពិន្ទុខ្ពស់បំផុតរបស់អ្នក៖</span>
+                    <span id="global-high-score" class="text-yellow-400 font-bold">0</span>
+                </div>
+                <!-- ផ្លាកសញ្ញាអ្នកបង្កើតហ្គេម និងការប្រើប្រាស់ inline-block + pb-1 ការពារការបាត់ជើងអក្សរ សំ គឹមឆេង -->
+                <div
+                    class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center space-x-1.5 shadow-inner">
+                    <span>🎮 បង្កើតហ្គេមដោយ៖</span>
+                    <span
+                        class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 font-bold pb-1">សំ
+                        គឹមឆេង</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ផ្ទាំងលេងហ្គេម (Game Board Screen) ================= -->
+        <section id="game-screen" class="hidden">
+            <!-- របារព័ត៌មាន និងពិន្ទុខាងលើ -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/10">
+                <div class="flex flex-col items-center justify-center p-2">
+                    <span class="text-xs text-slate-400">ពិន្ទុបច្ចុប្បន្ន</span>
+                    <span id="current-score" class="text-2xl font-bold text-indigo-400">0</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-2 border-l border-white/10">
+                    <span class="text-xs text-slate-400">ចំនួនដងបង្វិល</span>
+                    <span id="moves-count" class="text-2xl font-bold text-purple-400">0</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-2 border-l border-white/10">
+                    <span class="text-xs text-slate-400 font-medium">⏰ រយៈពេល</span>
+                    <span id="timer-display" class="text-2xl font-bold text-pink-400">00:00</span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-2 border-l border-white/10">
+                    <span class="text-xs text-slate-400">ពិន្ទុខ្ពស់បំផុត</span>
+                    <span id="high-score-display" class="text-2xl font-bold text-yellow-400">0</span>
+                </div>
+            </div>
+
+            <!-- កាតហ្គេមទាំងអស់នឹងត្រូវបង្កើតឡើងនៅទីនេះ -->
+            <div id="grid-container" class="grid gap-3 md:gap-4 justify-center mx-auto max-w-3xl min-h-[300px]"></div>
+
+            <!-- ប៊ូតុងបញ្ជាខាងក្រោម -->
+            <div class="mt-8 flex flex-wrap gap-4 items-center justify-between border-t border-white/10 pt-6">
+                <!-- ម៉ឺនុយបើក/បិទ សំឡេង -->
+                <button onclick="toggleSound()" id="sound-btn"
+                    class="flex items-center space-x-2 bg-white/5 border border-white/10 hover:bg-white/10 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
+                    <span id="sound-icon">🔊</span> <span id="sound-text">បើកសំឡេង</span>
+                </button>
+
+                <div class="flex space-x-3">
+                    <button onclick="backToMenu()"
+                        class="bg-slate-700/50 hover:bg-slate-700 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all border border-slate-600">
+                        ⬅️ ត្រឡប់ក្រោយ
+                    </button>
+                    <button onclick="resetGame()"
+                        class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 px-6 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-indigo-500/20 transition-all">
+                        🔄 លេងឡើងវិញ
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= ផ្ទាំងឈ្នះហ្គេម (Victory Modal) ================= -->
+    <div id="victory-modal"
+        class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-500 p-4">
+        <div class="bg-gradient-to-b from-slate-900 to-indigo-950 border border-indigo-500/40 rounded-3xl p-8 max-w-md w-full text-center shadow-2xl relative transform scale-90 transition-all duration-500"
+            id="victory-card">
+
+            <div
+                class="absolute -top-12 left-1/2 transform -translate-x-1/2 text-7xl bg-indigo-950 border-4 border-indigo-500 w-24 h-24 flex items-center justify-center rounded-full shadow-lg shadow-indigo-500/50 animate-bounce">
+                🏆
+            </div>
+
+            <!-- បន្ថែម pb-3 (Padding Bottom) និង pt-1 ការពារការបាត់ជើងអក្សរខ្មែរលើពាក្យ អបអរសាទរ -->
+            <h2
+                class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-400 mt-10 pt-1 pb-3 leading-tight">
+                អបអរសាទរ! អ្នកឈ្នះហើយ!
+            </h2>
+            <p class="text-slate-300 text-sm mb-6">អ្នកពិតជាមានការចងចាំដ៏អស្ចារ្យមែន!</p>
+
+            <!-- ស្ថិតិការលេង -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 space-y-3 text-left">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400 text-sm">🎮 កម្រិតលេង៖</span>
+                    <span id="modal-level" class="font-bold text-indigo-300">ងាយស្រួល</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-white/5 pt-2">
+                    <span class="text-slate-400 text-sm">⏱️ ប្រើពេលសរុប៖</span>
+                    <span id="modal-time" class="font-bold text-pink-400">00:00</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-white/5 pt-2">
+                    <span class="text-slate-400 text-sm">🔄 ចំនួនដងបង្វិល៖</span>
+                    <span id="modal-moves" class="font-bold text-purple-400">0 ដង</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-white/5 pt-2">
+                    <span class="text-slate-400 text-sm">⭐ ពិន្ទុទទួលបាន៖</span>
+                    <span id="modal-score" class="font-bold text-yellow-400">0</span>
+                </div>
+            </div>
+
+            <!-- ប៊ូតុងបញ្ជា -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="closeVictoryModal(); backToMenu();"
+                    class="py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl transition-all border border-slate-700">
+                    🏠 ទៅទំព័រដើម
+                </button>
+                <button onclick="closeVictoryModal(); resetGame();"
+                    class="py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/20 transition-all">
+                    🔄 លេងម្តងទៀត
+                </button>
+            </div>
+
+            <!-- ឈ្មោះអ្នកបង្កើតនៅលើផ្ទាំងឈ្នះ -->
+            <p class="text-slate-500 text-xs mt-4">
+                អរគុណសម្រាប់ការលេង! រៀបចំឡើងដោយ៖ <span class="text-indigo-400 font-semibold">សំ គឹមឆេង</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Script ដំណើរការហ្គេមទាំងស្រុង -->
+    <script>
+        // និយមន័យប្រធានបទ និងរូបតំណាង (Emojis)
+        const themes = {
+            animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦'],
+            fruits: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍈', '🍒', '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🥑'],
+            space: ['🚀', '🛸', '🪐', '🌌', '🌠', '⭐', '🌙', '☀️', '🌍', '👽', '🤖', '🛰️', '☄️', '🔭', '👨‍🚀', '👩‍🚀', '👾', '📡'],
+            food: ['🍕', '🍔', '🍟', '🌭', '🍿', '🧂', '🥓', '🍳', '🧇', '🥞', '🥐', '🥨', '🍩', '🍪', '🎂', '🧁', '🍦', '🍣']
+        };
+
+        const difficultySettings = {
+            easy: { rows: 4, cols: 4, pairs: 8 },
+            medium: { rows: 4, cols: 6, pairs: 12 },
+            hard: { rows: 6, cols: 6, pairs: 18 }
+        };
+
+        // អថេរគ្រប់គ្រងស្ថានភាពហ្គេម (Game States)
+        let currentDifficulty = 'easy';
+        let currentTheme = 'animals';
+        let cards = [];
+        let flippedCards = [];
+        let matchedCount = 0;
+        let moves = 0;
+        let score = 0;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+        let gameActive = false;
+        let soundEnabled = true;
+
+        // បង្កើតប្រព័ន្ធសំឡេង Web Audio API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!soundEnabled || !audioCtx) return;
+
+            // ដោះស្រាយបញ្ហា AudioContext ជាប់សោរ (Locked) របស់ Browser
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'flip') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                osc.start(now);
+                osc.stop(now + 0.12);
+            } else if (type === 'match') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } else if (type === 'fail') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(160, now);
+                osc.frequency.setValueAtTime(110, now + 0.15);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'win') {
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // Fanfare
+                notes.forEach((freq, idx) => {
+                    const noteOsc = audioCtx.createOscillator();
+                    const noteGain = audioCtx.createGain();
+                    noteOsc.connect(noteGain);
+                    noteGain.connect(audioCtx.destination);
+                    noteOsc.type = 'sine';
+                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                    noteGain.gain.setValueAtTime(0.1, now + idx * 0.12);
+                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
+                    noteOsc.start(now + idx * 0.12);
+                    noteOsc.stop(now + idx * 0.12 + 0.35);
+                });
+            }
+        }
+
+        // ការផ្លាស់ប្តូរកម្រិតលេង (Difficulty Selection)
+        function selectDifficulty(diff) {
+            currentDifficulty = diff;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600/30', 'border-indigo-500', 'border-2');
+                btn.classList.add('bg-white/5', 'border', 'border-white/10');
+                btn.querySelector('span').classList.remove('text-indigo-300');
+                btn.querySelector('span').classList.add('text-slate-400');
+            });
+
+            const activeBtn = document.getElementById(`btn-${diff}`);
+            activeBtn.classList.remove('bg-white/5', 'border', 'border-white/10');
+            activeBtn.classList.add('bg-indigo-600/30', 'border-indigo-500', 'border-2', 'shadow-lg', 'shadow-indigo-500/20');
+            activeBtn.querySelector('span').classList.remove('text-slate-400');
+            activeBtn.querySelector('span').classList.add('text-indigo-300');
+
+            playSound('flip');
+        }
+
+        // ការផ្លាស់ប្តូរប្រធានបទ (Theme Selection)
+        function selectTheme(theme) {
+            currentTheme = theme;
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600/30', 'border-indigo-500', 'border-2');
+                btn.classList.add('bg-white/5', 'border', 'border-white/10');
+            });
+
+            const activeBtn = document.getElementById(`theme-${theme}`);
+            activeBtn.classList.remove('bg-white/5', 'border', 'border-white/10');
+            activeBtn.classList.add('bg-indigo-600/30', 'border-indigo-500', 'border-2');
+
+            playSound('flip');
+        }
+
+        // ការចាប់ផ្តើមហ្គេមចេញពីម៉ឺនុយដើម (Start Game)
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            resetGame();
+        }
+
+        // ត្រឡប់មកម៉ឺនុយដើមវិញ (Back to Main Menu)
+        function backToMenu() {
+            clearInterval(timerInterval);
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            updateGlobalHighScore();
+            playSound('flip');
+        }
+
+        // បិទ/បើកសំឡេង (Toggle Sound)
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const soundIcon = document.getElementById('sound-icon');
+            const soundText = document.getElementById('sound-text');
+            if (soundEnabled) {
+                soundIcon.textContent = '🔊';
+                soundText.textContent = 'បើកសំឡេង';
+                playSound('flip');
+            } else {
+                soundIcon.textContent = '🔇';
+                soundText.textContent = 'បិទសំឡេង';
+            }
+        }
+
+        // កំណត់ទិន្នន័យឡើងវិញ និងរៀបចំក្តារលេង (Reset & Initialise Game Board)
+        function resetGame() {
+            clearInterval(timerInterval);
+            secondsElapsed = 0;
+            moves = 0;
+            score = 0;
+            matchedCount = 0;
+            flippedCards = [];
+            gameActive = true;
+
+            document.getElementById('timer-display').textContent = '00:00';
+            document.getElementById('moves-count').textContent = '0';
+            document.getElementById('current-score').textContent = '0';
+
+            // បង្ហាញពិន្ទុខ្ពស់បំផុតក្នុងតំបន់
+            const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
+            const localHighScore = localStorage.getItem(highScoreKey) || 0;
+            document.getElementById('high-score-display').textContent = localHighScore;
+
+            // ចាប់ផ្តើមនាឡិកាវាស់ពេល
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                document.getElementById('timer-display').textContent = `${mins}:${secs}`;
+            }, 1000);
+
+            generateCards();
+        }
+
+        // បង្កើតកាត និងបោះចូលក្នុង Grid
+        function generateCards() {
+            const setting = difficultySettings[currentDifficulty];
+            const themeEmojis = [...themes[currentTheme]];
+
+            // កាត់តម្រឹមយកចំនួនរូបតំណាងតាមតម្រូវការគូ
+            const selectedEmojis = themeEmojis.sort(() => 0.5 - Math.random()).slice(0, setting.pairs);
+
+            // បង្កើតគូ (ស្ទួន ២ ដង) រួចច្របល់វាឱ្យសព្វ (Shuffle)
+            const gameEmojis = [...selectedEmojis, ...selectedEmojis].sort(() => 0.5 - Math.random());
+
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = '';
+
+            // កំណត់ចំនួនជួរឈររបស់ Grid ទៅតាមទំហំលេង
+            gridContainer.className = 'grid gap-3 md:gap-4 justify-center mx-auto max-w-3xl min-h-[300px]';
+            if (currentDifficulty === 'easy') {
+                gridContainer.classList.add('grid-cols-4');
+            } else if (currentDifficulty === 'medium') {
+                gridContainer.classList.add('grid-cols-4', 'md:grid-cols-6');
+            } else {
+                gridContainer.classList.add('grid-cols-6');
+            }
+
+            cards = gameEmojis.map((emoji, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card-container aspect-square cursor-pointer';
+
+                // កំណត់ទំហំកាត និងទំហំរូប Emojis តាមកម្រិតលេង
+                let emojiSizeClass = 'text-3xl md:text-4xl';
+                let cardSizeClass = 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24';
+                if (currentDifficulty === 'hard') {
+                    emojiSizeClass = 'text-2xl md:text-3xl';
+                    cardSizeClass = 'w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20';
+                } else if (currentDifficulty === 'medium') {
+                    emojiSizeClass = 'text-3xl';
+                    cardSizeClass = 'w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22';
+                }
+
+                card.innerHTML = `
+                    <div class="card-inner w-full h-full relative" data-index="${idx}" data-emoji="${emoji}">
+                        <!-- ផ្នែកខាងក្រោយរបស់កាត (Card Back - Hidden face) -->
+                        <div class="card-back absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-800 rounded-2xl flex items-center justify-center border border-indigo-400/40 shadow-md hover:brightness-110 active:scale-95 transition-all">
+                            <div class="w-8 h-8 rounded-full border-2 border-dashed border-indigo-300/40 flex items-center justify-center">
+                                <span class="text-indigo-200 text-xs font-bold">✨</span>
+                            </div>
+                        </div>
+                        <!-- ផ្នែកខាងមុខរបស់កាត (Card Front - Show Emojis) -->
+                        <div class="card-front absolute inset-0 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 shadow-inner">
+                            <span class="${emojiSizeClass} select-none drop-shadow-md">${emoji}</span>
+                        </div>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => handleCardClick(card.querySelector('.card-inner')));
+                gridContainer.appendChild(card);
+                return card;
+            });
+        }
+
+        // ដោះស្រាយនៅពេលអ្នកលេងចុចលើកាតនីមួយៗ
+        function handleCardClick(cardInner) {
+            if (!gameActive) return;
+            // ការពារមិនឱ្យចុចកាតដែលកំពុងបើក ឬកាតដែលផ្គូផ្គងរួចហើយ
+            if (cardInner.classList.contains('flipped') || flippedCards.length >= 2) return;
+
+            // បើកកាត
+            cardInner.classList.add('flipped');
+            flippedCards.push(cardInner);
+            playSound('flip');
+
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves-count').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        // ពិនិត្យមើលថាតើកាតទាំងពីរដែលបើកមានគូដូចគ្នាឬទេ?
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const emoji1 = card1.getAttribute('data-emoji');
+            const emoji2 = card2.getAttribute('data-emoji');
+
+            if (emoji1 === emoji2) {
+                // ករណី៖ ផ្គូផ្គងត្រូវគូ (Match Success)
+                matchedCount += 2;
+                score += 15; // បន្ថែមពិន្ទុសម្រាប់រាល់គូដែលត្រូវ
+
+                // ប្រាក់រង្វាន់សម្រាប់ការចងចាំបានលឿន និងច្បាស់
+                if (moves <= (difficultySettings[currentDifficulty].pairs + 2)) {
+                    score += 5; // បន្ថែមពិន្ទុបន្ថែម
+                }
+
+                document.getElementById('current-score').textContent = score;
+
+                // បង្ហាញពន្លឺបញ្ជាក់ថាត្រឹមត្រូវ
+                setTimeout(() => {
+                    card1.querySelector('.card-front').classList.add('bg-emerald-500/20', 'border-emerald-400');
+                    card2.querySelector('.card-front').classList.add('bg-emerald-500/20', 'border-emerald-400');
+                    playSound('match');
+                    flippedCards = [];
+
+                    // ពិនិត្យលក្ខខណ្ឌឈ្នះហ្គេម
+                    if (matchedCount === difficultySettings[currentDifficulty].pairs * 2) {
+                        endGame(true);
+                    }
+                }, 400);
+
+            } else {
+                // ករណី៖ ផ្គូផ្គងខុសគូ (Match Fail)
+                if (score > 2) score -= 2; // ដកពិន្ទុបន្តិចបន្តួចនៅពេលផ្គូផ្គងខុស
+                document.getElementById('current-score').textContent = score;
+
+                setTimeout(() => {
+                    card1.querySelector('.card-front').classList.add('bg-rose-500/10', 'border-rose-400/40');
+                    card2.querySelector('.card-front').classList.add('bg-rose-500/10', 'border-rose-400/40');
+                    playSound('fail');
+                }, 300);
+
+                // បិទកាតត្រឡប់ទៅវិញក្រោយ ១វិនាទី
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.querySelector('.card-front').classList.remove('bg-rose-500/10', 'border-rose-400/40');
+                    card2.querySelector('.card-front').classList.remove('bg-rose-500/10', 'border-rose-400/40');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        // បញ្ចប់ហ្គេម និងគណនាពិន្ទុឈ្នះ
+        function endGame(won) {
+            gameActive = false;
+            clearInterval(timerInterval);
+
+            if (won) {
+                playSound('win');
+                startConfetti();
+
+                // រក្សាទុកពិន្ទុខ្ពស់បំផុត (High Score) ទៅក្នុង LocalStorage
+                const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
+                const currentHighScore = parseInt(localStorage.getItem(highScoreKey)) || 0;
+
+                // បន្ថែមពិន្ទុបន្ថែមទៅតាមល្បឿននៃការលេង (Time bonus)
+                const timeBonus = Math.max(100 - secondsElapsed, 10);
+                const finalScore = score + timeBonus;
+
+                if (finalScore > currentHighScore) {
+                    localStorage.setItem(highScoreKey, finalScore);
+                }
+
+                // បំពេញស្ថិតិក្នុងផ្ទាំង Modal ឈ្នះហ្គេម
+                const levelNames = { easy: 'ងាយស្រួល (4x4)', medium: 'មធ្យម (4x6)', hard: 'ពិបាក (6x6)' };
+                document.getElementById('modal-level').textContent = levelNames[currentDifficulty];
+
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                document.getElementById('modal-time').textContent = `${mins}នាទី:${secs}វិនាទី`;
+
+                document.getElementById('modal-moves').textContent = `${moves} ដង`;
+                document.getElementById('modal-score').textContent = finalScore;
+
+                // បើកបង្ហាញ Modal ឈ្នះហ្គេម
+                setTimeout(() => {
+                    const modal = document.getElementById('victory-modal');
+                    const card = document.getElementById('victory-card');
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    card.classList.remove('scale-90');
+                }, 800);
+            }
+        }
+
+        // បិទផ្ទាំងជ័យជម្នះ
+        function closeVictoryModal() {
+            const modal = document.getElementById('victory-modal');
+            const card = document.getElementById('victory-card');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            card.classList.add('scale-90');
+            stopConfetti();
+        }
+
+        // បច្ចុប្បន្នភាពការបង្ហាញពិន្ទុខ្ពស់បំផុតសរុប (Global High Score Display)
+        function updateGlobalHighScore() {
+            let maxScore = 0;
+            // រុករករាល់ពិន្ទុខ្ពស់បំផុតក្នុងកម្រិតនីមួយៗ
+            for (let diff in difficultySettings) {
+                for (let theme in themes) {
+                    const score = parseInt(localStorage.getItem(`high_score_${diff}_${theme}`)) || 0;
+                    if (score > maxScore) maxScore = score;
+                }
+            }
+            document.getElementById('global-high-score').textContent = maxScore;
+        }
+
+
+        // ================= CONFETTI EFFECT (ប្រព័ន្ធកម្ទេចភ្លើងអបអរ) =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confettiActive = false;
+        let confettiArray = [];
+        const colors = ['#f43f5e', '#ec4899', '#d946ef', '#a855f7', '#8b5cf6', '#6366f1', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class ConfettiParticle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height - 20;
+                this.size = Math.random() * 8 + 6;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 4 + 3;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 4 - 2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > canvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            confettiArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateConfetti);
+        }
+
+        function startConfetti() {
+            canvas.classList.remove('hidden');
+            resizeCanvas();
+            confettiActive = true;
+            confettiArray = [];
+            for (let i = 0; i < 150; i++) {
+                confettiArray.push(new ConfettiParticle());
+            }
+            animateConfetti();
+        }
+
+        function stopConfetti() {
+            confettiActive = false;
+            canvas.classList.add('hidden');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // ការពារការបាត់បង់ទំហំពេលប្តូរ Orientation ឬ Screen size
+        window.addEventListener('resize', resizeCanvas);
+
+        // ចាប់ផ្តើមលើកដំបូងបំផុត
+        updateGlobalHighScore();
+    </script>
+</body>
+
+</html>
