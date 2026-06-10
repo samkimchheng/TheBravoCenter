@@ -22,8 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ពង្រឹងចំណេះដឹង
                                 <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </a>
-                            <div class="absolute left-0 mt-1 w-60 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out bg-white border border-gray-100 rounded-2xl shadow-xl z-50 pt-1">
-                                <div class="p-2 space-y-1 bg-white rounded-2xl">
+                            <div class="absolute left-0 mt-2 w-60 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+                                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 group-hover:animate-pulse transition-all duration-500 -z-10"></div>
+                                <div class="relative bg-white border border-gray-100 rounded-2xl shadow-xl p-2 space-y-1">
                                     <a href="quiz.html?tab=quizzes" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">តេស្តសមត្ថភាព</a>
                                     <a href="quiz.html?tab=lessons" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">មេរៀនសំខាន់ៗ</a>
                                     <a href="quiz.html?tab=shortcuts" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">មេរៀន Shortcut Key</a>
@@ -35,8 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ហ្គេម
                                 <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
-                            <div class="absolute left-0 mt-1 w-64 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out bg-white border border-gray-100 rounded-2xl shadow-xl z-50 pt-1">
-                                <div class="p-2 space-y-1 bg-white rounded-2xl">
+                            <div class="absolute left-0 mt-2 w-64 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+                                <div class="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 group-hover:animate-pulse transition-all duration-500 -z-10"></div>
+                                <div class="relative bg-white border border-gray-100 rounded-2xl shadow-xl p-2 space-y-1">
                                     <a href="memory-game.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">ល្បងប្រាជ្ញាស្វែងរកគូ</a>
                                     <a href="spin-wheel.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">កម្មវិធីបង្វិលកងចាប់ឈ្មោះ</a>
                                 </div>
