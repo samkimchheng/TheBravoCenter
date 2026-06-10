@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="relative bg-white border border-gray-100 rounded-2xl shadow-xl p-2 space-y-1">
                                     <a href="memory-game.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">ល្បងប្រាជ្ញាស្វែងរកគូ</a>
                                     <a href="spin-wheel.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">កម្មវិធីបង្វិលកងចាប់ឈ្មោះ</a>
+                                    <a href="robot-game.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">រ៉ូបូតសង្គ្រោះថាមពល</a>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="block px-5 py-2 text-gray-400 font-bold text-sm uppercase tracking-wider">ហ្គេម</span>
                     <a href="memory-game.html" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ល្បងប្រាជ្ញាស្វែងរកគូ</a>
                     <a href="spin-wheel.html" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">កម្មវិធីបង្វិលកងចាប់ឈ្មោះ</a>
+                                <a href="robot-game.html" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">រ៉ូបូតសង្គ្រោះថាមពល</a>
                 </div>
                 <a href="testimonials.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ចំណាប់អារម្មណ៍សិស្ស</a>
                 <a href="contact.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ទំនាក់ទំនង</a>

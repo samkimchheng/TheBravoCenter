@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ហ្គេមកម្សាន្ត - មជ្ឈមណ្ឌលមិត្តពូកែ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* លាក់ផ្ទាំង Google Translate ខាងលើ និងការពារមិនឱ្យជាន់ Navbar */
+        body {
+            top: 0 !important;
+        }
+
+        .skiptranslate iframe {
+            display: none !important;
+        }
+
+        #goog-gt-tt {
+            display: none !important;
+        }
+
+        html[class*="translated-"] .text-km {
+            display: none !important;
+        }
+
+        html[class*="translated-"] .text-en {
+            display: inline !important;
+        }
+
+        .text-en {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Navigation Bar Component -->
+    <div id="navbar-container"></div>
+
+    <section class="pt-32 pb-16 flex-grow bg-gradient-to-b from-blue-50/50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-purple-600 font-bold tracking-wider uppercase text-sm mb-2 block">កម្សាន្ត
+                    និងពង្រឹងប្រាជ្ញា</span>
+                <h2
+                    class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 py-1 mb-4">
+                    ជ្រើសរើសហ្គេមសម្រាប់លេង</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- ហ្គេមទី ១៖ ល្បងប្រាជ្ញាស្វែងរកគូ -->
+                <a href="memory-game.html"
+                    class="bg-white rounded-[2rem] p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 group flex flex-col items-center text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-400 to-purple-500"></div>
+                    <div
+                        class="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center text-5xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                        🧠
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                        ល្បងប្រាជ្ញាស្វែងរកគូ</h3>
+                    <p class="text-gray-500 mb-8 flex-grow">ហ្គេមសាកល្បងការចងចាំ
+                        ស្វែងរកកាតដែលមានរូបភាពដូចគ្នាដើម្បីទទួលបានពិន្ទុ។</p>
+                    <span
+                        class="mt-auto w-full inline-flex items-center justify-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 px-6 py-3 rounded-xl font-bold group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                        លេងឥឡូវនេះ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </a>
+
+                <!-- ហ្គេមទី ២៖ រ៉ូបូតសង្គ្រោះថាមពល -->
+                <a href="robot-game.html"
+                    class="bg-white rounded-[2rem] p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 group flex flex-col items-center text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+                    <div
+                        class="w-24 h-24 bg-cyan-50 rounded-full flex items-center justify-center text-5xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                        🤖
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-cyan-600 transition-colors">
+                        រ៉ូបូតសង្គ្រោះថាមពល</h3>
+                    <p class="text-gray-500 mb-8 flex-grow">បញ្ជារ៉ូបូតលោតគេចពីឧបសគ្គឡាស៊ែរ
+                        និងប្រមូលថាមពលដើម្បីរត់ឱ្យបានឆ្ងាយបំផុត។</p>
+                    <span
+                        class="mt-auto w-full inline-flex items-center justify-center gap-2 bg-cyan-50 border border-cyan-100 text-cyan-700 px-6 py-3 rounded-xl font-bold group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                        លេងឥឡូវនេះ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </a>
+
+                <!-- ហ្គេមទី ៣៖ បង្វិលកងចាប់ឈ្មោះ -->
+                <a href="spin-wheel.html"
+                    class="bg-white rounded-[2rem] p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 group flex flex-col items-center text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
+                    <div
+                        class="w-24 h-24 bg-teal-50 rounded-full flex items-center justify-center text-5xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-inner">
+                        🎡
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-teal-600 transition-colors">
+                        បង្វិលកងចាប់ឈ្មោះ</h3>
+                    <p class="text-gray-500 mb-8 flex-grow">កម្មវិធីបង្វិលកងចៃដន្យ សម្រាប់ចាប់ឈ្មោះសិស្ស
+                        ឬចាប់រង្វាន់ផ្សេងៗដោយយុត្តិធម៌។</p>
+                    <span
+                        class="mt-auto w-full inline-flex items-center justify-center gap-2 bg-teal-50 border border-teal-100 text-teal-700 px-6 py-3 rounded-xl font-bold group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                        ប្រើប្រាស់ឥឡូវនេះ <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
+        <p>&copy; <span id="year"></span> <span class="text-km">មជ្ឈមណ្ឌលមិត្តពូកែ</span><span
+                class="text-en notranslate">TheBravoCenter</span>. រក្សាសិទ្ធិគ្រប់យ៉ាង.</p>
+        <p class="mt-2 text-sm text-gray-300">បង្កើតគេហទំព័រដោយ លោកគ្រូ <strong class="text-white notranslate">សំ
+                គឹមឆេង</strong></p>
+        <!-- ផ្ទាំងបង្ហាញចំនួនអ្នកចូលទស្សនាវេបសាយ -->
+        <div class="mt-4 flex justify-center items-center gap-3 min-h-[40px]">
+            <span class="text-sm font-medium tracking-wide text-gray-300">ចំនួនអ្នកចូលទស្សនា៖</span>
+            <img src="https://hits.sh/thebravocenter.com.svg?style=for-the-badge&label=%20&color=2563eb"
+                alt="Visitor Counter" class="h-7 shadow-sm rounded">
+        </div>
+        <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    </footer>
+
+    <!-- Google Translate Widget -->
+    <div id="google_translate_element"
+        class="fixed bottom-4 left-4 z-50 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all">
+    </div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({ pageLanguage: 'km', includedLanguages: 'km,en' }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- បញ្ចូល JS -->
+    <script src="assets/js/navbar.js"></script>
+</body>
+
+</html>

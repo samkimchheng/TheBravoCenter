@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ហ្គេមរ៉ូបូតសង្គ្រោះថាមពល ៖ Cyber Robot Runner</title>
+    <!-- Tailwind CSS សម្រាប់ UI និងរចនាបថទំនើប -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts សម្រាប់អក្សរខ្មែរស្អាតៗ -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #0b0f19 0%, #020408 100%);
+            /* អនុញ្ញាតឲ្យអូសចុះក្រោមបាន ប៉ុន្តែលាក់របារអូសខាងឆ្វេង-ស្តាំ */
+            overflow-x: hidden;
+            overflow-y: auto;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ចលនាលោតឡូហ្គូបែបពិសេស (Custom Logo Bounce Animation) */
+        @keyframes logo-bounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                filter: drop-shadow(0 10px 15px rgba(6, 182, 212, 0.4));
+            }
+            50% {
+                transform: translateY(-12px) scale(1.05);
+                filter: drop-shadow(0 25px 25px rgba(6, 182, 212, 0.7));
+            }
+        }
+        .logo-bounce {
+            animation: logo-bounce 3.5s ease-in-out infinite;
+        }
+
+        /* ចលនាប៉ប្រិចភ្នែករ៉ូបូត (Robot Eye Blink) */
+        @keyframes eye-blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.15); }
+        }
+        .robot-eye {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: eye-blink 3s infinite;
+        }
+
+        /* ចលនាញាក់បន្ទាត់សំឡេងមាត់រ៉ូបូត (Equalizer Animation) */
+        @keyframes eq-pulse {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.4); }
+        }
+        .eq-bar {
+            transform-box: fill-box;
+            transform-origin: bottom;
+            animation: eq-pulse 0.4s infinite alternate ease-in-out;
+        }
+        .eq-bar-2 { animation-delay: 0.12s; animation-duration: 0.3s; }
+        .eq-bar-3 { animation-delay: 0.24s; animation-duration: 0.5s; }
+        .eq-bar-4 { animation-delay: 0.08s; animation-duration: 0.35s; }
+        .eq-bar-5 { animation-delay: 0.18s; animation-duration: 0.45s; }
+
+        /* ពន្លឺ Neon ជុំវិញហ្គេម */
+        .neon-border {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center py-8 px-4 relative text-white">
+
+    <!-- Canvas សម្រាប់បង្ហាញកម្ទេចក្រដាសអបអរសាទរពេលឈ្នះ -->
+    <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full hidden"></canvas>
+
+    <!-- ផ្ទៃខាងក្រោយមានពន្លឺរត់លម្អ (Glowing Orbs) -->
+    <div class="absolute top-10 left-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- ប្រអប់ហ្គេមទាំងមូល -->
+    <main class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-6 shadow-2xl relative z-10 neon-border overflow-hidden">
+        
+        <!-- ប៊ូតុងត្រឡប់ទៅទំព័រដើម -->
+        <div id="back-home-btn" class="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
+            <a href="index.html" class="flex items-center space-x-2 text-sm font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all border border-white/10 backdrop-blur-md">
+                <span>🏠</span>
+                <span class="hidden sm:inline">ត្រឡប់ទៅទំព័រដើម</span>
+            </a>
+        </div>
+
+        <!-- ================= ផ្ទាំងចាប់ផ្តើមលេង (Start Screen) ================= -->
+        <section id="start-screen" class="flex flex-col items-center text-center py-6">
+            
+            <!-- ឡូហ្គូរ៉ូបូតមានចលនាដ៏រស់រវើក (Animated Cyber Robot Logo) -->
+            <div class="relative w-36 h-36 mb-6 logo-bounce flex items-center justify-center">
+                <!-- ពន្លឺជះចេញពីក្រោយ (Glow Effect) -->
+                <div class="absolute inset-0 rounded-full bg-cyan-500/30 blur-2xl animate-pulse"></div>
+                <!-- SVG រ៉ូបូតមានចលនា -->
+                <div class="w-full h-full relative z-10">
+                    <svg class="w-full h-full drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="metallicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e293b" />
+                                <stop offset="50%" stop-color="#334155" />
+                                <stop offset="100%" stop-color="#0f172a" />
+                            </linearGradient>
+                            <linearGradient id="neonCyan" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#22d3ee" />
+                                <stop offset="100%" stop-color="#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Antenna -->
+                        <rect x="47" y="10" width="6" height="15" fill="#475569" rx="1" />
+                        <circle cx="50" cy="8" r="5" fill="#06b6d4" class="animate-ping origin-center" style="animation-duration: 2s;" />
+                        <circle cx="50" cy="8" r="4" fill="#22d3ee" />
+                        <!-- Ears -->
+                        <rect x="15" y="42" width="7" height="18" rx="3" fill="#475569" stroke="#0891b2" stroke-width="1" />
+                        <rect x="78" y="42" width="7" height="18" rx="3" fill="#475569" stroke="#0891b2" stroke-width="1" />
+                        <!-- Head Body -->
+                        <rect x="20" y="22" width="60" height="56" rx="16" fill="url(#metallicGradient)" stroke="#0891b2" stroke-width="3" />
+                        <!-- Face Visor -->
+                        <rect x="27" y="34" width="46" height="20" rx="6" fill="#020617" stroke="#1e293b" stroke-width="1.5" />
+                        <!-- Glowing Robot Eyes -->
+                        <ellipse cx="38" cy="44" rx="7" ry="2.5" fill="url(#neonCyan)" class="robot-eye" />
+                        <ellipse cx="62" cy="44" rx="7" ry="2.5" fill="url(#neonCyan)" class="robot-eye" />
+                        <!-- Mouth/Audio Equalizer -->
+                        <g stroke="#22d3ee" stroke-width="2" stroke-linecap="round">
+                            <line x1="38" y1="66" x2="38" y2="60" class="eq-bar" />
+                            <line x1="44" y1="68" x2="44" y2="58" class="eq-bar eq-bar-2" />
+                            <line x1="50" y1="70" x2="50" y2="56" class="eq-bar eq-bar-3" />
+                            <line x1="56" y1="68" x2="56" y2="58" class="eq-bar eq-bar-4" />
+                            <line x1="62" y1="66" x2="62" y2="60" class="eq-bar eq-bar-5" />
+                        </g>
+                        <!-- Detail lines/screws -->
+                        <circle cx="26" cy="28" r="1.5" fill="#64748b" />
+                        <circle cx="74" cy="28" r="1.5" fill="#64748b" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- ចំណងជើងធំ ជៀសវាងបញ្ហាដាច់ជើងអក្សរខ្មែរ -->
+            <h1 class="text-3xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 pt-2 pb-5 leading-tight">
+                រ៉ូបូតសង្គ្រោះថាមពល
+            </h1>
+            
+            <p class="text-slate-300 text-sm md:text-base max-w-md mt-1 mb-8">
+                ជួយរ៉ូបូតសង្គ្រោះថាមពលឲ្យបានឆ្ងាយបំផុត! ជៀសវាងឧបសគ្គឡាស៊ែរក្រហម និងប្រមូលខែលការពារថាមពលពិសេសពីមជ្ឈមណ្ឌល។
+            </p>
+
+            <!-- របៀបលេងសង្ខេប -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 max-w-md w-full mb-8 text-left space-y-2">
+                <h3 class="text-cyan-400 font-bold text-sm">🎮 របៀបបញ្ជា៖</h3>
+                <p class="text-xs text-slate-300">👉 <strong>ចុចលើអេក្រង់</strong> ឬ <strong>ចុច Spacebar</strong> ដើម្បី <span class="text-yellow-400 font-bold">លោត</span></p>
+                <p class="text-xs text-slate-300">👉 <strong>ចុចលោត ២ ដង</strong> ជាប់គ្នា ដើម្បី <span class="text-yellow-400 font-bold">លោតពីរតង់ (Double Jump)</span></p>
+                <p class="text-xs text-slate-300">🔰 ប្រមូលអាគុយ <span class="text-cyan-400 font-bold">⚡ (+10 ពិន្ទុ)</span> និងខែលការពារពីមជ្ឈមណ្ឌល <span class="text-indigo-400 font-bold">🛡️ (អមតៈ 5 វិនាទី)</span></p>
+            </div>
+
+            <!-- ប៊ូតុងចាប់ផ្តើម -->
+            <button onclick="startGame()" class="w-full max-w-md py-4 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 hover:from-cyan-600 hover:to-fuchsia-600 font-bold text-lg rounded-2xl shadow-xl shadow-cyan-500/20 transform hover:-translate-y-1 transition-all duration-300 text-white uppercase tracking-wider">
+                🔌 ភ្ជាប់ចរន្តលេងឥឡូវនេះ
+            </button>
+
+            <!-- បង្ហាញពិន្ទុខ្ពស់បំផុត និងព័ត៌មានអ្នកបង្កើត -->
+            <div class="mt-8 text-slate-400 text-sm flex flex-col items-center space-y-4">
+                <div class="flex items-center space-x-2">
+                    <span>🏆 ចម្ងាយឆ្ងាយបំផុត៖</span>
+                    <span id="global-high-score" class="text-yellow-400 font-bold text-base">0 m</span>
+                </div>
+                <!-- ផ្លាកសញ្ញាអ្នកបង្កើតហ្គេម សំ គឹមឆេង -->
+                <div class="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300 flex items-center space-x-1.5 shadow-inner">
+                    <span>⚙️ បង្កើតហ្គេមដោយ៖</span>
+                    <span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 font-bold pb-1">សំ គឹមឆេង</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ផ្ទាំងលេងហ្គេម (Game Screen) ================= -->
+        <section id="game-screen" class="hidden relative flex flex-col items-center">
+            <!-- របារព័ត៌មានខាងលើ -->
+            <div class="w-full flex items-center justify-between mb-4 bg-white/5 p-3 rounded-2xl border border-white/10">
+                <div class="flex items-center space-x-4">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest">ចម្ងាយរត់</span>
+                        <span id="distance-display" class="text-xl font-bold text-cyan-400">0 m</span>
+                    </div>
+                    <div class="flex flex-col border-l border-white/10 pl-4">
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest">ពិន្ទុថាមពល</span>
+                        <span id="score-display" class="text-xl font-bold text-yellow-400">0</span>
+                    </div>
+                </div>
+
+                <!-- ស្ថានភាពខែលការពារពិសេស -->
+                <div id="shield-status" class="hidden px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/50 text-xs font-bold text-indigo-300 animate-pulse flex items-center space-x-1">
+                    <span>🛡️</span> <span>កំពុងបើកខែលការពារ BRAVO</span>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button onclick="toggleSound()" id="sound-btn" class="bg-white/5 hover:bg-white/10 w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 transition-all">
+                        <span id="sound-icon">🔊</span>
+                    </button>
+                    <button onclick="backToMenu()" class="bg-slate-800 hover:bg-slate-700 text-xs font-semibold px-3 py-2 rounded-xl border border-slate-700 transition-all">
+                        🛑 ឈប់លេង
+                    </button>
+                </div>
+            </div>
+
+            <!-- កន្លែងបង្ហាញគំនូរជីវចលហ្គេម (Main Canvas) -->
+            <div class="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
+                <canvas id="game-canvas" class="w-full h-auto max-h-[55vh] block"></canvas>
+            </div>
+            
+            <p class="text-xs text-slate-400 mt-3 italic">សូមចុចលើប្រអប់ហ្គេម ឬចុច Spacebar ដើម្បីឲ្យរ៉ូបូតលោតគេចពីឧបសគ្គ!</p>
+        </section>
+
+    </main>
+
+    <!-- ផ្ទាំងបង្ហាញចំនួនអ្នកចូលទស្សនាវេបសាយ -->
+    <div class="mt-4 flex justify-center items-center gap-3 min-h-[40px] relative z-10">
+        <span class="text-sm font-medium tracking-wide text-gray-300">ចំនួនអ្នកចូលទស្សនា៖</span>
+        <img src="https://hits.sh/thebravocenter.com.svg?style=for-the-badge&label=%20&color=2563eb" alt="Visitor Counter"
+            class="h-7 shadow-sm rounded">
+    </div>
+
+    <!-- ================= ផ្ទាំងលេងចាញ់/ហ្គេមចប់ (Game Over Modal) ================= -->
+    <div id="gameover-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center z-50 opacity-0 pointer-events-none transition-all duration-500 p-4">
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-cyan-500/40 rounded-3xl p-8 max-w-md w-full text-center shadow-2xl relative transform scale-90 transition-all duration-500 max-h-[90vh] overflow-y-auto" id="gameover-card">
+            
+            <!-- ឡូហ្គោលោតៗនៅផ្ទាំងចាញ់ (Sad Robot Overcast) -->
+            <div class="absolute -top-14 left-1/2 transform -translate-x-1/2 w-28 h-28 flex items-center justify-center">
+                <div class="absolute inset-0 rounded-full bg-rose-500/40 blur-xl animate-pulse"></div>
+                <!-- SVG រ៉ូបូតចាញ់ហ្គេម -->
+                <div class="w-full h-full relative z-10">
+                    <svg class="w-full h-full drop-shadow-[0_0_15px_rgba(244,63,94,0.6)]" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="metallicGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e293b" />
+                                <stop offset="50%" stop-color="#334155" />
+                                <stop offset="100%" stop-color="#0f172a" />
+                            </linearGradient>
+                            <linearGradient id="neonRose" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#f43f5e" />
+                                <stop offset="100%" stop-color="#be123c" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Antenna -->
+                        <rect x="47" y="10" width="6" height="15" fill="#475569" rx="1" />
+                        <circle cx="50" cy="8" r="5" fill="#f43f5e" class="animate-ping origin-center" style="animation-duration: 1.2s;" />
+                        <circle cx="50" cy="8" r="4" fill="#fb7185" />
+                        <!-- Ears -->
+                        <rect x="15" y="42" width="7" height="18" rx="3" fill="#475569" stroke="#f43f5e" stroke-width="1" />
+                        <rect x="78" y="42" width="7" height="18" rx="3" fill="#475569" stroke="#f43f5e" stroke-width="1" />
+                        <!-- Head Body -->
+                        <rect x="20" y="22" width="60" height="56" rx="16" fill="url(#metallicGradient2)" stroke="#f43f5e" stroke-width="3" />
+                        <!-- Face Visor -->
+                        <rect x="27" y="34" width="46" height="20" rx="6" fill="#020617" stroke="#1e293b" stroke-width="1.5" />
+                        <!-- Glowing Robot Eyes (Sad expression for Game Over) -->
+                        <path d="M 31,46 Q 38,40 38,46" stroke="url(#neonRose)" stroke-width="3" fill="none" stroke-linecap="round" />
+                        <path d="M 69,46 Q 62,40 62,46" stroke="url(#neonRose)" stroke-width="3" fill="none" stroke-linecap="round" />
+                        <!-- Mouth/Sad Audio Equalizer -->
+                        <g stroke="#f43f5e" stroke-width="2" stroke-linecap="round">
+                            <line x1="38" y1="64" x2="38" y2="66" class="eq-bar" />
+                            <line x1="44" y1="62" x2="44" y2="68" class="eq-bar eq-bar-2" />
+                            <line x1="50" y1="60" x2="50" y2="70" class="eq-bar eq-bar-3" />
+                            <line x1="56" y1="62" x2="56" y2="68" class="eq-bar eq-bar-4" />
+                            <line x1="62" y1="64" x2="62" y2="66" class="eq-bar eq-bar-5" />
+                        </g>
+                        <!-- Detail lines/screws -->
+                        <circle cx="26" cy="28" r="1.5" fill="#64748b" />
+                        <circle cx="74" cy="28" r="1.5" fill="#64748b" />
+                    </svg>
+                </div>
+            </div>
+
+            <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-400 mt-12 pt-1 pb-3 leading-tight uppercase tracking-wider">
+                រ៉ូបូតអស់ថាមពល!
+            </h2>
+            <p class="text-slate-300 text-sm mb-6">អ្នកបានខិតខំប្រឹងប្រែងអស់ពីសមត្ថភាពហើយ!</p>
+
+            <!-- ស្ថិតិការរត់ -->
+            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 space-y-3 text-left">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400 text-sm">🏃‍♂️ ចម្ងាយរត់បាន៖</span>
+                    <span id="modal-distance" class="font-bold text-cyan-400">0 m</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-white/5 pt-2">
+                    <span class="text-slate-400 text-sm">⚡ ពិន្ទុថាមពល៖</span>
+                    <span id="modal-score" class="font-bold text-yellow-400">0</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-white/5 pt-2">
+                    <span class="text-slate-400 text-sm">🏆 កំណត់ត្រាចម្ងាយចាស់៖</span>
+                    <span id="modal-highscore" class="font-bold text-slate-300">0 m</span>
+                </div>
+            </div>
+
+            <!-- ប៊ូតុងបញ្ជា -->
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="closeGameOverModal(); backToMenu();" class="py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl transition-all border border-slate-700">
+                    🏠 ទំព័រដើម
+                </button>
+                <button onclick="closeGameOverModal(); startGame();" class="py-3 bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-cyan-500/20 transition-all">
+                    🔄 លេងម្តងទៀត
+                </button>
+            </div>
+
+            <!-- ឈ្មោះអ្នកបង្កើតនៅលើផ្ទាំងចាញ់ -->
+            <p class="text-slate-500 text-[11px] mt-4 uppercase tracking-widest">
+                រចនាហ្គេមដោយ៖ <span class="text-cyan-400 font-bold">សំ គឹមឆេង</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Script ដំណើរការហ្គេមរ៉ូបូតទាំងស្រុង -->
+    <script>
+        // --- ប្រព័ន្ធគ្រប់គ្រងសម្លេង (Synthesizer Audio) ---
+        let soundEnabled = true;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // អថេរសម្រាប់គ្រប់គ្រងតន្ត្រី background (BGM)
+        let bgmSchedulerInterval = null;
+        let nextBgmNoteTime = 0.0;
+        let bgmStep = 0;
+        const bgmTempo = 132; // ល្បឿន BPM របស់តន្ត្រី
+        const bgmStepDuration = 60 / bgmTempo / 2; // ចលនា step នីមួយៗ (8th note)
+
+        function playSound(type) {
+            if (!soundEnabled || !audioCtx) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'jump') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(600, now + 0.15);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'doublejump') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.18);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                osc.start(now);
+                osc.stop(now + 0.18);
+            } else if (type === 'battery') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                osc.frequency.setValueAtTime(987.77, now + 0.16); // B5
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'shield') {
+                // សំឡេងបែប Sci-fi Power Up
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(200, now);
+                osc.frequency.linearRampToValueAtTime(1200, now + 0.4);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                osc.start(now);
+                osc.stop(now + 0.45);
+            } else if (type === 'hit') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(60, now + 0.25);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'gameover') {
+                const notes = [440, 392, 349, 293]; // Sad desc
+                notes.forEach((freq, idx) => {
+                    const noteOsc = audioCtx.createOscillator();
+                    const noteGain = noteOsc.context.createGain();
+                    noteOsc.connect(noteGain);
+                    noteGain.connect(audioCtx.destination);
+                    noteOsc.type = 'sine';
+                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.15);
+                    noteGain.gain.setValueAtTime(0.1, now + idx * 0.15);
+                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.15 + 0.35);
+                    noteOsc.start(now + idx * 0.15);
+                    noteOsc.stop(now + idx * 0.15 + 0.4);
+                });
+            }
+        }
+
+        // --- ដំណើរការតន្ត្រី Procedural Synthwave BGM Loop ---
+        function startBGM() {
+            if (!soundEnabled) return;
+            if (bgmSchedulerInterval) return; // កំពុងដំណើរការហើយ
+            
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            nextBgmNoteTime = audioCtx.currentTime + 0.05;
+            bgmStep = 0;
+            
+            // Scheduler ដំណើរការរាល់ 25ms ដើម្បីរៀបចំចង្វាក់ភ្លេងទុកជាមុន
+            bgmSchedulerInterval = setInterval(() => {
+                while (nextBgmNoteTime < audioCtx.currentTime + 0.1) {
+                    scheduleBgmStep(bgmStep, nextBgmNoteTime);
+                    nextBgmNoteTime += bgmStepDuration;
+                    bgmStep++;
+                }
+            }, 25);
+        }
+
+        function stopBGM() {
+            if (bgmSchedulerInterval) {
+                clearInterval(bgmSchedulerInterval);
+                bgmSchedulerInterval = null;
+            }
+        }
+
+        function scheduleBgmStep(step, time) {
+            if (!soundEnabled || !gameActive) return;
+
+            const bar = Math.floor(step / 8) % 4; // Cm -> Ab -> Eb -> Bb ( progression 4 bars )
+            const stepInBar = step % 8;
+            
+            // Bass frequencies: C2 (65.41), Ab1 (51.91), Eb2 (77.78), Bb1 (58.27)
+            const roots = [65.41, 51.91, 77.78, 58.27];
+            
+            // 1. Synth Bassline (គូសសំឡេងបាសធ្ងន់ៗ)
+            if (stepInBar % 2 === 0) { // លេងរាល់ 8th note
+                const bassOsc = audioCtx.createOscillator();
+                const bassGain = audioCtx.createGain();
+                const bassFilter = audioCtx.createBiquadFilter();
+                
+                bassOsc.type = 'triangle';
+                bassOsc.frequency.setValueAtTime(roots[bar], time);
+                
+                // បង្កើត envelope ឲ្យសំឡេងបាស
+                bassGain.gain.setValueAtTime(0, time);
+                bassGain.gain.linearRampToValueAtTime(0.09, time + 0.02);
+                bassGain.gain.exponentialRampToValueAtTime(0.001, time + bgmStepDuration * 1.8);
+                
+                // បន្ថែម Filter បន្ថយសំឡេងស្រួច កុំឲ្យហឹរត្រចៀក
+                bassFilter.type = 'lowpass';
+                bassFilter.frequency.setValueAtTime(250, time);
+                bassFilter.frequency.exponentialRampToValueAtTime(100, time + bgmStepDuration * 1.5);
+                
+                bassOsc.connect(bassFilter);
+                bassFilter.connect(bassGain);
+                bassGain.connect(audioCtx.destination);
+                
+                bassOsc.start(time);
+                bassOsc.stop(time + bgmStepDuration * 1.8);
+            }
+            
+            // 2. Melody Arpeggio (ភ្លេងស្រួចៗបែប Retro Cyber Pluck)
+            // Cm (C4, Eb4, G4, C5), Ab (Ab3, C4, Eb4, Ab4), Eb (Eb4, G4, Bb4, Eb5), Bb (Bb3, D4, F4, Bb4)
+            const arps = [
+                [261.63, 311.13, 392.00, 523.25, 392.00, 311.13, 261.63, 392.00], // Cm
+                [207.65, 261.63, 311.13, 415.30, 311.13, 261.63, 207.65, 311.13], // Ab
+                [311.13, 392.00, 466.16, 622.25, 466.16, 392.00, 311.13, 466.16], // Eb
+                [233.08, 293.66, 349.23, 466.16, 349.23, 293.66, 233.08, 349.23]  // Bb
+            ];
+            
+            const noteFreq = arps[bar][stepInBar];
+            
+            const melOsc = audioCtx.createOscillator();
+            const melGain = audioCtx.createGain();
+            const delay = audioCtx.createDelay();
+            const delayFeedback = audioCtx.createGain();
+            
+            melOsc.type = 'sine';
+            melOsc.frequency.setValueAtTime(noteFreq, time);
+            
+            // Envelope សម្រាប់ភ្លេង
+            melGain.gain.setValueAtTime(0, time);
+            melGain.gain.linearRampToValueAtTime(0.04, time + 0.01);
+            melGain.gain.exponentialRampToValueAtTime(0.001, time + 0.16);
+            
+            // បន្ថែម Echo Delay (អេកូ) ឲ្យមានអារម្មណ៍អណ្តែតអវកាស
+            delay.delayTime.setValueAtTime(0.15, time);
+            delayFeedback.gain.setValueAtTime(0.35, time);
+            
+            melOsc.connect(melGain);
+            melGain.connect(audioCtx.destination);
+            
+            // Feedback Loop Delay
+            melGain.connect(delay);
+            delay.connect(delayFeedback);
+            delayFeedback.connect(delay);
+            delayFeedback.connect(audioCtx.destination);
+            
+            melOsc.start(time);
+            melOsc.stop(time + 0.3);
+            
+            // 3. Kick Drum (សំឡេងធាក់ស្គរ 808 ធ្ងន់ៗរាល់ step 0 នឹង 4)
+            if (stepInBar === 0 || stepInBar === 4) {
+                const kickOsc = audioCtx.createOscillator();
+                const kickGain = audioCtx.createGain();
+                
+                kickOsc.type = 'sine';
+                kickOsc.frequency.setValueAtTime(140, time);
+                kickOsc.frequency.exponentialRampToValueAtTime(45, time + 0.09);
+                
+                kickGain.gain.setValueAtTime(0.15, time);
+                kickGain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
+                
+                kickOsc.connect(kickGain);
+                kickGain.connect(audioCtx.destination);
+                
+                kickOsc.start(time);
+                kickOsc.stop(time + 0.15);
+            }
+            
+            // 4. Hi-hat (សំឡេងសង្កៀតដែកស្រាលៗ រាល់ step 2 នឹង 6)
+            if (stepInBar === 2 || stepInBar === 6) {
+                const hatOsc = audioCtx.createOscillator();
+                const hatGain = audioCtx.createGain();
+                
+                hatOsc.type = 'triangle';
+                hatOsc.frequency.setValueAtTime(11000, time);
+                
+                hatGain.gain.setValueAtTime(0.015, time);
+                hatGain.gain.exponentialRampToValueAtTime(0.001, time + 0.03);
+                
+                hatOsc.connect(hatGain);
+                hatGain.connect(audioCtx.destination);
+                
+                hatOsc.start(time);
+                hatOsc.stop(time + 0.03);
+            }
+        }
+
+        // --- កូដគ្រប់គ្រងដំណើរការហ្គេមនៅលើ Canvas ---
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // កំណត់ទំហំជាក់ស្តែងរបស់ Canvas
+        function setCanvasSize() {
+            canvas.width = 800;
+            canvas.height = 400;
+        }
+        setCanvasSize();
+
+        // គូររូបរ៉ូបូតមានចលនាតូចមួយនៅលើ Canvas (សម្រាប់ Shield / Collectibles)
+        function drawCanvasRobotHead(ctx, x, y, width, height, glowColor, gameFrame) {
+            ctx.save();
+            ctx.translate(x + width/2, y + height/2);
+            
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 12;
+            
+            // ខ្លួនដែករ៉ូបូត
+            ctx.fillStyle = '#334155';
+            ctx.strokeStyle = glowColor;
+            ctx.lineWidth = 2;
+            
+            // ក្បាលរ៉ូបូតបែប Cybernetic Octagon
+            ctx.beginPath();
+            ctx.moveTo(-width/2 + 4, -height/2);
+            ctx.lineTo(width/2 - 4, -height/2);
+            ctx.lineTo(width/2, -height/2 + 4);
+            ctx.lineTo(width/2, height/2 - 4);
+            ctx.lineTo(width/2 - 4, height/2);
+            ctx.lineTo(-width/2 + 4, height/2);
+            ctx.lineTo(-width/2, height/2 - 4);
+            ctx.lineTo(-width/2, -height/2 + 4);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            // កញ្ចក់ការពារភ្នែក
+            ctx.fillStyle = '#090d16';
+            ctx.fillRect(-width/2 + 4, -6, width - 8, 10);
+            
+            // ភ្នែកឡាស៊ែរញាក់ចង្វាក់
+            ctx.strokeStyle = glowColor;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(-width/2 + 6, -1);
+            ctx.stroke();
+
+            // អង់តែនលោតពន្លឺ
+            ctx.fillStyle = '#64748b';
+            ctx.fillRect(-2, -height/2 - 5, 4, 5);
+            ctx.fillStyle = glowColor;
+            ctx.beginPath();
+            ctx.arc(0, -height/2 - 7, 3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+
+        // អថេរគ្រប់គ្រងហ្គេម
+        let gameActive = false;
+        let score = 0;
+        let distance = 0;
+        let speed = 5.5;
+        let maxSpeed = 12;
+        let obstacles = [];
+        let collectibles = [];
+        let particles = [];
+        let gameFrame = 0;
+        let spawnRate = 90; // spawn item and obstacle frequency
+        
+        // ស្ថានភាពរ៉ូបូត (Robot State)
+        const robot = {
+            x: 100,
+            y: 300,
+            width: 45,
+            height: 55,
+            vy: 0,
+            gravity: 0.6,
+            jumpForce: -11,
+            isGrounded: false,
+            doubleJumpAvailable: true,
+            runningFrame: 0,
+            shieldTimer: 0, // seconds
+            isShielded: false
+        };
+
+        // ផ្ទៃខាងក្រោយ Parallax
+        let bgOffset = 0;
+
+        // ចាប់ផ្តើមហ្គេមចេញពីម៉ឺនុយដើម (Start Game)
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            resetGame();
+        }
+
+        // ត្រឡប់មកម៉ឺនុយដើមវិញ (Back to Main Menu)
+        function backToMenu() {
+            gameActive = false;
+            stopBGM(); // បញ្ឈប់តន្ត្រីពេលចាកចេញទៅក្រៅ
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            updateGlobalHighScore();
+            playSound('jump');
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔇';
+            
+            if (soundEnabled) {
+                if (gameActive) startBGM(); // លេងឡើងវិញបើនៅក្នុងហ្គេម
+                playSound('jump');
+            } else {
+                stopBGM(); // បិទចរន្តភ្លេងភ្លាមៗ
+            }
+        }
+
+        // កំណត់ទិន្នន័យឡើងវិញ
+        function resetGame() {
+            score = 0;
+            distance = 0;
+            speed = 5.5;
+            obstacles = [];
+            collectibles = [];
+            particles = [];
+            gameFrame = 0;
+            
+            robot.y = 300;
+            robot.vy = 0;
+            robot.isGrounded = true;
+            robot.doubleJumpAvailable = true;
+            robot.shieldTimer = 0;
+            robot.isShielded = false;
+
+            document.getElementById('distance-display').textContent = '0 m';
+            document.getElementById('score-display').textContent = '0';
+            document.getElementById('shield-status').classList.add('hidden');
+
+            gameActive = true;
+            
+            // បញ្ឈប់ និងចាប់ផ្តើមភ្លេង BGM ឡើងវិញពីដើម
+            stopBGM();
+            startBGM();
+            
+            animate();
+        }
+
+        // មុខងារបញ្ជាការលោត (Jump Command)
+        function makeRobotJump() {
+            if (!gameActive) return;
+
+            if (robot.isGrounded) {
+                robot.vy = robot.jumpForce;
+                robot.isGrounded = false;
+                playSound('jump');
+                createExplosion(robot.x + 10, robot.y + robot.height, '#06b6d4', 8);
+            } else if (robot.doubleJumpAvailable) {
+                robot.vy = robot.jumpForce * 0.9;
+                robot.doubleJumpAvailable = false;
+                playSound('doublejump');
+                createExplosion(robot.x + 10, robot.y + robot.height/2, '#f43f5e', 12);
+            }
+        }
+
+        // ចាប់យក Input ពី Keyboard និង Touch
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                makeRobotJump();
+            }
+        });
+
+        // ចុចលើ Canvas ដើម្បីលោត (គាំទ្រទាំងទូរស័ព្ទ និងកុំព្យូទ័រ)
+        canvas.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            makeRobotJump();
+        });
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            makeRobotJump();
+        });
+
+        // បង្កើតកម្ទេចភ្លើង (Particle Generator)
+        function createExplosion(x, y, color, count = 10) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    size: Math.random() * 4 + 2,
+                    vx: (Math.random() - 0.5) * 6 - speed * 0.3,
+                    vy: (Math.random() - 0.5) * 6,
+                    color: color,
+                    alpha: 1,
+                    decay: Math.random() * 0.03 + 0.01
+                });
+            }
+        }
+
+        // គូរផ្ទៃខាងក្រោយ និងពន្លឺលំហអាកាសដ៏ស្រស់ស្អាត (Procedural Space & Parallax Galaxy)
+        function drawBackground() {
+            // មេឃ និងកម្រិតពណ៌លំហអាកាសដ៏ជ្រៅ (Deep Space Gradient)
+            let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#020208');
+            gradient.addColorStop(0.5, '#050515');
+            gradient.addColorStop(1, '#020208');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // គូរពពកឧស្ម័នលំហអាកាស (Glowing Nebulae Clouds)
+            ctx.save();
+            ctx.globalCompositeOperation = 'screen';
+            
+            // ពពកផ្កាយដុះកន្ទុយពណ៌ស្វាយ (Violet Nebula)
+            let neb1 = ctx.createRadialGradient(250, 150, 10, 250, 150, 200);
+            neb1.addColorStop(0, 'rgba(139, 92, 246, 0.16)');
+            neb1.addColorStop(1, 'transparent');
+            ctx.fillStyle = neb1;
+            ctx.beginPath();
+            ctx.arc(250, 150, 200, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ពពកផ្កាយដុះកន្ទុយពណ៌ខៀវអឿន (Cyan Nebula)
+            let neb2 = ctx.createRadialGradient(580, 100, 10, 580, 100, 220);
+            neb2.addColorStop(0, 'rgba(6, 182, 212, 0.14)');
+            neb2.addColorStop(1, 'transparent');
+            ctx.fillStyle = neb2;
+            ctx.beginPath();
+            ctx.arc(580, 100, 220, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.restore();
+
+            bgOffset += speed;
+
+            // ផ្កាយ Parallax ជាន់ទី ១ ៖ តូចៗខ្លាំង និងរត់យឺតបំផុត (Distant Stars - Ultra Slow)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+            for (let i = 0; i < 35; i++) {
+                let x = (i * 97 + bgOffset * 0.03) % canvas.width;
+                let y = (i * 41) % 260;
+                ctx.fillRect(x, y, 1, 1);
+            }
+
+            // ផ្កាយ Parallax ជាន់ទី ២ ៖ មធ្យម និងរត់ល្បឿនបង្គួរ (Medium Stars - Medium)
+            ctx.fillStyle = 'rgba(34, 211, 238, 0.45)';
+            for (let i = 0; i < 18; i++) {
+                let x = (i * 153 + bgOffset * 0.1) % canvas.width;
+                let y = (i * 71) % 240;
+                ctx.fillRect(x, y, 2, 2);
+            }
+
+            // ផ្កាយ Parallax ជាន់ទី ៣ ៖ ធំៗ បញ្ចេញពន្លឺព្រិចៗ (Bright Blinking Stars - Fast)
+            for (let i = 0; i < 6; i++) {
+                let x = (i * 311 + bgOffset * 0.25) % canvas.width;
+                let y = (i * 93) % 180;
+                let size = Math.abs(Math.sin(gameFrame * 0.05 + i)) * 2.5 + 1;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.fillRect(x - size/2, y - size/2, size, size);
+            }
+
+            // គូរភពយក្សមានចិញ្ចៀន (Giant Ringed Gas Planet)
+            ctx.save();
+            let p1X = (550 - bgOffset * 0.05) % (canvas.width + 350);
+            if (p1X < -150) p1X += canvas.width + 350;
+            let p1Y = 120;
+            
+            // គូរស្រមោលពន្លឺជុំវិញភព
+            let planetGrad = ctx.createRadialGradient(p1X - 8, p1Y - 8, 4, p1X, p1Y, 35);
+            planetGrad.addColorStop(0, '#a5f3fc');
+            planetGrad.addColorStop(0.3, '#0891b2');
+            planetGrad.addColorStop(0.7, '#0e172c');
+            planetGrad.addColorStop(1, '#020617');
+            ctx.fillStyle = planetGrad;
+            ctx.shadowColor = '#06b6d4';
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.arc(p1X, p1Y, 35, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // គូរចិញ្ចៀនព័ទ្ធជុំវិញភព
+            ctx.strokeStyle = 'rgba(165, 243, 252, 0.35)';
+            ctx.lineWidth = 4;
+            ctx.save();
+            ctx.translate(p1X, p1Y);
+            ctx.rotate(Math.PI / 7);
+            ctx.scale(2.3, 0.4);
+            ctx.beginPath();
+            ctx.arc(0, 0, 26, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+            ctx.restore();
+
+            // គូរភពរណបតូចពណ៌ផ្កាឈូក (Small Exotic Moon)
+            ctx.save();
+            let p2X = (180 - bgOffset * 0.12) % (canvas.width + 120);
+            if (p2X < -60) p2X += canvas.width + 120;
+            let p2Y = 80;
+            let moonGrad = ctx.createRadialGradient(p2X - 3, p2Y - 3, 2, p2X, p2Y, 14);
+            moonGrad.addColorStop(0, '#fbcfe8');
+            moonGrad.addColorStop(0.4, '#db2777');
+            moonGrad.addColorStop(1, '#4c0519');
+            ctx.fillStyle = moonGrad;
+            ctx.beginPath();
+            ctx.arc(p2X, p2Y, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            // គូរដុំថ្មអាចម៍ផ្កាយហោះអណ្តែត (Floating Asteroid Belts)
+            ctx.save();
+            ctx.fillStyle = '#1e293b';
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 4; i++) {
+                let x = (i * 240 - bgOffset * 0.28) % (canvas.width + 80);
+                if (x < -40) x += canvas.width + 80;
+                let y = 190 + Math.sin(i + bgOffset * 0.008) * 15;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y - 8);
+                ctx.lineTo(x + 10, y - 5);
+                ctx.lineTo(x + 12, y + 4);
+                ctx.lineTo(x + 3, y + 10);
+                ctx.lineTo(x - 8, y + 6);
+                ctx.lineTo(x - 6, y - 4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // គូរថ្នល់/ដីរត់ (Ground)
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 340, canvas.width, 60);
+
+            // គូរអក្សរ "មជ្ឈមណ្ឌលមិត្តពូកែ" រត់លម្អក្រោមផ្លូវរត់ (Scrolling glowing Khmer text)
+            ctx.save();
+            ctx.font = "bold 15px 'Kantumruy Pro', sans-serif";
+            ctx.fillStyle = "rgba(34, 211, 238, 0.35)"; // ពណ៌ Cyan ថ្លាស្រាលៗ
+            ctx.shadowColor = "#06b6d4";
+            ctx.shadowBlur = 8;
+            ctx.textAlign = "center";
+            let textSpacing = 400; // គម្លាតរវាងអក្សរនីមួយៗ
+            for (let i = 0; i < 4; i++) {
+                let x = (i * textSpacing - bgOffset * 0.8) % (canvas.width + 200);
+                if (x < -150) x += canvas.width + 200;
+                ctx.fillText("មជ្ឈមណ្ឌលមិត្តពូកែ", x, 380); // បង្ហាញនៅកម្ពស់ y=380 ក្រោមបន្ទាត់រត់ (y=340)
+            }
+            ctx.restore();
+
+            // ខ្សែបន្ទាត់ឡាស៊ែរ Neon តុបតែងថ្នល់
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(0, 340);
+            ctx.lineTo(canvas.width, 340);
+            ctx.stroke();
+
+            // ភ្លើងសញ្ញានៅលើថ្នល់
+            ctx.fillStyle = 'rgba(6, 182, 212, 0.3)';
+            for (let i = 0; i < 8; i++) {
+                let x = (i * 150 - bgOffset) % (canvas.width + 100);
+                if (x < -50) x += canvas.width + 100;
+                ctx.fillRect(x, 345, 40, 3);
+            }
+        }
+
+        // គូររ៉ូបូតយ៉ាងស្រស់ស្អាត (Draw Futuristic Cyber Robot)
+        function drawRobot() {
+            ctx.save();
+            ctx.translate(robot.x, robot.y);
+
+            // ផ្សែងហុយចេញពី Jetpack ខាងក្រោយ
+            if (!robot.isGrounded) {
+                particles.push({
+                    x: robot.x,
+                    y: robot.y + 35,
+                    size: Math.random() * 5 + 2,
+                    vx: -speed - (Math.random() * 3),
+                    vy: Math.random() * 2 + 1,
+                    color: robot.isShielded ? '#8b5cf6' : '#ec4899',
+                    alpha: 0.8,
+                    decay: 0.05
+                });
+            }
+
+            // --- ខ្លួនរ៉ូបូត (Robot Body Parts with CSS Canvas Path) ---
+            // ក្បាល (Head with Antenna)
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillRect(10, 0, 25, 18);
+            
+            // អង់តែន (Antenna)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(22, 0);
+            ctx.lineTo(22, -8);
+            ctx.stroke();
+            ctx.fillStyle = '#f43f5e';
+            ctx.beginPath();
+            ctx.arc(22, -8, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ភ្នែកឡាស៊ែរ (Glowing Laser Eye)
+            ctx.fillStyle = robot.isShielded ? '#a855f7' : '#06b6d4';
+            ctx.shadowColor = robot.isShielded ? '#a855f7' : '#06b6d4';
+            ctx.shadowBlur = 10;
+            ctx.fillRect(22, 5, 14, 4);
+            ctx.shadowBlur = 0; // reset shadow
+
+            // ក (Neck)
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillRect(18, 18, 9, 4);
+
+            // ខ្លួនធំ (Main Chest/Core)
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(5, 22, 35, 23);
+            
+            // ស្នូលថាមពលកណ្តាលទ្រូង (Power Core on Chest)
+            ctx.fillStyle = robot.isShielded ? '#c084fc' : '#f43f5e';
+            ctx.beginPath();
+            ctx.arc(22, 33, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ជើង (Animated Legs based on running frame)
+            ctx.fillStyle = '#475569';
+            let legSwing = Math.sin(robot.runningFrame) * 12;
+            
+            if (robot.isGrounded) {
+                // ជើងទី ១
+                ctx.fillRect(10, 45, 7, 10 + legSwing);
+                // ជើងទី ២
+                ctx.fillRect(28, 45, 7, 10 - legSwing);
+            } else {
+                // កំពុងហោះ/លោត
+                ctx.fillRect(12, 45, 6, 8);
+                ctx.fillRect(27, 45, 6, 8);
+            }
+
+            // ដៃរ៉ូបូត (Cyber Arms)
+            ctx.fillStyle = '#64748b';
+            if (robot.isGrounded) {
+                ctx.fillRect(1, 25, 5, 15 - legSwing * 0.3);
+            } else {
+                ctx.fillRect(1, 15, 5, 15);
+            }
+
+            // គូរខែលការពារ BRAVO (Glowing Shield Effect)
+            if (robot.isShielded) {
+                ctx.restore(); // restore to standard coordinates for full screen shield drawing
+                ctx.save();
+                ctx.translate(robot.x + robot.width/2, robot.y + robot.height/2);
+                
+                // ពន្លឺខែលការពាររង្វង់ខាងក្រៅ
+                ctx.strokeStyle = 'rgba(99, 102, 241, 0.85)';
+                ctx.lineWidth = 3;
+                ctx.shadowColor = '#6366f1';
+                ctx.shadowBlur = 18;
+                ctx.beginPath();
+                ctx.arc(0, 0, 42, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                // គូរបន្ទាត់បង្វិលបែប Sci-Fi Hologram ជុំវិញរ៉ូបូត
+                ctx.strokeStyle = 'rgba(34, 211, 238, 0.6)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([8, 12]);
+                ctx.save();
+                ctx.rotate(-gameFrame * 0.03);
+                ctx.beginPath();
+                ctx.arc(0, 0, 48, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+                
+                // គូរបន្ទាត់បង្វិលបញ្ច្រាស
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.6)';
+                ctx.setLineDash([15, 10]);
+                ctx.save();
+                ctx.rotate(gameFrame * 0.025);
+                ctx.beginPath();
+                ctx.arc(0, 0, 36, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+                
+                ctx.shadowBlur = 0;
+            }
+
+            ctx.restore();
+
+            // បង្កើន Frame ចលនារបស់ជើងរ៉ូបូត
+            if (robot.isGrounded) {
+                robot.runningFrame += 0.25;
+            }
+        }
+
+        // គ្រប់គ្រងឧបសគ្គ (Manage Obstacles - Red Laser Barriers)
+        function handleObstacles() {
+            // បង្កើតឧបសគ្គថ្មីតាមការកំណត់
+            if (gameFrame % spawnRate === 0) {
+                let type = Math.random() > 0.55 ? 'barrier' : 'drone';
+                if (type === 'barrier') {
+                    // របាំងឡាស៊ែរឈរនៅលើដី
+                    let h = Math.random() * 40 + 35;
+                    obstacles.push({
+                        x: canvas.width,
+                        y: 340 - h,
+                        width: 15,
+                        height: h,
+                        color: '#f43f5e',
+                        type: 'barrier'
+                    });
+                } else {
+                    // ដ្រូនហោះលើអាកាស (តម្រូវឲ្យរ៉ូបូតលោតទាប ឬឱនគេច)
+                    let h = 25;
+                    obstacles.push({
+                        x: canvas.width,
+                        y: 200 + Math.random() * 50,
+                        width: 25,
+                        height: h,
+                        color: '#ec4899',
+                        type: 'drone',
+                        sinValue: 0
+                    });
+                }
+                
+                // បន្ថែមល្បឿន និងការលំបាកបន្តិចម្តងៗ
+                if (spawnRate > 45) spawnRate -= 1;
+            }
+
+            // គូរ និងផ្លាស់ទីឧបសគ្គ
+            for (let i = 0; i < obstacles.length; i++) {
+                let obs = obstacles[i];
+                obs.x -= speed;
+
+                if (obs.type === 'drone') {
+                    obs.sinValue += 0.05;
+                    obs.y += Math.sin(obs.sinValue) * 1.5; // ដ្រូនហោះឡើងចុះរលក
+                    
+                    // គូរដ្រូនហោះ (Hovering Drone)
+                    ctx.fillStyle = obs.color;
+                    ctx.shadowColor = obs.color;
+                    ctx.shadowBlur = 8;
+                    ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+                    
+                    // កង្ហារដ្រូនសងខាង
+                    ctx.fillStyle = '#64748b';
+                    ctx.fillRect(obs.x - 5, obs.y + 8, 5, 4);
+                    ctx.fillRect(obs.x + obs.width, obs.y + 8, 5, 4);
+                    ctx.shadowBlur = 0;
+                } else {
+                    // គូររបាំងឡាស៊ែរឈរ (Laser Gate)
+                    ctx.fillStyle = obs.color;
+                    ctx.shadowColor = obs.color;
+                    ctx.shadowBlur = 10;
+                    ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+                    
+                    // ជើងទម្រឡាស៊ែរខាងក្រោម
+                    ctx.fillStyle = '#64748b';
+                    ctx.fillRect(obs.x - 4, obs.y + obs.height - 8, obs.width + 8, 8);
+                    ctx.shadowBlur = 0;
+                }
+
+                // ពិនិត្យការប៉ះទង្គិចគ្នា (Collision Detection)
+                if (detectCollision(robot, obs)) {
+                    if (robot.isShielded) {
+                        // បើមានខែលការពារ គឺបំបែកឧបសគ្គនោះភ្លាមៗ
+                        playSound('hit');
+                        createExplosion(obs.x, obs.y, obs.color, 15);
+                        obstacles.splice(i, 1);
+                        i--;
+                        score += 5; // បន្ថែមពិន្ទុសម្រាប់ការបំបែក
+                    } else {
+                        // លេងចាញ់ អស់ថាមពល
+                        playSound('hit');
+                        createExplosion(robot.x + 20, robot.y + 20, '#f43f5e', 35);
+                        endGame();
+                    }
+                }
+
+                // ឡាស៊ែររត់ហួសអេក្រង់ខាងឆ្វេង
+                if (obs && obs.x + obs.width < 0) {
+                    obstacles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        // គ្រប់គ្រងការរើសថាមពល (Manage Collectibles - Batteries & BRAVO Shield)
+        function handleCollectibles() {
+            // បង្កើតថាមពលថ្មីរាល់ 110 Frame
+            if (gameFrame % 110 === 0) {
+                // ជ្រើសរើសរវាង អាគុយធម្មតា និងខែលការពារមជ្ឈមណ្ឌល (BRAVO Shield)
+                let isShield = Math.random() > 0.82;
+                
+                collectibles.push({
+                    x: canvas.width,
+                    y: 180 + Math.random() * 100,
+                    width: 26,
+                    height: 26,
+                    isShield: isShield,
+                    color: isShield ? '#6366f1' : '#f59e0b',
+                    sinVal: 0
+                });
+            }
+
+            // គូរ និងផ្លាស់ទីវត្ថុរើស
+            for (let i = 0; i < collectibles.length; i++) {
+                let item = collectibles[i];
+                item.x -= speed;
+                item.sinVal += 0.08;
+                item.y += Math.sin(item.sinVal) * 0.8; // ហោះអណ្តែតថ្នមៗ
+
+                if (item.isShield) {
+                    // គូររ៉ូបូតខែលការពារពិសេសដែលមានចលនាវិល និងជះពន្លឺ (BRAVO Cyber Shield)
+                    ctx.save();
+                    ctx.translate(item.x + 13, item.y + 13);
+                    ctx.rotate(gameFrame * 0.02);
+                    
+                    // គូរខែលរង្វង់ខាងក្រៅ
+                    ctx.shadowColor = '#6366f1';
+                    ctx.shadowBlur = 15;
+                    ctx.strokeStyle = '#818cf8';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 16, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // បំពេញពណ៌ថ្លាៗក្នុងខែល
+                    ctx.fillStyle = 'rgba(99, 102, 241, 0.25)';
+                    ctx.fill();
+                    ctx.restore();
+                    
+                    // គូរក្បាលរ៉ូបូតមានចលនានៅចំកណ្តាលខែល
+                    drawCanvasRobotHead(ctx, item.x + 4, item.y + 4, 18, 18, '#818cf8', gameFrame);
+                } else {
+                    // គូរអាគុយថាមពល (Power Battery)
+                    ctx.save();
+                    ctx.fillStyle = '#06b6d4';
+                    ctx.shadowColor = '#06b6d4';
+                    ctx.shadowBlur = 10;
+                    ctx.fillRect(item.x + 6, item.y + 2, 12, 20);
+                    // ក្បាលអាគុយ
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(item.x + 10, item.y - 1, 4, 3);
+                    ctx.restore();
+                }
+
+                // ពិនិត្យពេលរ៉ូបូតរើសត្រូវ (Collision Detection)
+                if (detectCollision(robot, item)) {
+                    if (item.isShield) {
+                        // បើកខែលការពារ BRAVO Shield
+                        playSound('shield');
+                        robot.isShielded = true;
+                        robot.shieldTimer = 300; // 5 វិនាទី (60fps * 5)
+                        document.getElementById('shield-status').classList.remove('hidden');
+                        createExplosion(item.x + 13, item.y + 13, '#6366f1', 20);
+                    } else {
+                        // រើសបានអាគុយ បន្ថែមពិន្ទុ
+                        playSound('battery');
+                        score += 10;
+                        document.getElementById('score-display').textContent = score;
+                        createExplosion(item.x + 13, item.y + 13, '#06b6d4', 12);
+                    }
+
+                    // លុបចេញក្រោយពេលរើសរួច
+                    collectibles.splice(i, 1);
+                    i--;
+                }
+                // លុបចោលវត្ថុដែលរត់ហួសអេក្រង់ខាងឆ្វេង
+                else if (item.x + item.width < 0) {
+                    collectibles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        // គ្រប់គ្រងកម្ទេចភ្លើង (Manage Jetpack Particles)
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= p.decay;
+
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        // ប្រព័ន្ធគណនាការទង្គិច (AABB Collision Detection)
+        function detectCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        // បញ្ចប់ហ្គេម (End Game - Player Loses)
+        function endGame() {
+            gameActive = false;
+            stopBGM(); // បិទចង្វាក់ភ្លេងភ្លាមៗពេលលេងចាញ់
+            playSound('gameover');
+
+            // រក្សាទុកពិន្ទុឆ្ងាយបំផុត (Distance High Score) ទៅក្នុង LocalStorage
+            const storedHighScore = parseInt(localStorage.getItem('robot_high_score')) || 0;
+            const currentDistance = Math.floor(distance);
+
+            if (currentDistance > storedHighScore) {
+                localStorage.setItem('robot_high_score', currentDistance);
+            }
+
+            // បំពេញទិន្នន័យក្នុងផ្ទាំង Modal ហ្គេមចប់
+            document.getElementById('modal-distance').textContent = `${currentDistance} m`;
+            document.getElementById('modal-score').textContent = score;
+            document.getElementById('modal-highscore').textContent = `${Math.max(currentDistance, storedHighScore)} m`;
+
+            // បើកបង្ហាញ Modal ចាញ់ហ្គេម
+            setTimeout(() => {
+                const modal = document.getElementById('gameover-modal');
+                const card = document.getElementById('gameover-card');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                card.classList.remove('scale-90');
+            }, 600);
+        }
+
+        // បិទផ្ទាំងលេងចាញ់
+        function closeGameOverModal() {
+            const modal = document.getElementById('gameover-modal');
+            const card = document.getElementById('gameover-card');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            card.classList.add('scale-90');
+        }
+
+        // បច្ចុប្បន្នភាពការបង្ហាញពិន្ទុខ្ពស់បំផុតសរុប (Global High Score)
+        function updateGlobalHighScore() {
+            const storedHighScore = localStorage.getItem('robot_high_score') || 0;
+            document.getElementById('global-high-score').textContent = `${storedHighScore} m`;
+        }
+
+        // --- ដំណើរការហ្គេមរត់ជាបន្តបន្ទាប់ (Game Loop Animation) ---
+        function animate() {
+            if (!gameActive) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            gameFrame++;
+
+            // គណនាចម្ងាយរត់បាន (Distance increases with speed)
+            distance += speed * 0.02;
+            document.getElementById('distance-display').textContent = `${Math.floor(distance)} m`;
+
+            // បង្កើនល្បឿនហ្គេមបន្តិចម្តងៗដើម្បីបង្កើនភាពជក់ចិត្ត
+            if (gameFrame % 500 === 0 && speed < maxSpeed) {
+                speed += 0.4;
+            }
+
+            // រៀបចំរូបភាព និងចលនា
+            drawBackground();
+
+            // គណនាទំនាញផែនដីលើរ៉ូបូត
+            robot.y += robot.vy;
+            robot.vy += robot.gravity;
+
+            // កំណត់ដែនកំណត់លើដី (Ground limits)
+            if (robot.y + robot.height >= 340) {
+                robot.y = 340 - robot.height;
+                robot.vy = 0;
+                robot.isGrounded = true;
+                robot.doubleJumpAvailable = true;
+            }
+
+            // គ្រប់គ្រងរយៈពេលខែលការពារ
+            if (robot.isShielded) {
+                robot.shieldTimer--;
+                if (robot.shieldTimer <= 0) {
+                    robot.isShielded = false;
+                    document.getElementById('shield-status').classList.add('hidden');
+                }
+            }
+
+            // ដំណើរការផ្នែកផ្សេងៗរបស់ហ្គេម
+            handleObstacles();
+            handleCollectibles();
+            drawRobot();
+            handleParticles();
+
+            requestAnimationFrame(animate);
+        }
+
+        // ចាប់ផ្តើមលើកដំបូងបំផុត
+        updateGlobalHighScore();
+    </script>
+</body>
+</html>
