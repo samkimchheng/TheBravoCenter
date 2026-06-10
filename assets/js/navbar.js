@@ -17,13 +17,25 @@ document.addEventListener("DOMContentLoaded", function () {
                         <a href="about.html" class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">អំពីយើង</a>
                         <a href="courses.html" class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">វគ្គសិក្សា</a>
                         <a href="features.html" class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">សកម្មភាព</a>
-                        <a href="quiz.html" class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300">ពង្រឹងចំណេះដឹង</a>
+                        <div class="relative group">
+                            <a href="quiz.html" class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300 inline-flex items-center gap-1">
+                                ពង្រឹងចំណេះដឹង
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </a>
+                            <div class="absolute left-0 mt-1 w-60 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out bg-white border border-gray-100 rounded-2xl shadow-xl z-50 pt-1">
+                                <div class="p-2 space-y-1 bg-white rounded-2xl">
+                                    <a href="quiz.html?tab=quizzes" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">តេស្តសមត្ថភាព</a>
+                                    <a href="quiz.html?tab=lessons" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">មេរៀនសំខាន់ៗ</a>
+                                    <a href="quiz.html?tab=shortcuts" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">មេរៀន Shortcut Key</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="relative group">
                             <button class="nav-link desktop-link text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 px-5 py-2 rounded-full transition-all duration-300 inline-flex items-center gap-1">
                                 ហ្គេម
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
-                            <div class="absolute left-0 mt-1 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 bg-white border border-gray-100 rounded-2xl shadow-xl z-50 pt-1">
+                            <div class="absolute left-0 mt-1 w-64 opacity-0 invisible translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out bg-white border border-gray-100 rounded-2xl shadow-xl z-50 pt-1">
                                 <div class="p-2 space-y-1 bg-white rounded-2xl">
                                     <a href="memory-game.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">ល្បងប្រាជ្ញាស្វែងរកគូ</a>
                                     <a href="spin-wheel.html" class="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-xl transition-colors">កម្មវិធីបង្វិលកងចាប់ឈ្មោះ</a>
@@ -53,7 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <a href="about.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">អំពីយើង</a>
                 <a href="courses.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">វគ្គសិក្សា</a>
                 <a href="features.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">សកម្មភាព</a>
-                <a href="quiz.html" class="nav-link mobile-link block px-5 py-3 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ពង្រឹងចំណេះដឹង</a>
+                <div class="space-y-1 py-1">
+                    <span class="block px-5 py-2 text-gray-400 font-bold text-sm uppercase tracking-wider">ពង្រឹងចំណេះដឹង</span>
+                    <a href="quiz.html?tab=quizzes" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">តេស្តសមត្ថភាព</a>
+                    <a href="quiz.html?tab=lessons" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">មេរៀនសំខាន់ៗ</a>
+                    <a href="quiz.html?tab=shortcuts" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">មេរៀន Shortcut Key</a>
+                </div>
                 <div class="space-y-1 py-1">
                     <span class="block px-5 py-2 text-gray-400 font-bold text-sm uppercase tracking-wider">ហ្គេម</span>
                     <a href="memory-game.html" class="nav-link mobile-link block px-8 py-2.5 text-gray-600 font-medium hover:text-blue-600 hover:bg-white/80 rounded-xl transition-all duration-300">ល្បងប្រាជ្ញាស្វែងរកគូ</a>
@@ -79,8 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const mobileBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => { 
-            mobileMenu.classList.toggle('hidden'); 
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
     }
 
@@ -94,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (href === currentPath) {
             // ដក Class ពណ៌ប្រផេះធម្មតាចេញ
             link.classList.remove('text-gray-600', 'font-medium', 'hover:text-blue-600', 'hover:bg-white/80');
-            
+
             if (link.classList.contains('desktop-link')) {
                 // បន្ថែម Class សម្រាប់ម៉ឺនុយ Desktop ដែលកំពុង Active
                 link.classList.add('text-blue-700', 'font-bold', 'bg-white', 'shadow-sm', 'ring-1', 'ring-gray-900/5');
