@@ -4126,6 +4126,15 @@
             }
         }
 
+        // អាន URL parameter ដើម្បីបើក Tab ស្វ័យប្រវត្តិ
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            if (tabParam) {
+                switchTab(tabParam);
+            }
+        });
+
         // អនុគមន៍ប្តូរប្រភេទទូទៅ និងមេរៀន Word ក្នុងផ្ទាំងមេរៀនសំខាន់ៗ
         function switchLessonCategory(category) {
             const tabGeneral = document.getElementById('tab-lesson-general');
