@@ -361,6 +361,104 @@
         // បង្កើតប្រព័ន្ធសំឡេង Web Audio API
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+        // --- អថេរសម្រាប់គ្រប់គ្រងតន្ត្រី Background (BGM) ---
+        let bgmSchedulerInterval = null;
+        let nextBgmNoteTime = 0.0;
+        let bgmStep = 0;
+        const bgmTempo = 90; // ល្បឿន BPM យឺតល្មមសម្រាប់ហ្គេមគិត
+        const bgmStepDuration = 60 / bgmTempo / 2;
+
+        function startBGM() {
+            if (!soundEnabled) return;
+            if (bgmSchedulerInterval) return;
+            
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            nextBgmNoteTime = audioCtx.currentTime + 0.05;
+            bgmStep = 0;
+            
+            bgmSchedulerInterval = setInterval(() => {
+                while (nextBgmNoteTime < audioCtx.currentTime + 0.1) {
+                    scheduleBgmStep(bgmStep, nextBgmNoteTime);
+                    nextBgmNoteTime += bgmStepDuration;
+                    bgmStep++;
+                }
+            }, 25);
+        }
+
+        function stopBGM() {
+            if (bgmSchedulerInterval) {
+                clearInterval(bgmSchedulerInterval);
+                bgmSchedulerInterval = null;
+            }
+        }
+
+        function scheduleBgmStep(step, time) {
+            if (!soundEnabled || !gameActive) return;
+
+            const bar = Math.floor(step / 16) % 4; // 4 bars progression
+            const stepInBar = step % 16;
+            
+            // Chords: Am, F, C, G
+            const chords = [
+                [220.00, 261.63, 329.63, 440.00], // Am
+                [174.61, 220.00, 261.63, 349.23], // F
+                [261.63, 329.63, 392.00, 523.25], // C
+                [196.00, 246.94, 293.66, 392.00]  // G
+            ];
+            
+            // បាសកម្រាលអណ្តែតៗ (Pad)
+            if (stepInBar === 0) {
+                const padOsc = audioCtx.createOscillator();
+                const padGain = audioCtx.createGain();
+                padOsc.type = 'triangle';
+                padOsc.frequency.setValueAtTime(chords[bar][0] / 2, time);
+                
+                padGain.gain.setValueAtTime(0, time);
+                padGain.gain.linearRampToValueAtTime(0.04, time + 1);
+                padGain.gain.exponentialRampToValueAtTime(0.001, time + bgmStepDuration * 16);
+                
+                padOsc.connect(padGain);
+                padGain.connect(audioCtx.destination);
+                
+                padOsc.start(time);
+                padOsc.stop(time + bgmStepDuration * 16);
+            }
+            
+            // ភ្លេងតន្ត្រីតិតៗ (Arpeggio)
+            if (stepInBar % 2 === 0) {
+                const noteFreq = chords[bar][(stepInBar / 2) % 4];
+                const arpOsc = audioCtx.createOscillator();
+                const arpGain = audioCtx.createGain();
+                
+                arpOsc.type = 'sine';
+                arpOsc.frequency.setValueAtTime(noteFreq * 2, time); // សំឡេងខ្ពស់
+                
+                arpGain.gain.setValueAtTime(0, time);
+                arpGain.gain.linearRampToValueAtTime(0.02, time + 0.01);
+                arpGain.gain.exponentialRampToValueAtTime(0.001, time + 0.2);
+                
+                // បន្ថែមអេកូ (Delay) ដើម្បីភាពពីរោះរណ្តំ
+                const delay = audioCtx.createDelay();
+                const delayGain = audioCtx.createGain();
+                delay.delayTime.setValueAtTime(0.3, time);
+                delayGain.gain.setValueAtTime(0.15, time);
+                
+                arpOsc.connect(arpGain);
+                arpGain.connect(audioCtx.destination);
+                
+                arpGain.connect(delay);
+                delay.connect(delayGain);
+                delayGain.connect(delay);
+                delayGain.connect(audioCtx.destination);
+                
+                arpOsc.start(time);
+                arpOsc.stop(time + 0.3);
+            }
+        }
+
         function playSound(type) {
             if (!soundEnabled || !audioCtx) return;
 
@@ -398,8 +496,26 @@
                 osc.frequency.setValueAtTime(110, now + 0.15);
                 gain.gain.setValueAtTime(0.08, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                // សំឡេងបែបកំប្លែង "អូហូយ" (Uh-oh / Womp womp)
+                osc.type = 'triangle'; 
+                
+                // ចង្វាក់ទី ១៖ "អូ" (Oh) - សំឡេងធម្មតារួចចុះបន្តិច
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(250, now + 0.15);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.exponentialRampToValueAtTime(0.1, now + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                
+                // ចង្វាក់ទី ២៖ "ហូយ" (Hoy) - សំឡេងខ្ពស់បន្តិច រួចធ្លាក់ចុះជ្រៅ
+                osc.frequency.setValueAtTime(350, now + 0.15);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.6);
+                gain.gain.setValueAtTime(0.001, now + 0.15);
+                gain.gain.exponentialRampToValueAtTime(0.15, now + 0.2);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                
                 osc.start(now);
                 osc.stop(now + 0.25);
+                osc.stop(now + 0.6);
             } else if (type === 'win') {
                 const notes = [523.25, 659.25, 783.99, 1046.50]; // Fanfare
                 notes.forEach((freq, idx) => {
@@ -414,6 +530,59 @@
                     noteOsc.start(now + idx * 0.12);
                     noteOsc.stop(now + idx * 0.12 + 0.35);
                 });
+
+                // --- បន្ថែមសំឡេងទះដៃ និងហោ (Applause & Cheering) ---
+                // ១. សំឡេងទះដៃ (ប្រើ White Noise)
+                const bufferSize = audioCtx.sampleRate * 4; // រយៈពេល ៤ វិនាទី
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                
+                const noiseSource = audioCtx.createBufferSource();
+                noiseSource.buffer = buffer;
+                
+                // តម្រងសម្លេង (Filter) ដើម្បីឱ្យសំឡេងដូចមនុស្សច្រើនទះដៃ
+                const noiseFilter = audioCtx.createBiquadFilter();
+                noiseFilter.type = 'bandpass';
+                noiseFilter.frequency.value = 1000; // កម្រិតភាពរំញ័រលឺជាងមុន
+                noiseFilter.Q.value = 0.8;
+                
+                const noiseGain = audioCtx.createGain();
+                noiseGain.gain.setValueAtTime(0, now);
+                noiseGain.gain.linearRampToValueAtTime(1.2, now + 0.5); // សំឡេងកើនឡើង (ខ្លាំងជាងមុន)
+                noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 4); // ថយចុះយឺតៗ
+                
+                noiseSource.connect(noiseFilter);
+                noiseFilter.connect(noiseGain);
+                noiseGain.connect(audioCtx.destination);
+                noiseSource.start(now);
+                noiseSource.stop(now + 4);
+
+                // ២. សំឡេងហោ (Cheering - ប្រើ Oscillators រំញ័រច្រើនជាន់)
+                const createCheer = (startFreq, peakFreq, endFreq, startTime, duration) => {
+                    const cheerOsc = audioCtx.createOscillator();
+                    const cheerGain = audioCtx.createGain();
+                    cheerOsc.type = 'sine';
+                    
+                    cheerOsc.frequency.setValueAtTime(startFreq, now + startTime);
+                    cheerOsc.frequency.exponentialRampToValueAtTime(peakFreq, now + startTime + duration * 0.4);
+                    cheerOsc.frequency.linearRampToValueAtTime(endFreq, now + startTime + duration);
+                    
+                    cheerGain.gain.setValueAtTime(0, now + startTime);
+                    cheerGain.gain.linearRampToValueAtTime(0.25, now + startTime + duration * 0.2);
+                    cheerGain.gain.exponentialRampToValueAtTime(0.01, now + startTime + duration);
+                    
+                    cheerOsc.connect(cheerGain);
+                    cheerGain.connect(audioCtx.destination);
+                    cheerOsc.start(now + startTime);
+                    cheerOsc.stop(now + startTime + duration);
+                };
+
+                createCheer(300, 600, 450, 0, 2.5);   // សំឡេងទី១
+                createCheer(400, 750, 500, 0.2, 2.8); // សំឡេងទី២
+                createCheer(250, 550, 400, 0.4, 2.2); // សំឡេងទី៣
             }
         }
 
@@ -469,6 +638,7 @@
 
         // ត្រឡប់មកម៉ឺនុយដើមវិញ (Back to Main Menu)
         function backToMenu() {
+            gameActive = false;
             clearInterval(timerInterval);
             const startScreen = document.getElementById('start-screen');
             const gameScreen = document.getElementById('game-screen');
@@ -480,6 +650,7 @@
             startScreen.classList.add('animate-fade-in-up');
             
             document.getElementById('back-home-btn').classList.remove('hidden');
+            stopBGM();
             updateGlobalHighScore();
             playSound('flip');
         }
@@ -493,9 +664,11 @@
                 soundIcon.textContent = '🔊';
                 soundText.textContent = 'បើកសំឡេង';
                 playSound('flip');
+                if (gameActive) startBGM();
             } else {
                 soundIcon.textContent = '🔇';
                 soundText.textContent = 'បិទសំឡេង';
+                stopBGM();
             }
         }
 
@@ -527,6 +700,9 @@
             }, 1000);
 
             generateCards();
+            
+            stopBGM();
+            startBGM();
         }
 
         // បង្កើតកាត និងបោះចូលក្នុង Grid
@@ -668,6 +844,7 @@
         function endGame(won) {
             gameActive = false;
             clearInterval(timerInterval);
+            stopBGM();
 
             if (won) {
                 playSound('win');
