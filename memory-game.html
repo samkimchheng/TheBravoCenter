@@ -266,7 +266,6 @@
         <img src="https://hits.sh/thebravocenter.com.svg?style=for-the-badge&label=%20&color=2563eb" alt="Visitor Counter"
             class="h-7 shadow-sm rounded">
     </div>
-    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
     <!-- ================= ផ្ទាំងឈ្នះហ្គេម (Victory Modal) ================= -->
     <div id="victory-modal"
@@ -359,7 +358,8 @@
         let soundEnabled = true;
 
         // បង្កើតប្រព័ន្ធសំឡេង Web Audio API
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioContextClass ? new AudioContextClass() : null;
 
         // --- អថេរសម្រាប់គ្រប់គ្រងតន្ត្រី Background (BGM) ---
         let bgmSchedulerInterval = null;
@@ -491,12 +491,6 @@
                 osc.start(now);
                 osc.stop(now + 0.35);
             } else if (type === 'fail') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(160, now);
-                osc.frequency.setValueAtTime(110, now + 0.15);
-                gain.gain.setValueAtTime(0.08, now);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-                // សំឡេងបែបកំប្លែង "អូហូយ" (Uh-oh / Womp womp)
                 osc.type = 'triangle'; 
                 
                 // ចង្វាក់ទី ១៖ "អូ" (Oh) - សំឡេងធម្មតារួចចុះបន្តិច
@@ -514,8 +508,8 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
                 
                 osc.start(now);
-                osc.stop(now + 0.25);
                 osc.stop(now + 0.6);
+
             }
         }
 
@@ -620,8 +614,13 @@
             document.getElementById('current-score').textContent = '0';
 
             // បង្ហាញពិន្ទុខ្ពស់បំផុតក្នុងតំបន់
-            const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
-            const localHighScore = localStorage.getItem(highScoreKey) || 0;
+            let localHighScore = 0;
+            try {
+                const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
+                localHighScore = localStorage.getItem(highScoreKey) || 0;
+            } catch (e) {
+                console.warn("LocalStorage disabled");
+            }
             document.getElementById('high-score-display').textContent = localHighScore;
 
             // ចាប់ផ្តើមនាឡិកាវាស់ពេល
@@ -782,17 +781,17 @@
             if (won) {
                 startConfetti();
 
-                // រក្សាទុកពិន្ទុខ្ពស់បំផុត (High Score) ទៅក្នុង LocalStorage
-                const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
-                const currentHighScore = parseInt(localStorage.getItem(highScoreKey)) || 0;
-
                 // បន្ថែមពិន្ទុបន្ថែមទៅតាមល្បឿននៃការលេង (Time bonus)
                 const timeBonus = Math.max(100 - secondsElapsed, 10);
                 const finalScore = score + timeBonus;
 
-                if (finalScore > currentHighScore) {
-                    localStorage.setItem(highScoreKey, finalScore);
-                }
+                try {
+                    const highScoreKey = `high_score_${currentDifficulty}_${currentTheme}`;
+                    const currentHighScore = parseInt(localStorage.getItem(highScoreKey)) || 0;
+                    if (finalScore > currentHighScore) {
+                        localStorage.setItem(highScoreKey, finalScore);
+                    }
+                } catch (e) {}
 
                 // បំពេញស្ថិតិក្នុងផ្ទាំង Modal ឈ្នះហ្គេម
                 const levelNames = { easy: 'ងាយស្រួល (4x4)', medium: 'មធ្យម (4x6)', hard: 'ពិបាក (6x6)' };
@@ -828,12 +827,14 @@
         function updateGlobalHighScore() {
             let maxScore = 0;
             // រុករករាល់ពិន្ទុខ្ពស់បំផុតក្នុងកម្រិតនីមួយៗ
-            for (let diff in difficultySettings) {
-                for (let theme in themes) {
-                    const score = parseInt(localStorage.getItem(`high_score_${diff}_${theme}`)) || 0;
-                    if (score > maxScore) maxScore = score;
+            try {
+                for (let diff in difficultySettings) {
+                    for (let theme in themes) {
+                        const score = parseInt(localStorage.getItem(`high_score_${diff}_${theme}`)) || 0;
+                        if (score > maxScore) maxScore = score;
+                    }
                 }
-            }
+            } catch (e) {}
             document.getElementById('global-high-score').textContent = maxScore;
         }
 

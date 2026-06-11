@@ -270,6 +270,7 @@
             </div>
 
             <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-400 mt-12 pt-1 pb-3 leading-tight uppercase tracking-wider">
+            <h2 id="gameover-title" class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-400 via-fuchsia-500 to-indigo-400 mt-12 pt-1 pb-3 leading-tight uppercase tracking-wider">
                 រ៉ូបូតអស់ថាមពល!
             </h2>
             <p class="text-slate-300 text-sm mb-6">អ្នកបានខិតខំប្រឹងប្រែងអស់ពីសមត្ថភាពហើយ!</p>
@@ -311,7 +312,8 @@
     <script>
         // --- ប្រព័ន្ធគ្រប់គ្រងសម្លេង (Synthesizer Audio) ---
         let soundEnabled = true;
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioContextClass ? new AudioContextClass() : null;
         
         // អថេរសម្រាប់គ្រប់គ្រងតន្ត្រី background (BGM)
         let bgmSchedulerInterval = null;
@@ -1234,11 +1236,18 @@
             stopBGM(); // បិទចង្វាក់ភ្លេងភ្លាមៗពេលលេងចាញ់
 
             // រក្សាទុកពិន្ទុឆ្ងាយបំផុត (Distance High Score) ទៅក្នុង LocalStorage
-            const storedHighScore = parseInt(localStorage.getItem('robot_high_score')) || 0;
+            let storedHighScore = 0;
             const currentDistance = Math.floor(distance);
+            let isNewHighScore = false;
 
-            if (currentDistance > storedHighScore) {
-                localStorage.setItem('robot_high_score', currentDistance);
+            try {
+                storedHighScore = parseInt(localStorage.getItem('robot_high_score')) || 0;
+                if (currentDistance > storedHighScore) {
+                    localStorage.setItem('robot_high_score', currentDistance);
+                    isNewHighScore = true;
+                }
+            } catch (e) {
+                console.warn("LocalStorage is disabled");
             }
 
             // បំពេញទិន្នន័យក្នុងផ្ទាំង Modal ហ្គេមចប់
@@ -1246,12 +1255,22 @@
             document.getElementById('modal-score').textContent = score;
             document.getElementById('modal-highscore').textContent = `${Math.max(currentDistance, storedHighScore)} m`;
 
+            const titleEl = document.getElementById('gameover-title');
+            if (isNewHighScore && currentDistance > 0) {
+                titleEl.innerHTML = 'អបអរសាទរ!<br>កំណត់ត្រាថ្មី!';
+            } else {
+                titleEl.innerHTML = 'រ៉ូបូតអស់ថាមពល!';
+            }
+
             // បើកបង្ហាញ Modal ចាញ់ហ្គេម
             setTimeout(() => {
                 const modal = document.getElementById('gameover-modal');
                 const card = document.getElementById('gameover-card');
                 modal.classList.remove('opacity-0', 'pointer-events-none');
                 card.classList.remove('scale-90');
+                if (isNewHighScore && currentDistance > 0) {
+                    startConfetti();
+                }
             }, 600);
         }
 
@@ -1261,12 +1280,17 @@
             const card = document.getElementById('gameover-card');
             modal.classList.add('opacity-0', 'pointer-events-none');
             card.classList.add('scale-90');
+            stopConfetti();
         }
 
         // បច្ចុប្បន្នភាពការបង្ហាញពិន្ទុខ្ពស់បំផុតសរុប (Global High Score)
         function updateGlobalHighScore() {
-            const storedHighScore = localStorage.getItem('robot_high_score') || 0;
-            document.getElementById('global-high-score').textContent = `${storedHighScore} m`;
+            try {
+                const storedHighScore = localStorage.getItem('robot_high_score') || 0;
+                document.getElementById('global-high-score').textContent = `${storedHighScore} m`;
+            } catch (e) {
+                document.getElementById('global-high-score').textContent = `0 m`;
+            }
         }
 
         // --- ដំណើរការហ្គេមរត់ជាបន្តបន្ទាប់ (Game Loop Animation) ---
@@ -1317,6 +1341,79 @@
 
             requestAnimationFrame(animate);
         }
+
+        // ================= CONFETTI EFFECT =================
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        const ctxConfetti = confettiCanvas.getContext('2d');
+        let confettiActive = false;
+        let confettiArray = [];
+        const confettiColors = ['#f43f5e', '#ec4899', '#d946ef', '#a855f7', '#8b5cf6', '#6366f1', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b'];
+
+        function resizeConfettiCanvas() {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+
+        class ConfettiParticle {
+            constructor() {
+                this.x = Math.random() * confettiCanvas.width;
+                this.y = Math.random() * -confettiCanvas.height - 20;
+                this.size = Math.random() * 8 + 6;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 2 + 1.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 4 - 2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                if (this.y > confettiCanvas.height) {
+                    this.y = -20;
+                    this.x = Math.random() * confettiCanvas.width;
+                }
+            }
+
+            draw() {
+                ctxConfetti.save();
+                ctxConfetti.translate(this.x, this.y);
+                ctxConfetti.rotate((this.rotation * Math.PI) / 180);
+                ctxConfetti.fillStyle = this.color;
+                ctxConfetti.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctxConfetti.restore();
+            }
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctxConfetti.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            confettiArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateConfetti);
+        }
+
+        function startConfetti() {
+            confettiCanvas.classList.remove('hidden');
+            resizeConfettiCanvas();
+            confettiActive = true;
+            confettiArray = [];
+            for (let i = 0; i < 200; i++) {
+                confettiArray.push(new ConfettiParticle());
+            }
+            animateConfetti();
+        }
+
+        function stopConfetti() {
+            confettiActive = false;
+            confettiCanvas.classList.add('hidden');
+            ctxConfetti.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+
+        window.addEventListener('resize', resizeConfettiCanvas);
 
         // ចាប់ផ្តើមលើកដំបូងបំផុត
         updateGlobalHighScore();
