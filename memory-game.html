@@ -286,7 +286,7 @@
             <!-- បន្ថែម pb-3 (Padding Bottom) និង pt-1 ការពារការបាត់ជើងអក្សរខ្មែរលើពាក្យ អបអរសាទរ -->
             <h2
                 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-amber-400 to-orange-400 pt-1 pb-3 leading-tight">
-                អបអរសាទរ!<br>អ្នកឈ្នះហើយ!
+                អបអរសាទរ!<br>អ្នកឈ្នះហើយ
             </h2>
             <p class="text-slate-300 text-sm mb-6">អ្នកពិតជាមានការចងចាំដ៏អស្ចារ្យមែន!</p>
 
@@ -516,93 +516,6 @@
                 osc.start(now);
                 osc.stop(now + 0.25);
                 osc.stop(now + 0.6);
-            } else if (type === 'win') {
-                const notes = [523.25, 659.25, 783.99, 1046.50]; // Fanfare
-                notes.forEach((freq, idx) => {
-                // ភ្លេងជ័យជម្នះថ្មីបែបហ្គេមបុរាណ (Retro Arcade Victory Fanfare)
-                const melody = [
-                    { f: 523.25, t: 0, d: 0.15 },    // C5
-                    { f: 659.25, t: 0.15, d: 0.15 }, // E5
-                    { f: 783.99, t: 0.3, d: 0.15 },  // G5
-                    { f: 1046.50, t: 0.45, d: 0.2 }, // C6
-                    { f: 783.99, t: 0.7, d: 0.15 },  // G5
-                    { f: 1046.50, t: 0.85, d: 0.6 }  // C6 (អូសបន្លាយ)
-                ];
-
-                melody.forEach(note => {
-                    const noteOsc = audioCtx.createOscillator();
-                    const noteGain = audioCtx.createGain();
-                    noteOsc.connect(noteGain);
-                    noteGain.connect(audioCtx.destination);
-                    noteOsc.type = 'sine';
-                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
-                    noteGain.gain.setValueAtTime(0.05, now + idx * 0.12);
-                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
-                    noteOsc.start(now + idx * 0.12);
-                    noteOsc.stop(now + idx * 0.12 + 0.35);
-                    
-                    noteOsc.type = 'triangle'; // សំឡេងបែប 8-bit / Arcade
-                    noteOsc.frequency.setValueAtTime(note.f, now + note.t);
-                    noteGain.gain.setValueAtTime(0.08, now + note.t);
-                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + note.t + note.d);
-                    
-                    noteOsc.start(now + note.t);
-                    noteOsc.stop(now + note.t + note.d + 0.1);
-                });
-
-                // --- បន្ថែមសំឡេងទះដៃ និងហោ (Applause & Cheering) ---
-                // ១. សំឡេងទះដៃ (ប្រើ White Noise)
-                const bufferSize = audioCtx.sampleRate * 4; // រយៈពេល ៤ វិនាទី
-                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const data = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    data[i] = Math.random() * 2 - 1;
-                }
-                
-                const noiseSource = audioCtx.createBufferSource();
-                noiseSource.buffer = buffer;
-                
-                // តម្រងសម្លេង (Filter) ដើម្បីឱ្យសំឡេងដូចមនុស្សច្រើនទះដៃ
-                const noiseFilter = audioCtx.createBiquadFilter();
-                noiseFilter.type = 'bandpass';
-                noiseFilter.frequency.value = 1000; // កម្រិតភាពរំញ័រលឺជាងមុន
-                noiseFilter.Q.value = 0.8;
-                
-                const noiseGain = audioCtx.createGain();
-                noiseGain.gain.setValueAtTime(0, now);
-                noiseGain.gain.linearRampToValueAtTime(0.4, now + 0.5); // បន្ថយសំឡេងកុំឲ្យលឺខ្លាំងពេក
-                noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 4); // ថយចុះយឺតៗ
-                
-                noiseSource.connect(noiseFilter);
-                noiseFilter.connect(noiseGain);
-                noiseGain.connect(audioCtx.destination);
-                noiseSource.start(now);
-                noiseSource.stop(now + 4);
-
-                // ២. សំឡេងហោ (Cheering - ប្រើ Oscillators រំញ័រច្រើនជាន់)
-                const createCheer = (startFreq, peakFreq, endFreq, startTime, duration) => {
-                    const cheerOsc = audioCtx.createOscillator();
-                    const cheerGain = audioCtx.createGain();
-                    cheerOsc.type = 'sine';
-                    
-                    cheerOsc.frequency.setValueAtTime(startFreq, now + startTime);
-                    cheerOsc.frequency.exponentialRampToValueAtTime(peakFreq, now + startTime + duration * 0.4);
-                    cheerOsc.frequency.linearRampToValueAtTime(endFreq, now + startTime + duration);
-                    
-                    cheerGain.gain.setValueAtTime(0, now + startTime);
-                    cheerGain.gain.linearRampToValueAtTime(0.1, now + startTime + duration * 0.2); // បន្ថយសំឡេង
-                    cheerGain.gain.exponentialRampToValueAtTime(0.01, now + startTime + duration);
-                    
-                    cheerOsc.connect(cheerGain);
-                    cheerGain.connect(audioCtx.destination);
-                    cheerOsc.start(now + startTime);
-                    cheerOsc.stop(now + startTime + duration);
-                };
-
-                createCheer(300, 600, 450, 0, 2.5);   // សំឡេងទី១
-                createCheer(400, 750, 500, 0.2, 2.8); // សំឡេងទី២
-                createCheer(250, 550, 400, 0.4, 2.2); // សំឡេងទី៣
-            }
         }
 
         // ការផ្លាស់ប្តូរកម្រិតលេង (Difficulty Selection)
@@ -866,7 +779,6 @@
             stopBGM();
 
             if (won) {
-                playSound('win');
                 startConfetti();
 
                 // រក្សាទុកពិន្ទុខ្ពស់បំផុត (High Score) ទៅក្នុង LocalStorage
