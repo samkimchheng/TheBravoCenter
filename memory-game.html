@@ -525,7 +525,7 @@
                     noteGain.connect(audioCtx.destination);
                     noteOsc.type = 'sine';
                     noteOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
-                    noteGain.gain.setValueAtTime(0.1, now + idx * 0.12);
+                    noteGain.gain.setValueAtTime(0.05, now + idx * 0.12);
                     noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
                     noteOsc.start(now + idx * 0.12);
                     noteOsc.stop(now + idx * 0.12 + 0.35);
@@ -551,7 +551,7 @@
                 
                 const noiseGain = audioCtx.createGain();
                 noiseGain.gain.setValueAtTime(0, now);
-                noiseGain.gain.linearRampToValueAtTime(1.2, now + 0.5); // សំឡេងកើនឡើង (ខ្លាំងជាងមុន)
+                noiseGain.gain.linearRampToValueAtTime(0.4, now + 0.5); // បន្ថយសំឡេងកុំឲ្យលឺខ្លាំងពេក
                 noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 4); // ថយចុះយឺតៗ
                 
                 noiseSource.connect(noiseFilter);
@@ -571,7 +571,7 @@
                     cheerOsc.frequency.linearRampToValueAtTime(endFreq, now + startTime + duration);
                     
                     cheerGain.gain.setValueAtTime(0, now + startTime);
-                    cheerGain.gain.linearRampToValueAtTime(0.25, now + startTime + duration * 0.2);
+                    cheerGain.gain.linearRampToValueAtTime(0.1, now + startTime + duration * 0.2); // បន្ថយសំឡេង
                     cheerGain.gain.exponentialRampToValueAtTime(0.01, now + startTime + duration);
                     
                     cheerOsc.connect(cheerGain);
