@@ -519,6 +519,17 @@
             } else if (type === 'win') {
                 const notes = [523.25, 659.25, 783.99, 1046.50]; // Fanfare
                 notes.forEach((freq, idx) => {
+                // ភ្លេងជ័យជម្នះថ្មីបែបហ្គេមបុរាណ (Retro Arcade Victory Fanfare)
+                const melody = [
+                    { f: 523.25, t: 0, d: 0.15 },    // C5
+                    { f: 659.25, t: 0.15, d: 0.15 }, // E5
+                    { f: 783.99, t: 0.3, d: 0.15 },  // G5
+                    { f: 1046.50, t: 0.45, d: 0.2 }, // C6
+                    { f: 783.99, t: 0.7, d: 0.15 },  // G5
+                    { f: 1046.50, t: 0.85, d: 0.6 }  // C6 (អូសបន្លាយ)
+                ];
+
+                melody.forEach(note => {
                     const noteOsc = audioCtx.createOscillator();
                     const noteGain = audioCtx.createGain();
                     noteOsc.connect(noteGain);
@@ -529,6 +540,14 @@
                     noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
                     noteOsc.start(now + idx * 0.12);
                     noteOsc.stop(now + idx * 0.12 + 0.35);
+                    
+                    noteOsc.type = 'triangle'; // សំឡេងបែប 8-bit / Arcade
+                    noteOsc.frequency.setValueAtTime(note.f, now + note.t);
+                    noteGain.gain.setValueAtTime(0.08, now + note.t);
+                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + note.t + note.d);
+                    
+                    noteOsc.start(now + note.t);
+                    noteOsc.stop(now + note.t + note.d + 0.1);
                 });
 
                 // --- បន្ថែមសំឡេងទះដៃ និងហោ (Applause & Cheering) ---
