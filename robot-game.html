@@ -1364,6 +1364,7 @@
                 this.speedY = Math.random() * 1.5 + 0.5; // បន្ថយល្បឿនធ្លាក់ឲ្យយឺតនិងអណ្តែតជាងមុន
                 this.rotation = Math.random() * 360;
                 this.rotationSpeed = Math.random() * 4 - 2;
+                this.shape = Math.random() > 0.5 ? 'circle' : 'square';
             }
 
             update() {
@@ -1381,7 +1382,13 @@
                 ctxConfetti.translate(this.x, this.y);
                 ctxConfetti.rotate((this.rotation * Math.PI) / 180);
                 ctxConfetti.fillStyle = this.color;
-                ctxConfetti.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                if (this.shape === 'circle') {
+                    ctxConfetti.beginPath();
+                    ctxConfetti.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctxConfetti.fill();
+                } else {
+                    ctxConfetti.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                }
                 ctxConfetti.restore();
             }
         }
