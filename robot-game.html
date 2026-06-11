@@ -374,20 +374,6 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
                 osc.start(now);
                 osc.stop(now + 0.25);
-            } else if (type === 'gameover') {
-                const notes = [440, 392, 349, 293]; // Sad desc
-                notes.forEach((freq, idx) => {
-                    const noteOsc = audioCtx.createOscillator();
-                    const noteGain = noteOsc.context.createGain();
-                    noteOsc.connect(noteGain);
-                    noteGain.connect(audioCtx.destination);
-                    noteOsc.type = 'sine';
-                    noteOsc.frequency.setValueAtTime(freq, now + idx * 0.15);
-                    noteGain.gain.setValueAtTime(0.1, now + idx * 0.15);
-                    noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.15 + 0.35);
-                    noteOsc.start(now + idx * 0.15);
-                    noteOsc.stop(now + idx * 0.15 + 0.4);
-                });
             }
         }
 
@@ -1246,7 +1232,6 @@
         function endGame() {
             gameActive = false;
             stopBGM(); // បិទចង្វាក់ភ្លេងភ្លាមៗពេលលេងចាញ់
-            playSound('gameover');
 
             // រក្សាទុកពិន្ទុឆ្ងាយបំផុត (Distance High Score) ទៅក្នុង LocalStorage
             const storedHighScore = parseInt(localStorage.getItem('robot_high_score')) || 0;
