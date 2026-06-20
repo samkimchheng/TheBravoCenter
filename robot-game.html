@@ -128,6 +128,52 @@
                 padding: 8px;
             }
 
+            #game-shell.is-playing #stats-panel {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            #game-shell.is-playing #stats-panel > *,
+            #game-shell.is-playing #game-controls > * {
+                margin-left: 0 !important;
+            }
+
+            #game-shell.is-playing .stat-card {
+                min-width: 0;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 14px;
+                background: rgba(15, 23, 42, 0.58);
+                padding: 8px 10px;
+            }
+
+            #game-shell.is-playing .stat-card + .stat-card {
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                padding-left: 10px;
+            }
+
+            #game-shell.is-playing .stat-label {
+                font-size: 9px;
+                line-height: 1.15;
+                white-space: nowrap;
+            }
+
+            #game-shell.is-playing .stat-value {
+                font-size: 18px;
+                line-height: 1.2;
+            }
+
+            #game-shell.is-playing #game-controls {
+                width: 100%;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            #game-shell.is-playing #game-controls button:last-child {
+                flex: 1;
+            }
+
             #game-shell.is-playing #shield-status {
                 order: 3;
                 width: 100%;
@@ -246,14 +292,14 @@
         <section id="game-screen" class="hidden relative flex flex-col items-center">
             <!-- របារព័ត៌មានខាងលើ -->
             <div id="game-hud" class="w-full flex flex-wrap items-center justify-between mb-4 bg-white/5 p-3 rounded-2xl border border-white/10">
-                <div class="flex items-center space-x-4">
-                    <div class="flex flex-col">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-widest">ចម្ងាយរត់</span>
-                        <span id="distance-display" class="text-xl font-bold text-cyan-400">0 m</span>
+                <div id="stats-panel" class="flex items-center space-x-4">
+                    <div class="stat-card flex flex-col">
+                        <span class="stat-label text-[10px] text-slate-400 uppercase tracking-widest">ចម្ងាយរត់</span>
+                        <span id="distance-display" class="stat-value text-xl font-bold text-cyan-400">0 m</span>
                     </div>
-                    <div class="flex flex-col border-l border-white/10 pl-4">
-                        <span class="text-[10px] text-slate-400 uppercase tracking-widest">ពិន្ទុថាមពល</span>
-                        <span id="score-display" class="text-xl font-bold text-yellow-400">0</span>
+                    <div class="stat-card flex flex-col border-l border-white/10 pl-4">
+                        <span class="stat-label text-[10px] text-slate-400 uppercase tracking-widest">ពិន្ទុថាមពល</span>
+                        <span id="score-display" class="stat-value text-xl font-bold text-yellow-400">0</span>
                     </div>
                 </div>
 
@@ -262,7 +308,7 @@
                     <span>🛡️</span> <span>កំពុងបើកខែលការពារ BRAVO</span>
                 </div>
 
-                <div class="flex items-center space-x-2">
+                <div id="game-controls" class="flex items-center space-x-2">
                     <button onclick="toggleSound()" id="sound-btn" class="bg-white/5 hover:bg-white/10 w-9 h-9 rounded-xl flex items-center justify-center border border-white/10 transition-all">
                         <span id="sound-icon">🔊</span>
                     </button>
