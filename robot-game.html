@@ -203,6 +203,84 @@
                 justify-content: center;
             }
         }
+
+        @media (max-height: 520px) and (orientation: landscape) {
+            #game-shell.is-playing {
+                height: 100svh;
+                padding: 6px;
+            }
+
+            #game-shell.is-playing #game-hud {
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 6px;
+                padding: 6px;
+                margin-bottom: 6px;
+                border-radius: 14px;
+            }
+
+            #game-shell.is-playing #stats-panel {
+                width: auto;
+                min-width: 250px;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+            }
+
+            #game-shell.is-playing #stats-panel > *,
+            #game-shell.is-playing #game-controls > * {
+                margin-left: 0 !important;
+            }
+
+            #game-shell.is-playing .stat-card {
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                background: rgba(15, 23, 42, 0.58);
+                padding: 5px 8px;
+            }
+
+            #game-shell.is-playing .stat-card + .stat-card {
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                padding-left: 8px;
+            }
+
+            #game-shell.is-playing .stat-label {
+                font-size: 8px;
+                line-height: 1.1;
+                white-space: nowrap;
+            }
+
+            #game-shell.is-playing .stat-value {
+                font-size: 16px;
+                line-height: 1.15;
+            }
+
+            #game-shell.is-playing #shield-status {
+                flex: 1;
+                min-width: 0;
+                justify-content: center;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            #game-shell.is-playing #game-controls {
+                width: auto;
+                flex-shrink: 0;
+                gap: 6px;
+            }
+
+            #game-shell.is-playing #game-controls button:last-child {
+                flex: none;
+            }
+
+            #game-shell.is-playing #canvas-shell {
+                border-radius: 14px;
+            }
+
+            #game-shell.is-playing #game-canvas {
+                max-height: calc(100svh - 66px);
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center py-8 px-4 relative text-white">
@@ -668,6 +746,7 @@
         const gameShell = document.getElementById('game-shell');
         const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
+        let didEnterGameFullscreen = false;
 
         // កំណត់ទំហំជាក់ស្តែងរបស់ Canvas
         function setCanvasSize() {
@@ -682,9 +761,46 @@
             window.scrollTo(0, 0);
         }
 
-        function exitPlayingLayout() {
+        async function requestMobileLandscapeMode() {
+            const isTouchDevice = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+            const isSmallScreen = window.matchMedia('(max-width: 900px), (max-height: 520px)').matches;
+
+            if (!isTouchDevice || !isSmallScreen) return;
+
+            try {
+                if (!document.fullscreenElement && gameShell.requestFullscreen) {
+                    await gameShell.requestFullscreen();
+                    didEnterGameFullscreen = true;
+                }
+
+                if (screen.orientation && screen.orientation.lock) {
+                    await screen.orientation.lock('landscape');
+                }
+            } catch (error) {
+                console.info('Landscape mode is not available in this browser.', error);
+            }
+        }
+
+        async function exitMobileLandscapeMode() {
+            try {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+
+                if (didEnterGameFullscreen && document.fullscreenElement && document.exitFullscreen) {
+                    await document.exitFullscreen();
+                }
+            } catch (error) {
+                console.info('Could not leave fullscreen landscape mode.', error);
+            } finally {
+                didEnterGameFullscreen = false;
+            }
+        }
+
+        async function exitPlayingLayout() {
             document.body.classList.remove('is-playing');
             gameShell.classList.remove('is-playing');
+            await exitMobileLandscapeMode();
         }
 
         // គូររូបរ៉ូបូតមានចលនាតូចមួយនៅលើ Canvas (សម្រាប់ Shield / Collectibles)
@@ -768,18 +884,19 @@
         let bgOffset = 0;
 
         // ចាប់ផ្តើមហ្គេមចេញពីម៉ឺនុយដើម (Start Game)
-        function startGame() {
+        async function startGame() {
             enterPlayingLayout();
+            await requestMobileLandscapeMode();
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             resetGame();
         }
 
         // ត្រឡប់មកម៉ឺនុយដើមវិញ (Back to Main Menu)
-        function backToMenu() {
+        async function backToMenu() {
             gameActive = false;
             stopBGM(); // បញ្ឈប់តន្ត្រីពេលចាកចេញទៅក្រៅ
-            exitPlayingLayout();
+            await exitPlayingLayout();
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('start-screen').classList.remove('hidden');
             updateGlobalHighScore();
