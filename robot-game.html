@@ -125,6 +125,90 @@
             display: none;
         }
 
+        body.is-playing.force-landscape {
+            width: 100vw;
+            height: 100vh;
+            height: 100svh;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing {
+            top: 50%;
+            left: 50%;
+            right: auto;
+            bottom: auto;
+            width: 100svh;
+            height: 100vw;
+            transform: translate(-50%, -50%) rotate(90deg);
+            transform-origin: center center;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #game-hud {
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 6px;
+            padding: 6px;
+            margin-bottom: 6px;
+            border-radius: 14px;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #stats-panel {
+            width: auto;
+            min-width: 250px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #stats-panel > *,
+        body.is-playing.force-landscape #game-shell.is-playing #game-controls > * {
+            margin-left: 0 !important;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing .stat-card {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.58);
+            padding: 5px 8px;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing .stat-card + .stat-card {
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 8px;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing .stat-label {
+            font-size: 8px;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing .stat-value {
+            font-size: 16px;
+            line-height: 1.15;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #shield-status {
+            flex: 1;
+            min-width: 0;
+            justify-content: center;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #game-controls {
+            width: auto;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #game-controls button:last-child {
+            flex: none;
+        }
+
+        body.is-playing.force-landscape #game-shell.is-playing #game-canvas {
+            max-height: calc(100vw - 66px);
+        }
+
         @media (max-width: 640px) {
             #game-shell.is-playing {
                 height: 100svh;
@@ -766,15 +850,22 @@
             return isTouchDevice && isSmallScreen;
         }
 
+        function syncForcedLandscapeClass() {
+            if (!document.body.classList.contains('is-playing') || !isMobileGameScreen()) {
+                document.body.classList.remove('force-landscape');
+                return;
+            }
+
+            const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+            document.body.classList.toggle('force-landscape', isPortrait);
+        }
+
         async function requestMobileLandscapeMode() {
             if (!isMobileGameScreen()) return;
 
-            try {
-                if (!document.fullscreenElement && gameShell.requestFullscreen) {
-                    await gameShell.requestFullscreen();
-                    didEnterGameFullscreen = true;
-                }
+            syncForcedLandscapeClass();
 
+            try {
                 if (screen.orientation && screen.orientation.lock) {
                     await screen.orientation.lock('landscape');
                 }
@@ -785,6 +876,8 @@
 
         async function prepareGameOverPortraitMode() {
             if (!isMobileGameScreen()) return;
+
+            document.body.classList.remove('force-landscape');
 
             try {
                 if (screen.orientation && screen.orientation.unlock) {
@@ -810,6 +903,8 @@
         }
 
         async function exitMobileLandscapeMode() {
+            document.body.classList.remove('force-landscape');
+
             try {
                 if (screen.orientation && screen.orientation.unlock) {
                     screen.orientation.unlock();
@@ -830,6 +925,11 @@
             gameShell.classList.remove('is-playing');
             await exitMobileLandscapeMode();
         }
+
+        window.addEventListener('orientationchange', () => {
+            setTimeout(syncForcedLandscapeClass, 150);
+        });
+        window.addEventListener('resize', syncForcedLandscapeClass);
 
         // គូររូបរ៉ូបូតមានចលនាតូចមួយនៅលើ Canvas (សម្រាប់ Shield / Collectibles)
         function drawCanvasRobotHead(ctx, x, y, width, height, glowColor, gameFrame) {
