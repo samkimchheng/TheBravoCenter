@@ -389,7 +389,7 @@
         let bgmSchedulerInterval = null;
         let nextBgmNoteTime = 0.0;
         let bgmStep = 0;
-        const bgmTempo = 132; // ល្បឿន BPM របស់តន្ត្រី
+        const bgmTempo = 146; // ល្បឿន BPM របស់តន្ត្រី
         const bgmStepDuration = 60 / bgmTempo / 2; // ចលនា step នីមួយៗ (8th note)
 
         function playSound(type) {
@@ -451,7 +451,7 @@
 
         // --- ដំណើរការតន្ត្រី Procedural Synthwave BGM Loop ---
         function startBGM() {
-            if (!soundEnabled) return;
+            if (!soundEnabled || !audioCtx) return;
             if (bgmSchedulerInterval) return; // កំពុងដំណើរការហើយ
             
             if (audioCtx.state === 'suspended') {
@@ -478,117 +478,120 @@
             }
         }
 
-        function scheduleBgmStep(step, time) {
-            if (!soundEnabled || !gameActive) return;
+        function scheduleTone(freq, time, duration, type, volume, filterFreq = null, detune = 0) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            const filter = filterFreq ? audioCtx.createBiquadFilter() : null;
 
-            const bar = Math.floor(step / 8) % 4; // Cm -> Ab -> Eb -> Bb ( progression 4 bars )
-            const stepInBar = step % 8;
-            
-            // Bass frequencies: C2 (65.41), Ab1 (51.91), Eb2 (77.78), Bb1 (58.27)
-            const roots = [65.41, 51.91, 77.78, 58.27];
-            
-            // 1. Synth Bassline (គូសសំឡេងបាសធ្ងន់ៗ)
-            if (stepInBar % 2 === 0) { // លេងរាល់ 8th note
-                const bassOsc = audioCtx.createOscillator();
-                const bassGain = audioCtx.createGain();
-                const bassFilter = audioCtx.createBiquadFilter();
-                
-                bassOsc.type = 'triangle';
-                bassOsc.frequency.setValueAtTime(roots[bar], time);
-                
-                // បង្កើត envelope ឲ្យសំឡេងបាស
-                bassGain.gain.setValueAtTime(0, time);
-                bassGain.gain.linearRampToValueAtTime(0.09, time + 0.02);
-                bassGain.gain.exponentialRampToValueAtTime(0.001, time + bgmStepDuration * 1.8);
-                
-                // បន្ថែម Filter បន្ថយសំឡេងស្រួច កុំឲ្យហឹរត្រចៀក
-                bassFilter.type = 'lowpass';
-                bassFilter.frequency.setValueAtTime(250, time);
-                bassFilter.frequency.exponentialRampToValueAtTime(100, time + bgmStepDuration * 1.5);
-                
-                bassOsc.connect(bassFilter);
-                bassFilter.connect(bassGain);
-                bassGain.connect(audioCtx.destination);
-                
-                bassOsc.start(time);
-                bassOsc.stop(time + bgmStepDuration * 1.8);
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, time);
+            osc.detune.setValueAtTime(detune, time);
+            gain.gain.setValueAtTime(0.0001, time);
+            gain.gain.exponentialRampToValueAtTime(volume, time + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+
+            if (filter) {
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(filterFreq, time);
+                osc.connect(filter);
+                filter.connect(gain);
+            } else {
+                osc.connect(gain);
             }
+
+            gain.connect(audioCtx.destination);
+            osc.start(time);
+            osc.stop(time + duration + 0.04);
+        }
+
+        function scheduleNoiseHit(time, duration, volume, filterType, filterFreq) {
+            const bufferSize = Math.max(1, Math.floor(audioCtx.sampleRate * duration));
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            const filter = audioCtx.createBiquadFilter();
+            const gain = audioCtx.createGain();
+
+            noise.buffer = buffer;
+            filter.type = filterType;
+            filter.frequency.setValueAtTime(filterFreq, time);
+            gain.gain.setValueAtTime(volume, time);
+            gain.gain.exponentialRampToValueAtTime(0.0001, time + duration);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start(time);
+            noise.stop(time + duration);
+        }
+
+        function scheduleBgmStep(step, time) {
+            if (!soundEnabled || !audioCtx || !gameActive) return;
+
+            const bar = Math.floor(step / 8) % 4; // Cm -> Ab -> Eb -> Bb
+            const stepInBar = step % 8;
+            const phraseStep = step % 32;
             
-            // 2. Melody Arpeggio (ភ្លេងស្រួចៗបែប Retro Cyber Pluck)
-            // Cm (C4, Eb4, G4, C5), Ab (Ab3, C4, Eb4, Ab4), Eb (Eb4, G4, Bb4, Eb5), Bb (Bb3, D4, F4, Bb4)
+            const roots = [65.41, 51.91, 77.78, 58.27];
+            const chords = [
+                [261.63, 311.13, 392.00], // Cm
+                [207.65, 261.63, 311.13], // Ab
+                [311.13, 392.00, 466.16], // Eb
+                [233.08, 293.66, 349.23]  // Bb
+            ];
             const arps = [
-                [261.63, 311.13, 392.00, 523.25, 392.00, 311.13, 261.63, 392.00], // Cm
-                [207.65, 261.63, 311.13, 415.30, 311.13, 261.63, 207.65, 311.13], // Ab
-                [311.13, 392.00, 466.16, 622.25, 466.16, 392.00, 311.13, 466.16], // Eb
-                [233.08, 293.66, 349.23, 466.16, 349.23, 293.66, 233.08, 349.23]  // Bb
+                [523.25, 392.00, 622.25, 783.99, 622.25, 392.00, 523.25, 932.33],
+                [415.30, 311.13, 523.25, 622.25, 523.25, 311.13, 415.30, 830.61],
+                [622.25, 466.16, 783.99, 932.33, 783.99, 466.16, 622.25, 1174.66],
+                [466.16, 349.23, 587.33, 698.46, 587.33, 349.23, 466.16, 932.33]
+            ];
+            const leadMelody = [
+                783.99, 0, 698.46, 622.25, 0, 783.99, 932.33, 0,
+                830.61, 0, 783.99, 622.25, 0, 523.25, 622.25, 0,
+                932.33, 0, 783.99, 698.46, 0, 622.25, 783.99, 0,
+                698.46, 0, 587.33, 523.25, 0, 466.16, 523.25, 0
             ];
             
-            const noteFreq = arps[bar][stepInBar];
-            
-            const melOsc = audioCtx.createOscillator();
-            const melGain = audioCtx.createGain();
-            const delay = audioCtx.createDelay();
-            const delayFeedback = audioCtx.createGain();
-            
-            melOsc.type = 'sine';
-            melOsc.frequency.setValueAtTime(noteFreq, time);
-            
-            // Envelope សម្រាប់ភ្លេង
-            melGain.gain.setValueAtTime(0, time);
-            melGain.gain.linearRampToValueAtTime(0.04, time + 0.01);
-            melGain.gain.exponentialRampToValueAtTime(0.001, time + 0.16);
-            
-            // បន្ថែម Echo Delay (អេកូ) ឲ្យមានអារម្មណ៍អណ្តែតអវកាស
-            delay.delayTime.setValueAtTime(0.15, time);
-            delayFeedback.gain.setValueAtTime(0.35, time);
-            
-            melOsc.connect(melGain);
-            melGain.connect(audioCtx.destination);
-            
-            // Feedback Loop Delay
-            melGain.connect(delay);
-            delay.connect(delayFeedback);
-            delayFeedback.connect(delay);
-            delayFeedback.connect(audioCtx.destination);
-            
-            melOsc.start(time);
-            melOsc.stop(time + 0.3);
-            
-            // 3. Kick Drum (សំឡេងធាក់ស្គរ 808 ធ្ងន់ៗរាល់ step 0 នឹង 4)
-            if (stepInBar === 0 || stepInBar === 4) {
-                const kickOsc = audioCtx.createOscillator();
-                const kickGain = audioCtx.createGain();
-                
-                kickOsc.type = 'sine';
-                kickOsc.frequency.setValueAtTime(140, time);
-                kickOsc.frequency.exponentialRampToValueAtTime(45, time + 0.09);
-                
-                kickGain.gain.setValueAtTime(0.15, time);
-                kickGain.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
-                
-                kickOsc.connect(kickGain);
-                kickGain.connect(audioCtx.destination);
-                
-                kickOsc.start(time);
-                kickOsc.stop(time + 0.15);
+            if (stepInBar === 0) {
+                chords[bar].forEach((note, index) => {
+                    scheduleTone(note, time, bgmStepDuration * 7.8, 'sawtooth', 0.012, 900, index * 5);
+                    scheduleTone(note / 2, time, bgmStepDuration * 7.8, 'triangle', 0.01, 700, -index * 4);
+                });
             }
-            
-            // 4. Hi-hat (សំឡេងសង្កៀតដែកស្រាលៗ រាល់ step 2 នឹង 6)
-            if (stepInBar === 2 || stepInBar === 6) {
-                const hatOsc = audioCtx.createOscillator();
-                const hatGain = audioCtx.createGain();
-                
-                hatOsc.type = 'triangle';
-                hatOsc.frequency.setValueAtTime(11000, time);
-                
-                hatGain.gain.setValueAtTime(0.015, time);
-                hatGain.gain.exponentialRampToValueAtTime(0.001, time + 0.03);
-                
-                hatOsc.connect(hatGain);
-                hatGain.connect(audioCtx.destination);
-                
-                hatOsc.start(time);
-                hatOsc.stop(time + 0.03);
+
+            const bassPattern = [1, 0.5, 1, 1.5, 1, 0.5, 1.25, 1];
+            if (stepInBar % 2 === 0 || stepInBar === 7) {
+                scheduleTone(roots[bar] * bassPattern[stepInBar], time, bgmStepDuration * 1.45, 'triangle', 0.105, 260);
+                scheduleTone(roots[bar] * bassPattern[stepInBar] * 2, time, bgmStepDuration * 0.9, 'square', 0.025, 420);
+            }
+
+            scheduleTone(arps[bar][stepInBar], time, bgmStepDuration * 0.78, 'square', 0.027, 1600);
+
+            const leadNote = leadMelody[phraseStep];
+            if (leadNote) {
+                scheduleTone(leadNote, time, bgmStepDuration * 1.25, 'sine', 0.038, null);
+                scheduleTone(leadNote * 1.005, time + 0.012, bgmStepDuration * 1.1, 'triangle', 0.018, 2200);
+            }
+
+            if (stepInBar === 0 || stepInBar === 4) {
+                scheduleTone(120, time, 0.16, 'sine', 0.18, 180);
+            }
+
+            if (stepInBar === 4) {
+                scheduleNoiseHit(time + 0.01, 0.12, 0.055, 'bandpass', 1800);
+            }
+
+            if (stepInBar % 2 === 1 || stepInBar === 6) {
+                scheduleNoiseHit(time, 0.035, 0.022, 'highpass', 6500);
+            }
+
+            if (stepInBar === 7) {
+                scheduleNoiseHit(time, 0.11, 0.018, 'highpass', 5200);
             }
         }
 
