@@ -64,6 +64,76 @@
         .neon-border {
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.4), inset 0 0 15px rgba(6, 182, 212, 0.2);
         }
+
+        body.is-playing {
+            overflow: hidden;
+            padding: 0 !important;
+        }
+
+        #game-shell.is-playing {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100dvh;
+            max-width: none;
+            border-radius: 0;
+            border: 0;
+            padding: clamp(8px, 1.5vw, 18px);
+            display: flex;
+            flex-direction: column;
+            z-index: 40;
+        }
+
+        #game-shell.is-playing #back-home-btn,
+        body.is-playing #visitor-counter {
+            display: none;
+        }
+
+        #game-shell.is-playing #game-screen {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+        }
+
+        #game-shell.is-playing #game-hud {
+            flex-shrink: 0;
+            margin-bottom: clamp(8px, 1.4vw, 16px);
+        }
+
+        #game-shell.is-playing #canvas-shell {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+        }
+
+        #game-shell.is-playing #game-canvas {
+            width: 100%;
+            height: 100%;
+            max-height: none;
+            touch-action: manipulation;
+        }
+
+        #game-shell.is-playing #game-screen > p {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            #game-shell.is-playing {
+                padding: 8px;
+            }
+
+            #game-shell.is-playing #game-hud {
+                align-items: stretch;
+                gap: 8px;
+                padding: 8px;
+            }
+
+            #game-shell.is-playing #shield-status {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center py-8 px-4 relative text-white">
@@ -76,7 +146,7 @@
     <div class="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[140px] pointer-events-none"></div>
 
     <!-- ប្រអប់ហ្គេមទាំងមូល -->
-    <main class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-6 shadow-2xl relative z-10 neon-border overflow-hidden">
+    <main id="game-shell" class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-4 md:p-6 shadow-2xl relative z-10 neon-border overflow-hidden">
         
         <!-- ប៊ូតុងត្រឡប់ទៅទំព័រដើម -->
         <div id="back-home-btn" class="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
@@ -175,7 +245,7 @@
         <!-- ================= ផ្ទាំងលេងហ្គេម (Game Screen) ================= -->
         <section id="game-screen" class="hidden relative flex flex-col items-center">
             <!-- របារព័ត៌មានខាងលើ -->
-            <div class="w-full flex items-center justify-between mb-4 bg-white/5 p-3 rounded-2xl border border-white/10">
+            <div id="game-hud" class="w-full flex flex-wrap items-center justify-between mb-4 bg-white/5 p-3 rounded-2xl border border-white/10">
                 <div class="flex items-center space-x-4">
                     <div class="flex flex-col">
                         <span class="text-[10px] text-slate-400 uppercase tracking-widest">ចម្ងាយរត់</span>
@@ -203,7 +273,7 @@
             </div>
 
             <!-- កន្លែងបង្ហាញគំនូរជីវចលហ្គេម (Main Canvas) -->
-            <div class="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
+            <div id="canvas-shell" class="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-950">
                 <canvas id="game-canvas" class="w-full h-auto max-h-[55vh] block"></canvas>
             </div>
             
@@ -213,7 +283,7 @@
     </main>
 
     <!-- ផ្ទាំងបង្ហាញចំនួនអ្នកចូលទស្សនាវេបសាយ -->
-    <div class="mt-4 flex justify-center items-center gap-3 min-h-[40px] relative z-10">
+    <div id="visitor-counter" class="mt-4 flex justify-center items-center gap-3 min-h-[40px] relative z-10">
         <span class="text-sm font-medium tracking-wide text-gray-300">ចំនួនអ្នកចូលទស្សនា៖</span>
         <img src="https://hits.sh/thebravocenter.com.svg?style=for-the-badge&label=%20&color=2563eb" alt="Visitor Counter"
             class="h-7 shadow-sm rounded">
@@ -523,6 +593,7 @@
         }
 
         // --- កូដគ្រប់គ្រងដំណើរការហ្គេមនៅលើ Canvas ---
+        const gameShell = document.getElementById('game-shell');
         const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -532,6 +603,17 @@
             canvas.height = 400;
         }
         setCanvasSize();
+
+        function enterPlayingLayout() {
+            document.body.classList.add('is-playing');
+            gameShell.classList.add('is-playing');
+            window.scrollTo(0, 0);
+        }
+
+        function exitPlayingLayout() {
+            document.body.classList.remove('is-playing');
+            gameShell.classList.remove('is-playing');
+        }
 
         // គូររូបរ៉ូបូតមានចលនាតូចមួយនៅលើ Canvas (សម្រាប់ Shield / Collectibles)
         function drawCanvasRobotHead(ctx, x, y, width, height, glowColor, gameFrame) {
@@ -615,6 +697,7 @@
 
         // ចាប់ផ្តើមហ្គេមចេញពីម៉ឺនុយដើម (Start Game)
         function startGame() {
+            enterPlayingLayout();
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             resetGame();
@@ -624,6 +707,7 @@
         function backToMenu() {
             gameActive = false;
             stopBGM(); // បញ្ឈប់តន្ត្រីពេលចាកចេញទៅក្រៅ
+            exitPlayingLayout();
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('start-screen').classList.remove('hidden');
             updateGlobalHighScore();
