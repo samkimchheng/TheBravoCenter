@@ -74,6 +74,7 @@
             position: fixed;
             inset: 0;
             width: 100vw;
+            height: 100vh;
             height: 100dvh;
             max-width: none;
             border-radius: 0;
@@ -93,6 +94,7 @@
             flex: 1;
             min-height: 0;
             width: 100%;
+            justify-content: flex-start;
         }
 
         #game-shell.is-playing #game-hud {
@@ -104,12 +106,18 @@
             flex: 1;
             min-height: 0;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #game-shell.is-playing #game-canvas {
             width: 100%;
-            height: 100%;
+            height: auto;
+            aspect-ratio: 2 / 1;
             max-height: none;
+            max-width: 100%;
+            object-fit: contain;
             touch-action: manipulation;
         }
 
@@ -119,20 +127,23 @@
 
         @media (max-width: 640px) {
             #game-shell.is-playing {
-                padding: 8px;
+                height: 100svh;
+                padding: 6px;
             }
 
             #game-shell.is-playing #game-hud {
                 align-items: stretch;
-                gap: 8px;
-                padding: 8px;
+                gap: 6px;
+                padding: 6px;
+                margin-bottom: 6px;
+                border-radius: 14px;
             }
 
             #game-shell.is-playing #stats-panel {
                 width: 100%;
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 8px;
+                gap: 6px;
             }
 
             #game-shell.is-playing #stats-panel > *,
@@ -143,14 +154,14 @@
             #game-shell.is-playing .stat-card {
                 min-width: 0;
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 14px;
+                border-radius: 12px;
                 background: rgba(15, 23, 42, 0.58);
-                padding: 8px 10px;
+                padding: 6px 8px;
             }
 
             #game-shell.is-playing .stat-card + .stat-card {
                 border-left: 1px solid rgba(255, 255, 255, 0.1);
-                padding-left: 10px;
+                padding-left: 8px;
             }
 
             #game-shell.is-playing .stat-label {
@@ -167,7 +178,19 @@
             #game-shell.is-playing #game-controls {
                 width: 100%;
                 justify-content: space-between;
-                gap: 8px;
+                gap: 6px;
+            }
+
+            #game-shell.is-playing #canvas-shell {
+                flex: 0 1 auto;
+                min-height: 0;
+                border-radius: 14px;
+            }
+
+            #game-shell.is-playing #game-canvas {
+                width: 100%;
+                height: auto;
+                max-height: calc(100svh - 138px);
             }
 
             #game-shell.is-playing #game-controls button:last-child {
