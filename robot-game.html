@@ -760,11 +760,14 @@
             window.scrollTo(0, 0);
         }
 
-        async function requestMobileLandscapeMode() {
+        function isMobileGameScreen() {
             const isTouchDevice = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
             const isSmallScreen = window.matchMedia('(max-width: 900px), (max-height: 520px)').matches;
+            return isTouchDevice && isSmallScreen;
+        }
 
-            if (!isTouchDevice || !isSmallScreen) return;
+        async function requestMobileLandscapeMode() {
+            if (!isMobileGameScreen()) return;
 
             try {
                 if (!document.fullscreenElement && gameShell.requestFullscreen) {
@@ -777,6 +780,32 @@
                 }
             } catch (error) {
                 console.info('Landscape mode is not available in this browser.', error);
+            }
+        }
+
+        async function prepareGameOverPortraitMode() {
+            if (!isMobileGameScreen()) return;
+
+            try {
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+
+                if (screen.orientation && screen.orientation.lock && document.fullscreenElement) {
+                    try {
+                        await screen.orientation.lock('portrait-primary');
+                    } catch (error) {
+                        console.info('Portrait lock is not available in this browser.', error);
+                    }
+                }
+
+                if (didEnterGameFullscreen && document.fullscreenElement && document.exitFullscreen) {
+                    await document.exitFullscreen();
+                }
+            } catch (error) {
+                console.info('Could not prepare portrait game over mode.', error);
+            } finally {
+                didEnterGameFullscreen = false;
             }
         }
 
@@ -1535,7 +1564,8 @@
             }
 
             // បើកបង្ហាញ Modal ចាញ់ហ្គេម
-            setTimeout(() => {
+            setTimeout(async () => {
+                await prepareGameOverPortraitMode();
                 const modal = document.getElementById('gameover-modal');
                 const card = document.getElementById('gameover-card');
                 modal.classList.remove('opacity-0', 'pointer-events-none');
