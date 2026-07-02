@@ -234,11 +234,11 @@
                         <i class="fa-solid fa-rotate-left mr-2"></i> សម្អាតទិន្នន័យ
                     </button>
                     <!-- Form action អាចប្តូរទៅកាន់ API របស់អ្នក -->
-                    <button type="submit"
+                    <button type="submit" id="submitBtn"
                         class="w-full sm:w-auto px-8 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 group">
-                        <i
+                        <i id="submitIcon"
                             class="fa-solid fa-paper-plane mr-2 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform duration-300"></i>
-                        បញ្ជូនពាក្យចុះឈ្មោះឥឡូវនេះ
+                        <span id="submitText">បញ្ជូនពាក្យចុះឈ្មោះឥឡូវនេះ</span>
                     </button>
                 </div>
             </form>
@@ -293,28 +293,68 @@
 
     <!-- JavaScript script -->
     <script>
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault(); // ទប់ស្កាត់ការ Reload ទំព័រ
 
+            const submitBtn = document.getElementById('submitBtn');
+            const submitIcon = document.getElementById('submitIcon');
+            const submitText = document.getElementById('submitText');
+
             // ទាញយកតម្លៃពី Form
-            const khmerName = document.getElementById('khmerName').value;
-            const latinName = document.getElementById('latinName').value;
-            const gender = document.getElementById('gender').value;
-            const phone = document.getElementById('phone').value;
-            const course = document.getElementById('course').value;
-            const shift = document.getElementById('shift').value;
+            const formData = {
+                khmerName: document.getElementById('khmerName').value,
+                latinName: document.getElementById('latinName').value,
+                gender: document.getElementById('gender').value,
+                phone: document.getElementById('phone').value,
+                course: document.getElementById('course').value,
+                shift: document.getElementById('shift').value
+            };
 
-            // ដាក់បញ្ចូលតម្លៃទៅកាន់ Modal
-            document.getElementById('modalName').textContent = `${khmerName} (${latinName.toUpperCase()})`;
-            document.getElementById('modalGender').textContent = gender;
-            document.getElementById('modalCourse').textContent = course;
-            document.getElementById('modalShift').textContent = shift;
-            document.getElementById('modalPhone').textContent = phone;
+            // ប្តូរ UI ទៅជា "កំពុងបញ្ជូន..." (Loading State)
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitIcon.className = "fa-solid fa-circle-notch fa-spin mr-2";
+            submitText.textContent = "កំពុងបញ្ជូនទិន្នន័យ...";
 
-            // បង្ហាញ Modal
-            const modal = document.getElementById('successModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            try {
+                // ផ្ញើទិន្នន័យទៅកាន់ API របស់យើង
+                const response = await fetch('/api/telegram', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // បើជោគជ័យ ដាក់បញ្ចូលតម្លៃទៅកាន់ Modal
+                    document.getElementById('modalName').textContent = `${formData.khmerName} (${formData.latinName.toUpperCase()})`;
+                    document.getElementById('modalGender').textContent = formData.gender;
+                    document.getElementById('modalCourse').textContent = formData.course;
+                    document.getElementById('modalShift').textContent = formData.shift;
+                    document.getElementById('modalPhone').textContent = formData.phone;
+
+                    // បង្ហាញ Modal ជោគជ័យ
+                    const modal = document.getElementById('successModal');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                    
+                    // សម្អាតទិន្នន័យលើ Form
+                    document.getElementById('registerForm').reset();
+                } else {
+                    const errorData = await response.json();
+                    alert("មានបញ្ហាក្នុងការបញ្ជូនទិន្នន័យ៖ " + (errorData.error || "សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។"));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("មិនអាចភ្ជាប់ទៅកាន់ប្រព័ន្ធបានទេ។ សូមពិនិត្យមើលអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។");
+            } finally {
+                // ប្តូរ UI មកសភាពដើមវិញ
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitIcon.className = "fa-solid fa-paper-plane mr-2 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform duration-300";
+                submitText.textContent = "បញ្ជូនពាក្យចុះឈ្មោះឥឡូវនេះ";
+            }
         }
 
         function closeModal() {
@@ -322,9 +362,6 @@
             const modal = document.getElementById('successModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-
-            // សម្អាតទិន្នន័យលើ Form
-            document.getElementById('registerForm').reset();
         }
     </script>
 </body>
