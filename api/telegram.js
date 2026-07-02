@@ -1,3 +1,5 @@
+const https = require('https');
+
 export default async function handler(req, res) {
   // 1. អនុញ្ញាតតែ Method POST ប៉ុណ្ណោះ
   if (req.method !== 'POST') {
@@ -14,12 +16,11 @@ export default async function handler(req, res) {
     }
 
     // 4. យក Token និង Chat ID ពី Environment Variables (Vercel)
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
+    const botToken = (process.env.TELEGRAM_BOT_TOKEN || '').trim();
+    const chatId = (process.env.TELEGRAM_CHAT_ID || '').trim();
 
     if (!botToken || !chatId) {
-      console.error('Telegram Token or Chat ID is missing in Environment Variables.');
-      return res.status(500).json({ error: 'Server configuration error' });
+      return res.status(500).json({ error: 'Telegram Token or Chat ID is missing in Vercel Environment Variables.' });
     }
 
     // 5. រៀបចំសារ (Message) សម្រាប់ផ្ញើទៅ Telegram
@@ -35,23 +36,44 @@ export default async function handler(req, res) {
 ⏰ <b>ម៉ោងសិក្សា៖</b> ${shift}
     `;
 
-    // 6. បញ្ជូនទិន្នន័យទៅកាន់ Telegram API
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    // 6. បញ្ជូនទិន្នន័យទៅកាន់ Telegram API ដោយប្រើប្រាស់ Module 'https'
+    const payload = JSON.stringify({
+      chat_id: chatId,
+      text: message,
+      parse_mode: 'HTML',
+    });
+
+    const options = {
+      hostname: 'api.telegram.org',
+      port: 443,
+      path: `/bot${botToken}/sendMessage`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML',
-      }),
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    };
+
+    const data = await new Promise((resolve, reject) => {
+      const request = https.request(options, (response) => {
+        let body = '';
+        response.on('data', (chunk) => body += chunk);
+        response.on('end', () => {
+          try {
+            resolve({ status: response.statusCode, data: JSON.parse(body) });
+          } catch (e) {
+            reject(new Error('Failed to parse response from Telegram'));
+          }
+        });
+      });
+
+      request.on('error', (e) => reject(e));
+      request.write(payload);
+      request.end();
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.description || 'Failed to send message to Telegram');
+    if (data.status !== 200) {
+      throw new Error(`Telegram API Error: ${data.data.description || 'Unknown error'}`);
     }
 
     // 7. ឆ្លើយតបទៅកាន់ Frontend វិញថាជោគជ័យ
@@ -59,6 +81,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Error sending message to Telegram:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    // ត្រលប់ Error ពិតប្រាកដទៅកាន់ Frontend វិញ ដើម្បីស្រួលដោះស្រាយ
+    return res.status(500).json({ error: error.message || String(error) });
   }
 }
