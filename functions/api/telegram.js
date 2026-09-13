@@ -1,10 +1,16 @@
 export async function onRequestPost({ request, env }) {
   try {
-    const body = await request.json();
-    const { khmerName, latinName, gender, phone, course, shift } = body;
+    const formData = await request.formData();
+    const khmerName = formData.get('khmerName');
+    const latinName = formData.get('latinName');
+    const gender = formData.get('gender');
+    const phone = formData.get('phone');
+    const course = formData.get('course');
+    const shift = formData.get('shift');
+    const paymentScreenshot = formData.get('paymentScreenshot');
 
-    if (!khmerName || !phone || !course || !shift) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+    if (!khmerName || !phone || !course || !shift || !paymentScreenshot) {
+      return new Response(JSON.stringify({ error: 'Missing required fields or payment screenshot' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
@@ -14,14 +20,14 @@ export async function onRequestPost({ request, env }) {
     const chatId = (env.TELEGRAM_CHAT_ID || '').trim();
 
     if (!botToken || !chatId) {
-      return new Response(JSON.stringify({ error: 'Telegram Token or Chat ID is missing in Cloudflare Environment Variables.' }), {
+      return new Response(JSON.stringify({ error: 'Telegram Token or Chat ID is missing.' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
     const message = `
-🎉 <b>មានសិស្សថ្មីចុះឈ្មោះ (អនឡាញ)</b> 🎉
+🎉 <b>មានសិស្សថ្មីចុះឈ្មោះ និងបង់ប្រាក់</b> 🎉
 
 👤 <b>ឈ្មោះខ្មែរ៖</b> ${khmerName}
 📝 <b>ឈ្មោះឡាតាំង៖</b> ${latinName || 'មិនមាន'}
@@ -32,16 +38,15 @@ export async function onRequestPost({ request, env }) {
 ⏰ <b>ម៉ោងសិក្សា៖</b> ${shift}
     `;
 
-    const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    const telegramFormData = new FormData();
+    telegramFormData.append('chat_id', chatId);
+    telegramFormData.append('caption', message);
+    telegramFormData.append('parse_mode', 'HTML');
+    telegramFormData.append('photo', paymentScreenshot);
+
+    const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: 'HTML',
-      }),
+      body: telegramFormData,
     });
 
     const telegramData = await telegramResponse.json();
@@ -50,7 +55,7 @@ export async function onRequestPost({ request, env }) {
       throw new Error(`Telegram API Error: ${telegramData.description || 'Unknown error'}`);
     }
 
-    return new Response(JSON.stringify({ success: true, message: 'Message sent successfully' }), {
+    return new Response(JSON.stringify({ success: true, message: 'Message and photo sent successfully' }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

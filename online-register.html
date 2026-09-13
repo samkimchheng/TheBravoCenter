@@ -227,6 +227,39 @@
                     </div>
                 </div>
 
+                <!-- ផ្នែកទី៤៖ ការបង់ប្រាក់ -->
+                <div>
+                    <span
+                        class="text-xs font-bold text-cyan-400 uppercase tracking-wider block mb-3 border-b border-slate-700 pb-1">៤.
+                        ការបង់ប្រាក់ (Payment)</span>
+                    <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 mb-4">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="flex items-center space-x-4 w-full">
+                                <div class="bg-white p-2 rounded-lg shrink-0">
+                                    <!-- រូបភាពតំណាងធនាគារអេស៊ីលីដា -->
+                                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/ACLEDA_Bank_logo.svg/1200px-ACLEDA_Bank_logo.svg.png" alt="ACLEDA" class="h-10 w-auto object-contain">
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-white font-bold text-sm">គណនីអេស៊ីលីដា (ACLEDA)</h4>
+                                    <p class="text-cyan-400 font-bold text-sm">ឈ្មោះគណនី៖ <span class="text-white">SAM KIMCHHENG</span></p>
+                                </div>
+                            </div>
+                            
+                            <!-- ប៊ូតុងទូទាត់ប្រាក់ -->
+                            <a href="https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfu5ckLzMHjaSki6Ru0bsOyNK+ylPBgZ0sHH6BeGUscKoEOX1Pz7DJTHnkd62CxQCEukSPUF40MbQcb2aFhw4PwG4V60G565S8n3zbaOowKu+96RocSXIqLOc+pw2rHwdDJFBU7dbg25pL4AgqyuWvXCvwYX1fCEODvcvYbe/iVZpz+wq08QttUQeGco7XtQmlLJZ9hj2XFrQt5P6CsNUAlFA=&key=khqr" target="_blank" class="w-full md:w-auto text-center px-6 py-2.5 bg-blue-700 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center whitespace-nowrap">
+                                <i class="fa-solid fa-qrcode mr-2"></i> សូមចុចដើម្បីទូទាត់
+                            </a>
+                        </div>
+                        
+                        <!-- កន្លែង Upload វិក្កយបត្រ -->
+                        <div class="mt-5 border-t border-slate-700 pt-4">
+                            <label class="block text-xs text-slate-300 mb-2 font-medium">បញ្ចូលរូបភាពវិក្កយបត្របញ្ជាក់ការបង់ប្រាក់ (Payment Screenshot) <span class="text-red-500">*</span></label>
+                            <input type="file" id="paymentScreenshot" accept="image/*" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition duration-150 cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ប៊ូតុងបញ្ជូន -->
                 <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4">
                     <button type="reset"
@@ -300,8 +333,8 @@
             const submitIcon = document.getElementById('submitIcon');
             const submitText = document.getElementById('submitText');
 
-            // ទាញយកតម្លៃពី Form
-            const formData = {
+            // ទាញយកតម្លៃពី Form រួចរៀបចំជា Object ដើម្បីងាយស្រួលបង្ហាញលើ Modal
+            const formValues = {
                 khmerName: document.getElementById('khmerName').value,
                 latinName: document.getElementById('latinName').value,
                 gender: document.getElementById('gender').value,
@@ -310,29 +343,37 @@
                 shift: document.getElementById('shift').value
             };
 
+            // បង្កើត FormData ជំនួស JSON ដើម្បីអាចផ្ទុករូបភាពបាន
+            const formData = new FormData();
+            for (const key in formValues) {
+                formData.append(key, formValues[key]);
+            }
+
+            const paymentFile = document.getElementById('paymentScreenshot').files[0];
+            if (paymentFile) {
+                formData.append('paymentScreenshot', paymentFile);
+            }
+
             // ប្តូរ UI ទៅជា "កំពុងបញ្ជូន..." (Loading State)
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
             submitIcon.className = "fa-solid fa-circle-notch fa-spin mr-2";
-            submitText.textContent = "កំពុងបញ្ជូនទិន្នន័យ...";
+            submitText.textContent = "កំពុងបញ្ជូនទិន្នន័យ និងរូបភាព...";
 
             try {
-                // ផ្ញើទិន្នន័យទៅកាន់ API របស់យើង
+                // ផ្ញើទិន្នន័យទៅកាន់ API របស់យើង (មិនចាំបាច់មាន Content-Type ទេ Browser នឹងធ្វើដោយស្វ័យប្រវត្តិសម្រាប់ FormData)
                 const response = await fetch('/api/telegram', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    body: formData
                 });
 
                 if (response.ok) {
                     // បើជោគជ័យ ដាក់បញ្ចូលតម្លៃទៅកាន់ Modal
-                    document.getElementById('modalName').textContent = `${formData.khmerName} (${formData.latinName.toUpperCase()})`;
-                    document.getElementById('modalGender').textContent = formData.gender;
-                    document.getElementById('modalCourse').textContent = formData.course;
-                    document.getElementById('modalShift').textContent = formData.shift;
-                    document.getElementById('modalPhone').textContent = formData.phone;
+                    document.getElementById('modalName').textContent = `${formValues.khmerName} (${formValues.latinName.toUpperCase()})`;
+                    document.getElementById('modalGender').textContent = formValues.gender;
+                    document.getElementById('modalCourse').textContent = formValues.course;
+                    document.getElementById('modalShift').textContent = formValues.shift;
+                    document.getElementById('modalPhone').textContent = formValues.phone;
 
                     // បង្ហាញ Modal ជោគជ័យ
                     const modal = document.getElementById('successModal');
