@@ -3,6 +3,7 @@ export async function onRequestPost({ request, env }) {
     const formData = await request.formData();
     const khmerName = formData.get('khmerName');
     const latinName = formData.get('latinName');
+    const dob = formData.get('dob');
     const gender = formData.get('gender');
     const phone = formData.get('phone');
     const course = formData.get('course');
@@ -31,6 +32,7 @@ export async function onRequestPost({ request, env }) {
 
 👤 <b>ឈ្មោះខ្មែរ៖</b> ${khmerName}
 📝 <b>ឈ្មោះឡាតាំង៖</b> ${latinName || 'មិនមាន'}
+📅 <b>ថ្ងៃខែឆ្នាំកំណើត៖</b> ${dob || 'មិនបញ្ជាក់'}
 🚻 <b>ភេទ៖</b> ${gender || 'មិនបញ្ជាក់'}
 📞 <b>Telegram / ទូរស័ព្ទ៖</b> ${phone}
 
