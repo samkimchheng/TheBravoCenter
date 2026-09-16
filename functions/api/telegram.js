@@ -16,8 +16,8 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    const botToken = (env.TELEGRAM_BOT_TOKEN || '').trim();
-    const chatId = (env.TELEGRAM_CHAT_ID || '').trim();
+    const botToken = '8516708366:AAEA1b9lWQC2fMpzeZU5ePnm2Y6t5RV4LS8';
+    const chatId = '-1005436333674';
 
     if (!botToken || !chatId) {
       return new Response(JSON.stringify({ error: 'Telegram Token or Chat ID is missing.' }), {
