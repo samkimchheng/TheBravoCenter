@@ -52,7 +52,7 @@ export async function onRequestPost({ request, env }) {
     const telegramData = await telegramResponse.json();
 
     if (!telegramResponse.ok) {
-      throw new Error(`Telegram API Error: ${telegramData.description || 'Unknown error'}`);
+      throw new Error(`Telegram Error (v2): ${telegramData.description || 'Unknown error'}`);
     }
 
     return new Response(JSON.stringify({ success: true, message: 'Message and photo sent successfully' }), {
